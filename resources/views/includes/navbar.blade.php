@@ -48,6 +48,7 @@
                     <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-package"></i></span><span class="pcoded-mtext">Masterdata</span></a>
                     <ul class="pcoded-submenu">
                         <li><a href="{{ route('coas.index') }}">COA</a></li>
+                        <li><a href="{{ route('coa-kelompok.index') }}">Kelompok COA</a></li>
                         <li><a href="{{ route('jabatan.index') }}">Jabatan</a></li>
                         <!-- <li><a href="{{ route('jasa.index') }}">Jasa</a></li> -->
                         <li><a href="{{ route('barang2.index') }}">Produk/Barang</a></li>

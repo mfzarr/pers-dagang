@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -11,27 +10,50 @@ return new class extends Migration {
      */
     public function up()
     {
+        // Membuat tabel coa_kelompok
         Schema::create('coa_kelompok', function (Blueprint $table) {
-            $table->id();
-            $table->string('kelompok_akun');
+            $table->id('kelompok_akun'); // Menggunakan bigInteger sebagai primary key
             $table->string('nama_kelompok_akun');
-            $table->string('header_akun')->nullable();
-        });
+            $table->unsignedBigInteger('header_akun')->nullable(); // Sesuaikan tipe data dengan primary key
+            $table->unsignedBigInteger('id_perusahaan');
+            $table->timestamps();
+    
+            // Foreign key ke tabel 'perusahaan'
+            $table->foreign('id_perusahaan')
+                  ->references('id_perusahaan')
+                  ->on('perusahaan')
+                  ->onDelete('cascade');
+    
+            // Foreign key ke kolom 'kelompok_akun' di tabel yang sama
+            $table->foreign('header_akun')
+                  ->references('kelompok_akun')
+                  ->on('coa_kelompok')
+                  ->onDelete('set null');
+        });         
 
+        // Membuat tabel coa
         Schema::create('coa', function (Blueprint $table) {
             $table->id('id_coa');
             $table->string('kode');
             $table->string('nama_akun');
-            $table->string('kelompok_akun');
+            $table->unsignedBigInteger('kelompok_akun'); // Kolom ini digunakan untuk foreign key
             $table->string('posisi_d_c');
-            $table->boolean('saldo_awal')->default(0);
+            $table->integer('saldo_awal')->default(0);
             $table->unsignedBigInteger('id_perusahaan');
             $table->timestamps();
 
             // Foreign key constraint
-            $table->foreign('id_perusahaan')->references('id_perusahaan')->on('perusahaan')->onDelete('cascade');
-        });
+            $table->foreign('id_perusahaan')
+                  ->references('id_perusahaan')
+                  ->on('perusahaan')
+                  ->onDelete('cascade');
 
+            // Foreign key ke kolom 'kelompok_akun' di tabel 'coa_kelompok'
+            $table->foreign('kelompok_akun')
+                  ->references('kelompok_akun')
+                  ->on('coa_kelompok')
+                  ->onDelete('cascade');
+        });
     }
 
     /**

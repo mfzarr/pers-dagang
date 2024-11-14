@@ -51,6 +51,7 @@ use App\Http\Controllers\Masterdata\PerusahaanController as MasterdataPerusahaan
 use App\Http\Controllers\Masterdata\RolesController;
 use App\Http\Controllers\Masterdata\CoaController;
 
+
 use App\Http\Controllers\Masterdata\BarangController;
 
 use App\Http\Controllers\StokBarangController;
@@ -104,6 +105,10 @@ Route::resource('karyawan', KaryawanController::class);
 use App\Http\Controllers\Masterdata\JabatanController;
 
 Route::resource('jabatan', JabatanController::class);
+
+use App\Http\Controllers\Masterdata\CoaKelompokController;
+Route::resource('coa-kelompok', CoaKelompokController::class);
+Route::delete('/masterdata/{table}/{id}', [YourController::class, 'destroy'])->name('masterdata.delete');
 
 
 use App\Http\Controllers\Masterdata\UsersController;

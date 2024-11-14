@@ -12,6 +12,7 @@ class CoaKelompok extends Model
         'kelompok_akun',
         'nama_kelompok_akun',
         'header_akun',
+        'id_perusahaan'
     ];
 
     public $timestamps = false; // Assuming the table doesn't have created_at or updated_at columns

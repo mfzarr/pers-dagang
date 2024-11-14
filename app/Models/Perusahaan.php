@@ -29,21 +29,33 @@ class Perusahaan extends Model
     public function createCoaForPerusahaan()
     {
         DB::table('coa_kelompok')->insert([
-            ['kelompok_akun' => '11', 'nama_kelompok_akun' => 'Aktiva', 'header_akun' => null],
-            ['kelompok_akun' => '111', 'nama_kelompok_akun' => 'Aktiva Lancar', 'header_akun' => '11'],
-            ['kelompok_akun' => '112', 'nama_kelompok_akun' => 'Aktiva Tetap', 'header_akun' => '11'],
-            ['kelompok_akun' => '210', 'nama_kelompok_akun' => 'Kewajiban', 'header_akun' => null],
-            ['kelompok_akun' => '310', 'nama_kelompok_akun' => 'Modal', 'header_akun' => null],
-            ['kelompok_akun' => '410', 'nama_kelompok_akun' => 'Penjualan', 'header_akun' => null],
-            ['kelompok_akun' => '510', 'nama_kelompok_akun' => 'Pembelian', 'header_akun' => null],
+            ['kelompok_akun' => '11', 'nama_kelompok_akun' => 'Aktiva', 'header_akun' => null, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '111', 'nama_kelompok_akun' => 'Aktiva Lancar', 'header_akun' => '11', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '121', 'nama_kelompok_akun' => 'Aktiva Tetap', 'header_akun' => '11', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '21', 'nama_kelompok_akun' => 'Kewajiban', 'header_akun' => null, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '211', 'nama_kelompok_akun' => 'Kewajiban Jangka Pendek', 'header_akun' => '21', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '221', 'nama_kelompok_akun' => 'Kewajiban Jangka Panjang', 'header_akun' => '21', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '31', 'nama_kelompok_akun' => 'Ekuitas', 'header_akun' => null, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '311', 'nama_kelompok_akun' => 'Modal', 'header_akun' => '31', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '41', 'nama_kelompok_akun' => 'Pendapatan dan Penjualan', 'header_akun' => null, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '411', 'nama_kelompok_akun' => 'Pendapatan', 'header_akun' => '41', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '412', 'nama_kelompok_akun' => 'Penjualan', 'header_akun' => '41', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '51', 'nama_kelompok_akun' => 'Pembelian dan Beban', 'header_akun' => null, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '511', 'nama_kelompok_akun' => 'Pembelian', 'header_akun' => '51', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kelompok_akun' => '512', 'nama_kelompok_akun' => 'Beban', 'header_akun' => '51', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
         ]);
 
         DB::table('coa')->insert([
-            ['kode' => '01', 'nama_akun' => 'Kas', 'kelompok_akun' => 'Aktiva Lancar', 'posisi_d_c' => 'Debit', 'saldo_awal' => 1, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
-            ['kode' => '01', 'nama_akun' => 'Peralatan Salon', 'kelompok_akun' => 'Aktiva Tetap', 'posisi_d_c' => 'Debit', 'saldo_awal' => 1, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
-            ['kode' => '01', 'nama_akun' => 'Utang Usaha', 'kelompok_akun' => 'Kewajiban', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 1, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
-            ['kode' => '01', 'nama_akun' => 'Modal Pemilik', 'kelompok_akun' => 'Modal', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 1, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
-            ['kode' => '01', 'nama_akun' => 'Penjualan', 'kelompok_akun' => 'Penjualan', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 1, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode' => '1110', 'nama_akun' => 'Kas', 'kelompok_akun' => '111', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode' => '1111', 'nama_akun' => 'Perlengkapan', 'kelompok_akun' => '111', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode' => '1210', 'nama_akun' => 'Tanah', 'kelompok_akun' => '121', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode' => '1211', 'nama_akun' => 'Bangunan', 'kelompok_akun' => '121', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode' => '1120', 'nama_akun' => 'Peralatan', 'kelompok_akun' => '121', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode' => '2110', 'nama_akun' => 'Utang Usaha', 'kelompok_akun' => '211', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 0, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode' => '3110', 'nama_akun' => 'Modal Pemilik', 'kelompok_akun' => '311', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 0, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode' => '4120', 'nama_akun' => 'Penjualan', 'kelompok_akun' => '412', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 0, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode' => '5110', 'nama_akun' => 'Pembelian', 'kelompok_akun' => '511', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode' => '5120', 'nama_akun' => 'Beban-Beban', 'kelompok_akun' => '512', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

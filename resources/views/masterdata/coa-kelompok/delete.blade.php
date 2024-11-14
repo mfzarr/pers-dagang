@@ -37,18 +37,19 @@
         var table = $('#delete-table').val();
 
         $.ajax({
-            url: '/masterdata/coas' + table + '/' + id, // This URL needs to match your routes
-            method: 'DELETE',
-            data: {
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                $('#deleteModal').modal('hide');
-                location.reload();
-            },
-            error: function(xhr) {
-                alert('Error: ' + xhr.responseText);
-            }
-        });
+    url: '/masterdata/' + table + '/' + id, // This should now match the route definition
+    method: 'DELETE',
+    data: {
+        _token: '{{ csrf_token() }}'
+    },
+    success: function(response) {
+        $('#deleteModal').modal('hide');
+        location.reload();
+    },
+    error: function(xhr) {
+        alert('Error: ' + xhr.responseText);
+    }
+});
+
     });
 </script>

@@ -38,24 +38,19 @@
                             <table id="userAccessMenuTable" class="table table-striped table-bordered nowrap">
                                 <thead>
                                     <tr>
-                                        <th>Id Akun</th>
-                                        <th>Nama Akun</th>
                                         <th>Kelompok Akun</th>
-                                        <th>Posisi</th>
-                                        <th>Saldo Awal</th>
-                                        <!-- <th>Perusahaan</th> -->
+                                        <th>Nama Kelompok Akun</th>
+                                        <th>Header Akun</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($coas as $item)
+                                    @foreach ($coaKelompoks as $item)
                                     <tr>
-                                        <td>{{ $item->kode }}</td>
-                                        <td>{{ $item->nama_akun }}</td>
+                                        <td>{{ $item->kelompok_akun }}</td>
                                         <td>{{ $item->nama_kelompok_akun }}</td>
-                                        <td>{{ $item->posisi_d_c }}</td>
-                                        <td>{{ $item->saldo_awal }}</td>
+                                        <td>{{ $item->header_akun }}</td>
                                         <!-- <td>{{ $item->nama }}</td> -->
                                         <td>
                                             <!-- Tombol Edit -->

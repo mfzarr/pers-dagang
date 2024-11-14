@@ -20,29 +20,34 @@
                     </div>
                     <div class="form-group">
                         <label for="kelompok_akun">Kelompok Akun:</label>
-                        <select class="form-control" id="kelompok_akun" name="kelompok_akun" required>
+                        <select class="form-control" id="kelompok_akun" name="kelompok_akun" required
+                            onchange="setPosisiDC()">
                             <option value="" selected hidden>Select Kelompok</option>
                             @foreach ($kelompokAkun as $option)
-                                <option value="{{ $option->nama_kelompok_akun }}">{{ $option->nama_kelompok_akun }}</option>
+                                <option value="{{ $option->kelompok_akun }}">{{ $option->nama_kelompok_akun }}</option>
                             @endforeach
                         </select>
                     </div>
+
                     <div class="form-group">
                         <label for="posisi_d_c">Posisi Debit/Kredit:</label>
                         <br>
-                        <input type="radio" id="Debit" name="posisi_d_c" value="Debit" required>
+                        <!-- Nonaktifkan inputan radio -->
+                        <input type="radio" id="Debit" name="posisi_d_c_disabled" value="Debit" disabled>
                         <label for="Debit">Debit</label><br>
-                        <input type="radio" id="Kredit" name="posisi_d_c" value="Kredit" required>
+                        <input type="radio" id="Kredit" name="posisi_d_c_disabled" value="Kredit" disabled>
                         <label for="Kredit">Kredit</label><br>
+
+                        <!-- Input hidden untuk mengirim nilai posisi_d_c -->
+                        <input type="hidden" id="posisi_d_c" name="posisi_d_c" value="">
                     </div>
-                    <div class="form-group">
-                        <label for="saldo_awal">Saldo Awal:</label>
-                        <br>
-                        <input type="radio" id="1" name="saldo_awal" value="1" required>
-                        <label for="1">Ya</label><br>
-                        <input type="radio" id="0" name="saldo_awal" value="0" required>
-                        <label for="0">Tidak</label><br>
+
+                    <!-- Sembunyikan inputan saldo awal -->
+                    <div class="form-group" style="display: none;">
+                        <input type="hidden" id="saldo_awal" name="saldo_awal" value="0">
                     </div>
+
+
                 </form>
             </div>
             <div class="modal-footer">
@@ -54,13 +59,42 @@
 </div>
 
 <script>
+    function setPosisiDC() {
+        // Ambil nilai kelompok_akun yang dipilih
+        const kelompokAkun = parseInt(document.getElementById("kelompok_akun").value, 10);
+
+        // Ambil elemen radio untuk posisi
+        const debitRadio = document.getElementById("Debit");
+        const kreditRadio = document.getElementById("Kredit");
+
+        // Ambil elemen input hidden untuk posisi_d_c
+        const posisiDCInput = document.getElementById("posisi_d_c");
+
+        // Reset pilihan
+        debitRadio.checked = false;
+        kreditRadio.checked = false;
+        posisiDCInput.value = ""; // Reset nilai input hidden
+
+        // Logika untuk memilih posisi berdasarkan kelompok_akun
+        if (kelompokAkun < 200) {
+            debitRadio.checked = true;
+            posisiDCInput.value = "Debit";
+        } else if (kelompokAkun >= 200 && kelompokAkun < 500) {
+            kreditRadio.checked = true;
+            posisiDCInput.value = "Kredit";
+        } else if (kelompokAkun >= 500) {
+            debitRadio.checked = true;
+            posisiDCInput.value = "Debit";
+        }
+    }
+
     $(document).ready(function() {
         $('#confirmDataButton').click(function() {
             var form = $('#addform');
             var formData = form.serialize();
 
             $.ajax({
-                url: '{{ route("coas.store") }}',
+                url: '{{ route('coas.store') }}',
                 method: 'POST',
                 data: formData,
                 headers: {

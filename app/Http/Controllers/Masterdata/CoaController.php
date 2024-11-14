@@ -18,15 +18,16 @@ class CoaController extends Controller
     public function index()
     {
         $userPerusahaanId = auth()->user()->id_perusahaan;
-
+    
         $coas = Coa::join('perusahaan', 'coa.id_perusahaan', '=', 'perusahaan.id_perusahaan')
+            ->join('coa_kelompok', 'coa.kelompok_akun', '=', 'coa_kelompok.kelompok_akun')
             ->where('coa.id_perusahaan', $userPerusahaanId)
-            ->select('coa.*', 'perusahaan.nama')
+            ->select('coa.*', 'perusahaan.nama', 'coa_kelompok.nama_kelompok_akun')
             ->get();
-
-        $kelompokAkun = CoaKelompok::all();
-        $perusahaan = Perusahaan::all();
-
+    
+            $kelompokAkun = CoaKelompok::where('kelompok_akun', '>=', 100)->get();
+            $perusahaan = Perusahaan::all();
+    
         return view('masterdata.coa.index', [
             'coas' => $coas,
             'kelompokAkun' => $kelompokAkun,
@@ -34,6 +35,7 @@ class CoaController extends Controller
             'table' => 'coa'
         ]);
     }
+    
 
     /**
      * Store a newly created COA in the database.
@@ -56,19 +58,15 @@ class CoaController extends Controller
     public function edit($id)
     {
         $userPerusahaanId = auth()->user()->id_perusahaan;
-        $coas = Coa::where('id_coa', $id)
-                    ->where('id_perusahaan', $userPerusahaanId)
-                    ->firstOrFail();
-
-        $kelompokAkun = CoaKelompok::all();
-        $perusahaan = Perusahaan::all();
-
+        $coa = Coa::where('id_coa', $id)
+                  ->where('id_perusahaan', $userPerusahaanId)
+                  ->firstOrFail();
+    
         return response()->json([
-            'coas' => $coas,
-            'kelompokAkun' => $kelompokAkun,
-            'perusahaan' => $perusahaan
+            'coas' => $coa
         ]);
     }
+    
 
     /**
      * Update the specified COA record.
