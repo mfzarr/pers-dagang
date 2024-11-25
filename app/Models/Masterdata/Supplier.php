@@ -13,7 +13,13 @@ class Supplier extends Model
 
     protected $primaryKey = 'id_supplier'; // set the primary key
 
-    protected $fillable = ['nama', 'alamat', 'no_telp', 'id_perusahaan'];
+    protected $fillable = [
+        'nama',
+        'alamat',
+        'no_telp',
+        'status',
+        'id_perusahaan',
+    ]; // mass-assignable fields
 
     public $timestamps = true; // uses created_at and updated_at columns
 }

@@ -13,7 +13,16 @@ class Pelanggan extends Model
 
     protected $primaryKey = 'id_pelanggan'; // set the primary key
 
-    protected $fillable = ['nama', 'email', 'no_telp', 'alamat', 'id_perusahaan'];
+    protected $fillable = [
+        'nama',
+        'email',
+        'no_telp',
+        'alamat',
+        'jenis_kelamin',
+        'tgl_daftar',
+        'status',
+        'id_perusahaan',
+    ]; // mass-assignable attributes
 
     public $timestamps = true; // if you are using created_at and updated_at columns
 

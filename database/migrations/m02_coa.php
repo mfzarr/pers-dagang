@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         // Membuat tabel coa_kelompok
         Schema::create('coa_kelompok', function (Blueprint $table) {
-            $table->id('kelompok_akun'); // Menggunakan bigInteger sebagai primary key
+            $table->id('id_kelompok_akun'); // Menggunakan bigInteger sebagai primary key
+            $table->integer('kelompok_akun');
             $table->string('nama_kelompok_akun');
-            $table->unsignedBigInteger('header_akun')->nullable(); // Sesuaikan tipe data dengan primary key
             $table->unsignedBigInteger('id_perusahaan');
             $table->timestamps();
     
@@ -25,16 +25,16 @@ return new class extends Migration {
                   ->onDelete('cascade');
     
             // Foreign key ke kolom 'kelompok_akun' di tabel yang sama
-            $table->foreign('header_akun')
-                  ->references('kelompok_akun')
-                  ->on('coa_kelompok')
-                  ->onDelete('set null');
+            // $table->foreign('header_akun')
+            //       ->references('kelompok_akun')
+            //       ->on('coa_kelompok')
+            //       ->onDelete('set null');
         });         
 
         // Membuat tabel coa
         Schema::create('coa', function (Blueprint $table) {
             $table->id('id_coa');
-            $table->string('kode');
+            $table->integer('kode')->length(4);
             $table->string('nama_akun');
             $table->unsignedBigInteger('kelompok_akun'); // Kolom ini digunakan untuk foreign key
             $table->string('posisi_d_c');
@@ -50,7 +50,7 @@ return new class extends Migration {
 
             // Foreign key ke kolom 'kelompok_akun' di tabel 'coa_kelompok'
             $table->foreign('kelompok_akun')
-                  ->references('kelompok_akun')
+                  ->references('id_kelompok_akun')
                   ->on('coa_kelompok')
                   ->onDelete('cascade');
         });

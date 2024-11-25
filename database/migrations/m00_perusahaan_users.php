@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->id('id_perusahaan');
             $table->string('nama');
             $table->string('alamat');
-            $table->enum('jenis_perusahaan', ['barang', 'jasa']);
+            $table->string('jenis_perusahaan');
             $table->string('kode_perusahaan', 9)->unique(); // 9-character unique code
             $table->timestamps();
         });

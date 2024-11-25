@@ -27,7 +27,7 @@ class PerusahaanController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'jenis_perusahaan' => 'required|in:barang,jasa',
+            'jenis_perusahaan' => 'required|string|max:255',
         ]);
 
         // Get the logged-in user

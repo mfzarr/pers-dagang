@@ -30588,7 +30588,7 @@ text.highcharts-drilldown-data-label {
 
 /* image varient start */
 .aut-bg-img {
-    background-image: url("../images/auth/img-auth-big.jpg");
+    background-image: url("../images/auth/tes.jpg");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -32928,6 +32928,50 @@ new-task label input[type=checkbox] {
     border-bottom-right-radius: 0.25rem;
 }
 
+/* Tombol sort */
+.sort-btn {
+    background-color: transparent; /* Tombol tanpa latar belakang */
+    color: #D3D3D3; /* Warna ikon */
+    border: none; /* Tidak ada border */
+    padding: 0; /* Tidak ada padding */
+    cursor: pointer; /* Kursor pointer */
+    display: inline-flex;
+    align-items: center;
+    font-size: 18px; /* Ukuran ikon */
+    margin-left: 10px;
+}
+
+/* Menyorot ikon saat urutan ascending */
+.sort-btn.asc i {
+    color: #D3D3D3; /* Warna biru untuk panah naik */
+}
+
+/* Menyorot ikon saat urutan descending */
+.sort-btn.desc i {
+    color: #D3D3D3; /* Warna biru untuk panah turun */
+}
+
+/* Hover efek untuk tombol sort */
+.sort-btn:hover i {
+    color: #0056b3; /* Mengubah warna ikon saat hover */
+}
+
+.sort-btn:focus {
+    outline: none; /* Menghilangkan outline saat tombol difokuskan */
+}
+
+/* Ikon sort di posisi kanan atas tabel */
+.table th {
+    position: relative;
+    vertical-align: middle;
+}
+
+.table th .sort-btn {
+    position: absolute;
+    right: 10px; /* Menempatkan tombol di kanan */
+    top: 50%; /* Memposisikan tombol di tengah vertikal */
+    transform: translateY(-50%); /* Menyejajarkan tombol secara vertikal */
+}
 
 
 /**====== user card css end ======**/

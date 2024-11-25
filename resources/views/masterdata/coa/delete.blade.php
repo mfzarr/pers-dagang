@@ -21,34 +21,33 @@
 </div>
 
 <script>
-    // Handle the delete confirmation
-    $('.delete-button').click(function() {
-        var table = $(this).data('table');
-        var id = $(this).data('id');
+$(document).ready(function () {
+    $('.delete-button').click(function () {
+        var id = $(this).data('id'); // Ambil ID dari tombol yang diklik
 
-        // Set data in the delete confirmation modal
-        $('#delete-ids').val(id);
-        $('#delete-table').val(table);
+        // Tampilkan modal konfirmasi
         $('#deleteModal').modal('show');
-    });
 
-    $('#confirmDeleteButton').click(function() {
-        var id = $('#delete-ids').val();
-        var table = $('#delete-table').val();
-
-        $.ajax({
-            url: '/masterdata/coas' + table + '/' + id, // This URL needs to match your routes
-            method: 'DELETE',
-            data: {
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                $('#deleteModal').modal('hide');
-                location.reload();
-            },
-            error: function(xhr) {
-                alert('Error: ' + xhr.responseText);
-            }
+        // Ketika tombol konfirmasi delete diklik
+        $('#confirmDeleteButton').click(function () {
+            $.ajax({
+                url: '/masterdata/coas/' + id, // Pastikan URL sesuai dengan route destroy
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: function (response) {
+                    $('#deleteModal').modal('hide'); // Tutup modal
+                    location.reload(); // Reload halaman
+                },
+                error: function (xhr) {
+                    console.error('Error deleting data:', xhr.responseText);
+                    alert('Failed to delete the account.');
+                }
+            });
         });
     });
+});
+
+
 </script>

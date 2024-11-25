@@ -28,6 +28,9 @@ class PelangganController extends Controller
             'email' => 'nullable|email|max:255',
             'no_telp' => 'required|max:255',
             'alamat' => 'required|max:255',
+            'tgl_daftar' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
+            'status' => 'required|in:Aktif,Tidak Aktif',
         ]);
 
         Pelanggan::create([
@@ -35,6 +38,9 @@ class PelangganController extends Controller
             'email' => $request->email,
             'no_telp' => $request->no_telp,
             'alamat' => $request->alamat,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tgl_daftar' => $request->tgl_daftar,
+            'status' => $request->status,
             'id_perusahaan' => Auth::user()->id_perusahaan,
         ]);
 
@@ -55,6 +61,9 @@ class PelangganController extends Controller
             'email' => 'nullable|email|max:255',
             'no_telp' => 'required|max:255',
             'alamat' => 'required|max:255',
+            'tgl_daftar' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
+            'status' => 'required|in:Aktif,Tidak Aktif',
         ]);
 
         $pelanggan = Pelanggan::where('id_perusahaan', Auth::user()->id_perusahaan)
@@ -65,6 +74,9 @@ class PelangganController extends Controller
             'email' => $request->email,
             'no_telp' => $request->no_telp,
             'alamat' => $request->alamat,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tgl_daftar' => $request->tgl_daftar,
+            'status' => $request->status,
         ]);
 
         return redirect()->route('pelanggan.index')->with('success', 'Pelanggan updated successfully.');

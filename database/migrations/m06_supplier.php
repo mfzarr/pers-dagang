@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama', 50);
             $table->string('alamat', 50);
             $table->string('no_telp', 50);
+            $table->string('status')->default('Aktif');
             $table->timestamps();
             
             $table->foreignId('id_perusahaan');

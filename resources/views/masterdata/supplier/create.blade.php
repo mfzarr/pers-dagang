@@ -33,15 +33,25 @@
                                 <input type="text" class="form-control" id="nama" name="nama" required>
                             </div>
                             <div class="form-group">
-                                <label for="alamat">Alamat</label>
-                                <input type="text" class="form-control" id="alamat" name="alamat" required>
+                                <label for="no_telp">No Telp</label>
+                                <input type="number" class="form-control" id="no_telp" name="no_telp" required>
                             </div>
                             <div class="form-group">
-                                <label for="no_telp">No Telp</label>
-                                <input type="text" class="form-control" id="no_telp" name="no_telp" required>
+                                <label for="alamat">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="3" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select class="form-control" id="status" name="status" required>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Tidak Aktif">Tidak Aktif</option>
+                                </select>
+                            </div>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <a href="{{ route('supplier.index') }}" class="btn btn-danger">Back</a>
+                            </div>                        </form>
                     </div>
                 </div>
             </div>

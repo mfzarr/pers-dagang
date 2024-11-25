@@ -8,7 +8,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Edit COA</h5>
+                            <h5 class="m-b-10">Tambah COA</h5>
                         </div>
                     </div>
                 </div>
@@ -17,42 +17,38 @@
 
         <div class="card">
             <div class="card-header">
-                <h5>Edit COA</h5>
+                <h5>Tambah COA Baru</h5>
             </div>
 
             <div class="card-body">
-                <form method="POST" action="{{ route('coa.update', $coa->id_coa) }}">
+                <!-- Make sure the form has the correct method and action -->
+                <form method="POST" action="{{ route('coa.store') }}">
                     @csrf
-                    @method('PUT') <!-- This is important for PUT requests -->
                     <div class="form-group">
                         <label for="kode">Kode Akun:</label>
-                        <input type="text" class="form-control" id="kode" name="kode" value="{{ old('kode', $coa->kode) }}" required>
+                        <input type="number" class="form-control" id="kode" name="kode" required>
                     </div>
                     <div class="form-group">
                         <label for="nama_akun">Nama Akun:</label>
-                        <input type="text" class="form-control" id="nama_akun" name="nama_akun" value="{{ old('nama_akun', $coa->nama_akun) }}" required>
+                        <input type="text" class="form-control" id="nama_akun" name="nama_akun" required>
                     </div>
                     <div class="form-group">
                         <label for="kelompok_akun">Kelompok Akun:</label>
                         <select class="form-control" id="kelompok_akun" name="kelompok_akun" required>
                             <option value="" selected hidden>Pilih Kelompok</option>
                             @foreach ($kelompokAkun as $option)
-                                <option value="{{ $option->kelompok_akun }}" {{ old('kelompok_akun', $coa->kelompok_akun) == $option->kelompok_akun ? 'selected' : '' }}>
-                                    {{ $option->nama_kelompok_akun }}
-                                </option>
+                                <option value="{{ $option->kelompok_akun }}">{{ $option->nama_kelompok_akun }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="posisi_d_c">Posisi:</label><br>
-                        <input type="radio" id="Debit" name="posisi_d_c" value="Debit" {{ old('posisi_d_c', $coa->posisi_d_c) == 'Debit' ? 'checked' : '' }}> Debit
-                        <input type="radio" id="Kredit" name="posisi_d_c" value="Kredit" {{ old('posisi_d_c', $coa->posisi_d_c) == 'Kredit' ? 'checked' : '' }}> Kredit
+                        <label for="posisi_d_c">Posisi Debit/Kredit:</label><br>
+                        <input type="radio" id="Debit" name="posisi_d_c" value="Debit"> Debit
+                        <input type="radio" id="Kredit" name="posisi_d_c" value="Kredit"> Kredit
                     </div>
-                    <div class="form-group">
-                        <label for="saldo_awal">Saldo Awal:</label>
-                        <input type="number" class="form-control" id="saldo_awal" name="saldo_awal" value="{{ old('saldo_awal', $coa->saldo_awal) }}" step="0.01" required>
-                    </div>
+                    <input type="hidden" id="saldo_awal" name="saldo_awal" value="0">
                     <input type="hidden" name="id_perusahaan" value="{{ auth()->user()->perusahaan->id_perusahaan }}">
+                    <!-- Footer with buttons inside the form to ensure proper submission -->
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary">Save</button>
                         <button type="button" class="btn btn-danger" onclick="window.location='{{ route('coa.index') }}'">Back</button>
@@ -82,8 +78,5 @@
     }
 
     document.getElementById("kelompok_akun").addEventListener("change", setPosisiDC);
-
-    // Call the function on page load to set the initial state
-    document.addEventListener("DOMContentLoaded", setPosisiDC);
 </script>
 @endsection

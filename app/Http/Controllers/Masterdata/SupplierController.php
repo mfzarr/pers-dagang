@@ -27,12 +27,14 @@ class SupplierController extends Controller
             'nama' => 'required|max:50',
             'alamat' => 'required|max:50',
             'no_telp' => 'required|max:50',
+            'status' => 'required|in:Aktif,Tidak Aktif',
         ]);
 
         Supplier::create([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
+            'status' => $request->status,
             'id_perusahaan' => Auth::user()->id_perusahaan,
         ]);
 
@@ -42,7 +44,7 @@ class SupplierController extends Controller
     public function edit($id)
     {
         $supplier = Supplier::where('id_perusahaan', Auth::user()->id_perusahaan)
-                            ->findOrFail($id);
+            ->findOrFail($id);
         return view('masterdata.supplier.edit', compact('supplier'));
     }
 
@@ -52,15 +54,17 @@ class SupplierController extends Controller
             'nama' => 'required|max:50',
             'alamat' => 'required|max:50',
             'no_telp' => 'required|max:50',
+            'status' => 'required|in:Aktif,Tidak Aktif',
         ]);
 
         $supplier = Supplier::where('id_perusahaan', Auth::user()->id_perusahaan)
-                            ->findOrFail($id);
+            ->findOrFail($id);
 
         $supplier->update([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
+            'status' => $request->status,
         ]);
 
         return redirect()->route('supplier.index')->with('success', 'Supplier updated successfully.');
@@ -69,7 +73,7 @@ class SupplierController extends Controller
     public function destroy($id)
     {
         $supplier = Supplier::where('id_perusahaan', Auth::user()->id_perusahaan)
-                            ->findOrFail($id);
+            ->findOrFail($id);
         $supplier->delete();
 
         return redirect()->route('supplier.index')->with('success', 'Supplier deleted successfully.');

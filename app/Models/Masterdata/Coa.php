@@ -9,9 +9,46 @@ class Coa extends Model
 {
     use HasFactory;
 
+    // Table name
     protected $table = 'coa';
 
-    protected $primaryKey = 'id_coa'; 
+    // Primary key
+    protected $primaryKey = 'id_coa';
 
-    protected $guarded = [];
+    // If primary key is not auto-incrementing, specify this
+    public $incrementing = true;
+
+    // Data type of the primary key
+    protected $keyType = 'int';
+
+    // Fillable columns for mass assignment
+    protected $fillable = [
+        'kode',
+        'nama_akun',
+        'kelompok_akun',
+        'posisi_d_c',
+        'saldo_awal',
+        'id_perusahaan',
+    ];
+
+    // Disable timestamps if not present in the table
+    public $timestamps = false;
+
+    /**
+     * Define a many-to-one relationship with CoaKelompok
+     * (Each Coa belongs to one CoaKelompok)
+     */
+    public function kelompok()
+    {
+        return $this->belongsTo(CoaKelompok::class, 'kelompok_akun', 'kelompok_akun');
+    }
+
+    /**
+     * Define a many-to-one relationship with Perusahaan
+     * Uncomment if you need it in the future.
+     */
+    public function perusahaan()
+    {
+        return $this->belongsTo(Perusahaan::class, 'id_perusahaan', 'id_perusahaan');
+    }
 }

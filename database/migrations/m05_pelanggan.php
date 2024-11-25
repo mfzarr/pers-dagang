@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('no_telp');
             $table->string('alamat');
+            $table->string('jenis_kelamin');
+            $table->date('tgl_daftar');
             $table->string('status')->default('Aktif');
 
             $table->foreignId('id_perusahaan');

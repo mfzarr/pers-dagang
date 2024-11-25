@@ -19,14 +19,25 @@ class StoreCoaRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'kode' => 'required|string|max:255',
+            'kode' => 'required|numeric', // Hanya memastikan kode adalah angka
             'nama_akun' => 'required|string|max:255',
-            'kelompok_akun' => 'required|string|max:255',
+            'kelompok_akun' => 'required|numeric',
             'posisi_d_c' => 'required|string|in:Debit,Kredit',
-            'saldo_awal' => 'required|boolean',
+            'saldo_awal' => 'nullable|numeric',
         ];
     }
+    
+    
+    public function messages()
+    {
+        return [
+            'kode.required' => 'Kode Akun harus diisi.',
+            'nama_akun.required' => 'Nama Akun harus diisi.',
+            'kelompok_akun.required' => 'Kelompok Akun harus dipilih.',
+        ];
+    }
+    
 }

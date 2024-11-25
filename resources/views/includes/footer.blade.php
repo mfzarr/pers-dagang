@@ -50,12 +50,25 @@
 <script src="{{ asset('assets/js/ripple.js') }}"></script>
 <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
 <script src="{{ asset('assets/js/menu-setting.min.js') }}"></script>
+<!-- datatable Js -->
+<script src="assets/js/plugins/jquery.dataTables.min.js"></script>
+<script src="assets/js/plugins/dataTables.bootstrap4.min.js"></script>
+<script src="assets/js/pages/data-basic-custom.js"></script>
 
+<!-- [ Pre-loader ] start -->
+<!-- Required JS -->
+<script src="{{ asset('assets/js/plugins/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/js/pages/data-basic-custom.js') }}"></script>
+
+<!-- [ Footer ] end -->
 
 <!-- Apex Chart -->
 <script src="assets/js/plugins/apexcharts.min.js"></script>
 <!-- custom-chart js -->
 <script src="assets/js/pages/dashboard-main.js"></script>
+
+<!-- Cookies Handling for Modal (Optional) -->
 <script>
     $(document).ready(function() {
         checkCookie();
@@ -93,7 +106,6 @@
                 $('#exampleModalCenter').modal();
             }
         } else {
-            // user = prompt("Please enter your name:", "");
             $('#exampleModalCenter').modal();
             ticks = 1;
             setCookie("modelopen", ticks, 1);
