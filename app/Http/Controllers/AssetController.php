@@ -89,11 +89,13 @@ class AssetController extends Controller
         return redirect()->route('aset.index')->with('success', 'Asset updated successfully.');
     }
 
-    public function destroy(Asset $asset)
+    public function destroy($id)
     {
-        $asset->delete();
+        $aset = Asset::where('id_assets', $id)->firstOrFail();
+        $aset->delete();
         return redirect()->route('aset.index')->with('success', 'Asset deleted successfully.');
     }
+    
 
     public function calculateDepreciation(Asset $aset)
     {

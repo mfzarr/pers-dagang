@@ -19,7 +19,7 @@
                     <h5>Edit Aset</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('asset.update', $asset->id_asset) }}" method="POST">
+                    <form action="{{ route('aset.update', $asset->id_assets) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -44,7 +44,7 @@
                         </div>
                         <div class="text-right">
                             <button type="submit" class="btn btn-primary">Save</button>
-                            <a href="{{ route('asset.index') }}" class="btn btn-danger">Back</a>
+                            <a href="{{ route('aset.index') }}" class="btn btn-danger">Back</a>
                         </div>
                     </form>
                 </div>
