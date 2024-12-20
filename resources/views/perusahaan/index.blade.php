@@ -12,7 +12,7 @@
                             <h5 class="m-b-10">List of Your Perusahaan</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard')}}"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="#!">Perusahaan</a></li>
                         </ul>
                     </div>

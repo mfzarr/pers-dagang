@@ -44,7 +44,7 @@ class KaryawanController extends Controller
             'nama' => 'required|max:255',
             'no_telp' => 'required|max:255',
             'jenis_kelamin' => 'required|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'nullable',
             'alamat' => 'required|max:255',
             'status' => 'required',
             'id_jabatan' => 'required|exists:jabatan,id_jabatan',
@@ -63,7 +63,7 @@ class KaryawanController extends Controller
             'id_user' => $request->id_user
         ]);
 
-        return redirect()->route('karyawan.index')->with('success', 'Karyawan created successfully.');
+        return redirect()->route('pegawai.index')->with('success', 'Karyawan created successfully.');
     }
 
 
@@ -76,4 +76,19 @@ class KaryawanController extends Controller
 
         return view('masterdata.karyawan.edit', compact('karyawan', 'jabatans', 'users'));
     }
+
+    public function destroy($id)
+    {
+        $id_perusahaan = Auth::user()->id_perusahaan;
+    
+        // Cari karyawan berdasarkan ID dan pastikan hanya karyawan dari perusahaan yang sesuai
+        $karyawan = Karyawan::where('id_perusahaan', $id_perusahaan)->findOrFail($id);
+    
+        // Hapus karyawan
+        $karyawan->delete();
+    
+        // Redirect ke halaman index dengan pesan sukses
+        return redirect()->route('pegawai.index')->with('success', 'Karyawan deleted successfully.');
+    }
+    
 }

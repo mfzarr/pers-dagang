@@ -234,6 +234,45 @@ $(document).ready(function() {
         });
         return this;
     };
+
+        // Handle Submenu Toggle
+        $('.pcoded-hasmenu > a').on('click', function(e) {
+            e.preventDefault(); // Prevent default anchor click
+            var $parent = $(this).closest('.pcoded-hasmenu');
+            var $submenu = $parent.find('.pcoded-submenu');
+    
+            if ($submenu.length > 0) {
+                $submenu.slideToggle(); // Show or hide submenu
+                $parent.toggleClass('submenu-open'); // Add class for styling
+            }
+        });
+    
+        // Highlight active menu and expand submenus
+        var currentUrl = window.location.href;
+        $('ul.nav a').each(function() {
+            if (this.href === currentUrl) {
+                $(this).addClass('active'); // Add active class to current menu
+                $(this).parents('.pcoded-hasmenu').addClass('submenu-open'); // Expand parent menu
+                $(this).parents('.pcoded-submenu').slideDown(); // Show parent submenu
+            }
+        });
+    
+        // Ensure Tentang Perusahaan does not break submenu behavior
+        $('.nav-item a').on('click', function() {
+            if (!$(this).closest('.pcoded-hasmenu').length) {
+                $('.pcoded-submenu').slideUp(); // Collapse all submenus
+                $('.pcoded-hasmenu').removeClass('submenu-open');
+            }
+        });
+    
+        // Menu Fixed (Optional)
+        $('#menu-fixed').change(function() {
+            if ($(this).is(":checked")) {
+                $('.pcoded-navbar').addClass('menupos-fixed');
+            } else {
+                $('.pcoded-navbar').removeClass('menupos-fixed');
+            }
+        });
     // ==================    Menu Customizer End   =============
     // =========================================================
 });

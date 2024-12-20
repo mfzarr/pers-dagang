@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('barang', function (Blueprint $table) {
-            $table->id('id_barang');
-            $table->string('nama', 50);
-            $table->string('detail', 255);
-            $table->string('satuan', 50);
-            $table->integer('harga_jual');
-            $table->integer('HPP');
-            $table->timestamps();
-
-            $table->foreignId('id_perusahaan');
+        Schema::create('barang1', function (Blueprint $table) {
+            $table->id('id_barang1');
+            $table->string('nama');
+            $table->string('detail');
+            $table->string('satuan');
+            $table->string('kategori');
+            $table->foreignId('id_perusahaan'); // Foreign key column
             $table->foreign('id_perusahaan')->references('id_perusahaan')->on('perusahaan')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('barang');
+        Schema::dropIfExists('barang1s');
     }
 };

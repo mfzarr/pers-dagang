@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('no_telp');
             $table->string('jenis_kelamin');
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('alamat');
             $table->string('status');
             $table->foreignId('id_jabatan');

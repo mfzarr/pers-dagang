@@ -8,63 +8,62 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">List of Jabatan</h5>
+                                <h5 class="m-b-10">List of Kategori Produk</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
-                                            class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Jabatan</a></li>
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>                            <li class="breadcrumb-item"><a href="#!">E-Commerce</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Master Data</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Kategori Produk</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">                            <h5>Jabatan List</h5>
+                        <div class="card-header">
+                            <h5>Kategori Produk List</h5>
                             <div class="float-right">
-                                <a href="{{ route('jabatan.create') }}"
+                                <a href="{{ route('kategori-produk.create') }}"
                                     class="btn btn-success btn-sm btn-round has-ripple"><i class="feather icon-plus"></i>Add
-                                    Jabatan</a>
+                                    Kategori Produk</a>
                             </div>
                         </div>
                         <div class="card-body">
-                            @if ($jabatans->isEmpty())
-                                <p>No jabatans found for your perusahaan.</p>
+                            @if ($kategori_barangs->isEmpty())
+                                <p>No Kategori Produk found for your perusahaan.</p>
                             @else
                                 <div class="table-responsive">
                                     <table id="simpletable" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Nama</th>
-                                                <th>Asuransi</th>
-                                                <th>Gaji</th>
-                                                <th>Actions</th>
+                                                {{-- <th>no</th> --}}
+                                                <th>nama</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($jabatans as $jabatan)
+                                            {{-- <?php
+                                            $no = 1;
+                                            ?> --}}
+                                            @foreach ($kategori_barangs as $Kategori)
                                                 <tr>
-                                                    <td>{{ $jabatan->nama }}</td>
-                                                    <td>Rp{{ number_format($jabatan->asuransi, 0, ',', '.') }}
-                                                    </td>
-                                                    <td>Rp{{ number_format($jabatan->tarif_tetap, 0, ',', '.') }}
-                                                    </td>
+                                                    {{-- <td>{{$no++}}</td> --}}
+                                                    <td>{{ $Kategori->nama }}</td>
                                                     <td>
-                                                        <a href="{{ route('jabatan.edit', $jabatan->id_jabatan) }}"
-                                                            class="btn btn-info btn-sm">
-                                                            <i class="feather icon-edit"></i>&nbsp;Edit
-                                                        </a>
-                                                        <form id="delete-form-{{ $jabatan->id_jabatan }}"
-                                                            action="{{ route('jabatan.destroy', $jabatan->id_jabatan) }}"
+                                                        <a href="{{ route('kategori-produk.edit', $Kategori->id_kategori_barang) }}"
+                                                            class="btn btn-info btn-sm"><i
+                                                                class="feather icon-edit"></i>&nbsp;Edit</a>
+                                                        <form id="delete-form-{{ $Kategori->id_kategori_barang }}"
+                                                            action="{{ route('kategori-produk.destroy', $Kategori->id_kategori_barang) }}"
                                                             method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="button" class="btn btn-danger btn-sm"
-                                                                onclick="confirmDelete({{ $jabatan->id_jabatan }})">
-                                                                <i class="feather icon-trash-2"></i>&nbsp;Delete
-                                                            </button>
+                                                            <button type="button" class="btn btn-sm btn-danger"
+                                                                onclick="confirmDelete({{ $Kategori->id_kategori_barang }})"><i
+                                                                    class="feather icon-trash-2"></i>&nbsp;Delete</button>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -81,7 +80,7 @@
     </div>
 
     <script>
-        function confirmDelete(jabatanId) {
+        function confirmDelete(KategoriBarangId) {
             Swal.fire({
                 title: 'Hapus data ini?',
                 text: "Tindakan ini tidak bisa diubah!",
@@ -90,11 +89,11 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Ya, hapus data ini!',
-                cancelButtonText: 'Batal'
+                cancelButtonText: 'Batal',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Submit form dengan ID yang sesuai
-                    document.getElementById('delete-form-' + jabatanId).submit();
+                    // Submit form dengan id yang sesuai
+                    document.getElementById('delete-form-' + KategoriBarangId).submit();
                 }
             });
         }

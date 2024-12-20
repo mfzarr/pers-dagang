@@ -8,17 +8,19 @@ use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\Masterdata\CoaController;
 use App\Http\Controllers\Masterdata\CoaKelompokController;
 use App\Http\Controllers\Masterdata\RolesController;
-use App\Http\Controllers\Masterdata\BarangController;
+// use App\Http\Controllers\Masterdata\BarangController;
 use App\Http\Controllers\Masterdata\PelangganController;
 use App\Http\Controllers\Masterdata\SupplierController;
 use App\Http\Controllers\Masterdata\KaryawanController;
 use App\Http\Controllers\Masterdata\JabatanController;
 use App\Http\Controllers\Masterdata\UsersController;
 use App\Http\Controllers\Masterdata\JasaController;
-use App\Http\Controllers\Barang2Controller;
 use App\Http\Controllers\Transaksi\PembelianController;
 use App\Http\Controllers\Transaksi\PembeliandetailController;
-use App\Http\Controllers\AssetController;
+use App\Http\Controllers\Masterdata\AssetController;
+use App\Http\Controllers\Masterdata\Kategori_barangController;
+use App\Http\Controllers\Masterdata\ProdukController;
+use App\Http\Controllers\Masterdata\Barang1Controller;
 use Illuminate\Support\Facades\Auth;
 
 // Auth routes
@@ -69,7 +71,7 @@ Route::prefix('masterdata')->middleware('auth')->group(function () {
     Route::resource('user_role', RolesController::class);
 
     // Barang routes
-    Route::resource('barang', BarangController::class);
+    // Route::resource('barang', BarangController::class);
 
     // Pelanggan routes
     Route::resource('pelanggan', PelangganController::class);
@@ -78,7 +80,7 @@ Route::prefix('masterdata')->middleware('auth')->group(function () {
     Route::resource('supplier', SupplierController::class);
 
     // Karyawan routes
-    Route::resource('karyawan', KaryawanController::class);
+    Route::resource('pegawai', KaryawanController::class);
 
     // Jabatan routes
     Route::resource('jabatan', JabatanController::class);
@@ -92,6 +94,15 @@ Route::prefix('masterdata')->middleware('auth')->group(function () {
     // Asset routes
     Route::get('masterdata/aset/{aset}/depreciation', [AssetController::class, 'calculateDepreciation'])->name('aset.depreciation');
     Route::resource('aset', AssetController::class);
+
+    // Katetgori Barang Routes
+    Route::resource('kategori-produk', Kategori_barangController::class);
+
+    // Produk routes
+    Route::resource('produk', ProdukController::class);
+
+    // Barang1 routes
+    Route::resource('barang', Barang1Controller::class);
 });
 
 // Transaksi routes
@@ -103,7 +114,7 @@ Route::prefix('transaksi')->middleware('auth')->group(function () {
     Route::delete('/pembelian/detail/{id}', [PembeliandetailController::class, 'destroy'])->name('pembeliandetail.destroy');
 });
 
-// Barang2 routes
-Route::middleware('auth')->group(function () {
-    Route::resource('barang2', Barang2Controller::class);
+Route::get('/get-user-email/{id}', function ($id) {
+    $user = App\Models\User::find($id);
+    return response()->json(['email' => $user ? $user->email : null]);
 });

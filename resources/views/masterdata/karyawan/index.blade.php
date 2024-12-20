@@ -8,11 +8,11 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">List of Karyawan</h5>
+                            <h5 class="m-b-10">List of Pegawai</h5>
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#!">Karyawan</a></li>
+                            <li class="breadcrumb-item"><a href="#!">Pegawai</a></li>
                         </ul>
                     </div>
                 </div>
@@ -23,15 +23,17 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Karyawan List</h5>
-                        <a href="{{ route('karyawan.create') }}" class="btn btn-primary">Add Karyawan</a>
+                        <h5>Pegawai List</h5>
+                        <div class="float-right">
+                            <a href="{{ route('pegawai.create') }}" class="btn btn-success btn-sm btn-round has-ripple"><i class="feather icon-plus"></i>Add Karyawan</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         @if($karyawans->isEmpty())
                             <p>No karyawan found for your perusahaan.</p>
                         @else
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table id="simpletable" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Nama</th>
@@ -61,11 +63,19 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('karyawan.edit', $karyawan->id_karyawan) }}" class="btn btn-warning">Edit</a>
-                                                    <form action="{{ route('karyawan.destroy', $karyawan->id_karyawan) }}" method="POST" style="display:inline;">
+                                                    <a href="{{ route('pegawai.edit', $karyawan->id_karyawan) }}"
+                                                        class="btn btn-info btn-sm">
+                                                        <i class="feather icon-edit"></i>&nbsp;Edit
+                                                    </a>
+                                                    <form id="delete-form-{{ $karyawan->id_karyawan }}"
+                                                        action="{{ route('pegawai.destroy', $karyawan->id_karyawan) }}"
+                                                        method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                            onclick="confirmDelete({{ $karyawan->id_karyawan }})">
+                                                            <i class="feather icon-trash-2"></i>&nbsp;Delete
+                                                        </button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -80,4 +90,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    function confirmDelete(jabatanId) {
+        Swal.fire({
+            title: 'Hapus data ini?',
+            text: "Tindakan ini tidak bisa diubah!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus data ini!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit form dengan ID yang sesuai
+                document.getElementById('delete-form-' + jabatanId).submit();
+            }
+        });
+    }
+</script>
 @endsection
