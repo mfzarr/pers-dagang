@@ -51,7 +51,7 @@ class CoaController extends Controller
         $request->validated([
             'kode' => 'required|numeric|max:4',
             'nama_akun' => 'required|string|max:255',
-            'kelompok_akun' => 'required|integer|max:1',
+            'kelompok_akun' => 'required|integer',
             'posisi_d_c' => 'required|string|max:255',
             'saldo_awal'=>'required|numeric|max:255',
         ]);
@@ -92,7 +92,7 @@ class CoaController extends Controller
         $request->validate([
             'kode' => 'required|numeric|digits_between:1,4',
             'nama_akun' => 'required|string|max:255',
-            'kelompok_akun' => 'required|integer|max:1',
+            'kelompok_akun' => 'required|integer|between:1,9',
             'posisi_d_c' => 'required|string|max:255',
             'saldo_awal' => 'required|numeric|max:9999999999',
         ]);

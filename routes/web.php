@@ -21,6 +21,7 @@ use App\Http\Controllers\Masterdata\AssetController;
 use App\Http\Controllers\Masterdata\Kategori_barangController;
 use App\Http\Controllers\Masterdata\ProdukController;
 use App\Http\Controllers\Masterdata\Barang1Controller;
+use App\Http\Controllers\Laporan\JurnalUmumController;
 use Illuminate\Support\Facades\Auth;
 
 // Auth routes
@@ -107,14 +108,28 @@ Route::prefix('masterdata')->middleware('auth')->group(function () {
 
 // Transaksi routes
 Route::prefix('transaksi')->middleware('auth')->group(function () {
+    // Pembelian routes
     Route::resource('/pembelian', PembelianController::class);
-    Route::get('/pembelian/{id}/detail', [PembeliandetailController::class, 'index'])->name('pembeliandetail.index');
-    Route::post('/pembelian/{id}/detail/store', [PembeliandetailController::class, 'store'])->name('pembeliandetail.store');
-    Route::put('/pembelian/detail/{id}', [PembeliandetailController::class, 'update'])->name('pembeliandetail.update');
-    Route::delete('/pembelian/detail/{id}', [PembeliandetailController::class, 'destroy'])->name('pembeliandetail.destroy');
+    Route::get('pembelian/{id_pembelian}/detail', [PembelianController::class, 'show'])->name('pembelian.detail');
+    Route::post('pembelian/{id}/pelunasan', [PembelianController::class, 'pelunasan'])->name('pembeliandetail.pelunasan');
+    Route::post('/pembelian/{id}/pelunasan-auto', [PembelianController::class, 'pelunasan'])->name('pembelian.pelunasan.auto');
+
+    // CRUD Routes for Pembelian Details (individual items within a transaction)
+    Route::get('pembelian/{id}/details', [PembeliandetailController::class, 'index'])->name('pembeliandetail.index');
+    Route::post('pembelian/{id}/details/store', [PembeliandetailController::class, 'store'])->name('pembeliandetail.store');
+    Route::put('pembelian/detail/{id}', [PembeliandetailController::class, 'update'])->name('pembeliandetail.update');
+    Route::delete('pembelian/detail/{id}', [PembeliandetailController::class, 'destroy'])->name('pembeliandetail.destroy');
+});
+
+// Laporan routes
+Route::prefix('laporan')->middleware('auth')->group(function () {
+    Route::get('/jurnal-umum', [JurnalUmumController::class, 'index'])->name('jurnal-umum.index');
+    Route::get('/buku-besar', [JurnalUmumController::class, 'bukuBesar'])->name('buku-besar');
 });
 
 Route::get('/get-user-email/{id}', function ($id) {
     $user = App\Models\User::find($id);
     return response()->json(['email' => $user ? $user->email : null]);
 });
+
+

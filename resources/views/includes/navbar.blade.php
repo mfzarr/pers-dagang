@@ -87,16 +87,16 @@
                                 class="feather icon-credit-card"></i></span><span
                             class="pcoded-mtext">Transaksi</span></a>
                     <ul class="pcoded-submenu">
+                        <li><a href="{{ route ('pembelian.index')}}">Pembelian Barang Dagang</a></li>
                         <li><a href="transaksi/main">Transaksi</a></li>
                         <li><a href="transaksi/penjualan">Penjualan</a></li>
-                        <li><a href="transaksi/pembelian">Pembelian Barang Dagang</a></li>
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
                     <a href="#!" class="nav-link "><span class="pcoded-micon"><i
                                 class="feather icon-clipboard"></i></span><span class="pcoded-mtext">Laporan</span></a>
                     <ul class="pcoded-submenu">
-                        <li><a href="laporan/jurnal">Jurnal Umum</a></li>
+                        <li><a href="{{ route ('jurnal-umum.index')}}">Jurnal Umum</a></li>
                         <li><a href="laporan/buku_besar">Buku Besar</a></li>
                         <li><a href="laporan/neraca">Neraca Saldo</a></li>
                         <li><a href="laporan/laba_rugi">Laporan Laba Rugi</a></li>

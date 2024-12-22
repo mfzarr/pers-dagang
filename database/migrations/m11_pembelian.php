@@ -40,7 +40,7 @@ return new class extends Migration
         // Create pembelian_detail table
         Schema::create('pembelian_detail', function (Blueprint $table) {
             $table->id('id_pembelian_detail');
-            
+
             // Add id_pembelian as foreign key
             $table->unsignedBigInteger('id_pembelian');
             $table->foreign('id_pembelian')
@@ -48,10 +48,11 @@ return new class extends Migration
                 ->on('pembelian')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('id_barang');
-            $table->foreign('id_barang')
-                ->references('id_barang')
-                ->on('barang')
+            // Add id_produk as foreign key
+            $table->unsignedBigInteger('id_produk');
+            $table->foreign('id_produk')
+                ->references('id_produk')
+                ->on('produk')
                 ->onDelete('cascade');
 
             $table->integer('qty');
@@ -71,11 +72,12 @@ return new class extends Migration
                 ->on('pembelian')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('id_barang');
-            $table->foreign('id_barang')
-                ->references('id_barang')
-                ->on('barang')
+            $table->unsignedBigInteger('id_produk');
+            $table->foreign('id_produk')
+                ->references('id_produk')
+                ->on('produk')
                 ->onDelete('cascade');
+
 
             $table->decimal('total_pelunasan', 15, 2);
             $table->date('tanggal_pelunasan');

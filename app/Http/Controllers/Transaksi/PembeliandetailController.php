@@ -17,9 +17,9 @@ class PembeliandetailController extends Controller
     {
         $pembelian = Pembelian::with('pembelianDetails')->findOrFail($id_pembelian);
         $pembeliandetails = $pembelian->pembelianDetails;
-        $barangs = DB::table('barang')->where('id_perusahaan', $pembelian->id_perusahaan)->get();
+        $produk = DB::table('barang')->where('id_perusahaan', $pembelian->id_perusahaan)->get();
 
-        return view('transaksi.pembelian.detail.index', compact('pembeliandetails', 'barangs', 'pembelian'));
+        return view('transaksi.pembelian.detail.index', compact('pembeliandetails', 'produk', 'pembelian'));
     }
 
     /**

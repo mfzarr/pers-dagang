@@ -37,7 +37,12 @@ return new class extends Migration
             $table->foreignId('id_penjualan');
             $table->foreign('id_penjualan')->references('id_penjualan')->on('penjualan')->onDelete('cascade');
 
-            $table->integer('id_produk');
+            $table->unsignedBigInteger('id_produk');
+            $table->foreign('id_produk')
+                ->references('id_produk')
+                ->on('produk')
+                ->onDelete('cascade');
+                
             $table->string('keterangan_produk'); // barang atau jasa
             $table->integer('harga');
             $table->integer('kuantitas');

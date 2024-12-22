@@ -26,7 +26,7 @@
                         <h5>Create Supplier</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('supp') }}" method="POST">
+                        <form action="{{ route('supplier.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <label for="nama">Nama</label>

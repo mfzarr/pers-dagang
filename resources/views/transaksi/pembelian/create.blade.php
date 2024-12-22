@@ -30,18 +30,28 @@
                     <div class="card-body">
                         {{-- Display errors if any --}}
                         @if($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                         @endif
 
                         <form action="{{ route('pembelian.store') }}" method="POST">
                             @csrf
-
+                            {{-- Tipe Transaksi --}}
+                            {{-- <div class="form-group">
+                                <label for="id_coa" class="form-label">Tipe Transaksi</label>
+                                <select id="id_coa" name="id_coa" class="form-control" required>
+                                    <option value="">Select Tipe Transaksi</option>
+                                    @foreach($coa as $coaItem)
+                                        <option value="{{ $coaItem->id_coa }}" {{ $coaItem->nama_akun == 'Pembelian' ? 'selected' : '' }}>{{ $coaItem->nama_akun }}</option>
+                                    @endforeach
+                                </select>                                
+                            </div> --}}
+                            
                             {{-- Tanggal Pembelian --}}
                             <div class="form-group">
                                 <label for="tanggal" class="form-label">Tanggal Pembelian</label>
@@ -54,7 +64,7 @@
                                 <select id="supplier" name="supplier" class="form-control" required>
                                     <option value="">Select Supplier</option>
                                     @foreach($suppliers as $supplier)
-                                        <option value="{{ $supplier->id_supplier }}">{{ $supplier->nama }}</option>
+                                    <option value="{{ $supplier->id_supplier }}">{{ $supplier->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -68,49 +78,56 @@
                                 </select>
                             </div>
 
-                            {{-- Table for Barang Details --}}
-                            <h5 class="mt-4">Barang Details</h5>
+                            {{-- Table for produk Details --}}
+                            <h5 class="mt-4">Produk Details</h5>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="barangTable">
+                                <table class="table table-bordered" id="produkTable">
                                     <thead>
                                         <tr>
-                                            <th>Barang</th>
+                                            <th>Produk</th>
                                             <th>Qty</th>
                                             <th>Harga</th>
                                             <th>Subtotal</th>
                                             <th>Dibayar</th>
-                                            <th><button type="button" class="btn btn-sm btn-primary" onclick="addRow()">Add Row</button></th>
+                                            <th>
+                                                <button type="button" class="btn btn-sm btn-primary" onclick="addRow()">Add Row</button>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <select name="barang[0][id_barang]" class="form-control" required>
-                                                    <option value="">Select Barang</option>
-                                                    @foreach($barang as $item)
-                                                        <option value="{{ $item->id_barang }}">{{ $item->nama }}</option>
+                                                <select name="produk[0][id_produk]" class="form-control" required>
+                                                    <option value="">Select Produk</option>
+                                                    @foreach($produk as $item)
+                                                    <option value="{{ $item->id_produk }}">{{ $item->nama }}</option>
                                                     @endforeach
                                                 </select>
                                             </td>
-                                            <td><input type="number" name="barang[0][qty]" class="form-control qty" required></td>
-                                            <td><input type="number" name="barang[0][harga]" class="form-control harga" required></td>
-                                            <td><input type="number" name="barang[0][subtotal]" class="form-control subtotal" readonly></td>
-                                            <td><input type="number" name="barang[0][dibayar]" class="form-control" required></td>
+                                            <td><input type="number" name="produk[0][qty]" class="form-control qty" required></td>
+                                            <td><input type="number" name="produk[0][harga]" class="form-control harga" required></td>
+                                            <td><input type="number" name="produk[0][subtotal]" class="form-control subtotal" readonly></td>
+                                            <td><input type="number" name="produk[0][dibayar]" class="form-control dibayar" required></td>
                                             <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)">Remove</button></td>
                                         </tr>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td><strong>Total Dibayar</strong></td>
+                                            <td colspan="3"></td>
+                                            <td><input type="number" id="total_dibayar" class="form-control" readonly></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Total</strong></td>
+                                            <td colspan="2"></td>
+                                            <td><input type="number" id="total" class="form-control" readonly></td>
+                                            <td colspan="2"></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
 
-                            {{-- Totals --}}
-                            <div class="form-group">
-                                <label for="total_dibayar" class="form-label">Total Dibayar</label>
-                                <input type="number" id="total_dibayar" name="total_dibayar" class="form-control" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="total" class="form-label">Total</label>
-                                <input type="number" id="total" name="total" class="form-control" readonly>
-                            </div>
 
                             {{-- Submit --}}
                             <button type="submit" class="btn btn-success">Create Pembelian</button>
@@ -125,10 +142,10 @@
 {{-- Script to handle row addition, deletion, and calculations --}}
 <script>
     function addRow() {
-        const table = document.getElementById("barangTable").getElementsByTagName('tbody')[0];
+        const table = document.getElementById("produkTable").getElementsByTagName('tbody')[0];
         const rowCount = table.rows.length;
         const row = table.insertRow(rowCount);
-        row.innerHTML = document.querySelector("#barangTable tbody tr").innerHTML.replace(/\[0\]/g, `[${rowCount}]`);
+        row.innerHTML = document.querySelector("#produkTable tbody tr").innerHTML.replace(/\[0\]/g, `[${rowCount}]`);
     }
 
     function removeRow(button) {
@@ -137,24 +154,54 @@
         calculateTotals();
     }
 
-    document.addEventListener('input', function (event) {
+    document.getElementById('tipe_pembayaran').addEventListener('change', function() {
+        const isTunai = this.value === 'tunai';
+
+        // Loop through all rows and update 'dibayar' field based on payment type
+        document.querySelectorAll('#produkTable tbody tr').forEach(row => {
+            const dibayarInput = row.querySelector('[name*="dibayar"]');
+            const subtotalInput = row.querySelector('.subtotal');
+
+            if (isTunai) {
+                dibayarInput.value = subtotalInput.value; // Set dibayar to subtotal
+                dibayarInput.setAttribute('readonly', true); // Make it uneditable
+            } else {
+                dibayarInput.value = ''; // Clear value if kredit is selected
+                dibayarInput.removeAttribute('readonly'); // Make it editable
+            }
+        });
+
+        calculateTotals(); // Update totals after changing payment type
+    });
+
+    document.addEventListener('input', function(event) {
         if (event.target.classList.contains('qty') || event.target.classList.contains('harga')) {
             const row = event.target.closest('tr');
-            const qty = row.querySelector('.qty').value || 0;
-            const harga = row.querySelector('.harga').value || 0;
+            const qty = parseFloat(row.querySelector('.qty').value) || 0;
+            const harga = parseFloat(row.querySelector('.harga').value) || 0;
             const subtotal = qty * harga;
             row.querySelector('.subtotal').value = subtotal;
-            calculateTotals();
+
+            // Automatically update 'dibayar' if payment type is tunai
+            const tipePembayaran = document.getElementById('tipe_pembayaran').value;
+            const dibayarInput = row.querySelector('[name*="dibayar"]');
+            if (tipePembayaran === 'tunai') {
+                dibayarInput.value = subtotal;
+            }
+
+            calculateTotals(); // Recalculate totals on input change
         }
     });
 
     function calculateTotals() {
         let total = 0;
         let total_dibayar = 0;
-        document.querySelectorAll('#barangTable tbody tr').forEach(row => {
+
+        document.querySelectorAll('#produkTable tbody tr').forEach(row => {
             total += parseFloat(row.querySelector('.subtotal').value) || 0;
             total_dibayar += parseFloat(row.querySelector('[name*="dibayar"]').value) || 0;
         });
+
         document.getElementById('total').value = total;
         document.getElementById('total_dibayar').value = total_dibayar;
     }
