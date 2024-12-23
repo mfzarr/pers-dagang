@@ -9,7 +9,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Data from Table: {{ ucfirst($table) }}</h5>
+                                <h5 class="m-b-10">Data COA</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
@@ -48,9 +48,9 @@
                                     <tbody>
                                         @foreach ($coas as $coa)
                                             <tr>
-                                                <td>{{ $coa->kode }}</td>
+                                                <td>{{ $coa->kode_akun }}</td>
                                                 <td>{{ $coa->nama_akun }}</td>
-                                                <td>{{ $coa->nama_kelompok_akun }}</td>
+                                                <td>{{ $coa->kelompokakun->nama_kelompok_akun }}</td>
                                                 <td>{{ $coa->posisi_d_c }}</td>
                                                 <td>{{ $coa->saldo_awal }}</td>
                                                 <td>

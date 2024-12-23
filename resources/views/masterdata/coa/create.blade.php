@@ -25,26 +25,38 @@
                 <form method="POST" action="{{ route('coa.store') }}">
                     @csrf
                     <div class="form-group">
-                        <label for="kode">Kode Akun:</label>
-                        <input type="number" class="form-control" id="kode" name="kode" required>
+                        <label for="kode_akun">Kode Akun:</label>
+                        <input type="number" class="form-control" id="kode_akun" name="kode_akun" required>
+                        @if ($errors->has('kode_akun'))
+                            <span class="text-danger">{{ $errors->first('kode_akun') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="nama_akun">Nama Akun:</label>
                         <input type="text" class="form-control" id="nama_akun" name="nama_akun" required>
+                        @if ($errors->has('nama_akun'))
+                            <span class="text-danger">{{ $errors->first('nama_akun') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="kelompok_akun">Kelompok Akun:</label>
                         <select class="form-control" id="kelompok_akun" name="kelompok_akun" required>
                             <option value="" selected hidden>Pilih Kelompok</option>
-                            @foreach ($kelompokAkun as $option)
+                            @foreach ($kelompokakun as $option)
                                 <option value="{{ $option->kelompok_akun }}">{{ $option->nama_kelompok_akun }}</option>
                             @endforeach
                         </select>
+                        @if ($errors->has('kelompok_akun'))
+                            <span class="text-danger">{{ $errors->first('kelompok_akun') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="posisi_d_c">Posisi Debit/Kredit:</label><br>
                         <input type="radio" id="Debit" name="posisi_d_c" value="Debit"> Debit
                         <input type="radio" id="Kredit" name="posisi_d_c" value="Kredit"> Kredit
+                        @if ($errors->has('posisi_d_c'))
+                            <span class="text-danger">{{ $errors->first('posisi_d_c') }}</span>
+                        @endif
                     </div>
                     <input type="hidden" id="saldo_awal" name="saldo_awal" value="0">
                     <input type="hidden" name="id_perusahaan" value="{{ auth()->user()->perusahaan->id_perusahaan }}">

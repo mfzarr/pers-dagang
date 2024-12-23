@@ -1,32 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Laporan;
+namespace App\Http\Controllers\laporan;
 
-use App\Http\Controllers\Controller; // Import the correct Controller class
 use App\Models\Laporan\JurnalUmum;
 use App\Models\Masterdata\Coa; // Assuming Coa is defined here
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-
 
 class JurnalUmumController extends Controller
 {
     // Display all journal entries with filtering and pagination
     public function index(Request $request)
     {
-        $id_perusahaan = Auth::user()->id_perusahaan;
-        $jurnal = JurnalUmum::where('id_perusahaan', $id_perusahaan)->get();
         // Get the search term and filter type from the request
-        $filter = $request->input('filter');
         $search = $request->input('search');
-
+        $filter = $request->input('filter');
+        $id_perusahaan = Auth::user()->id_perusahaan;
+        
         // Query for JurnalUmum entries with eager loading
-        $query = JurnalUmum::with(['coa', 'perusahaan']); // Use eager loading
+        $query = JurnalUmum::with(['coa', 'perusahaan'])
+            ->where('id_perusahaan', $id_perusahaan); // Filter by id_perusahaan
 
         // Filter by search term
         if ($search) {
-            $query->where('nama_akun', 'like', '%' . $search . '%')
-                ->orWhere('kode_akun', 'like', '%' . $search . '%');
+            $query->where(function($q) use ($search) {
+                $q->where('nama_akun', 'like', '%' . $search . '%')
+                  ->orWhere('kode_akun', 'like', '%' . $search . '%');
+            });
         }
 
         // Filter by type (you may adjust the filtering logic according to your needs)
@@ -34,18 +35,18 @@ class JurnalUmumController extends Controller
             $query->where('nama_akun', 'like', '%' . $filter . '%');  // Changed to 'like' for flexibility
         }
 
-        // Fetch the filtered results
-        $jurnal = $query->paginate(10);
+        // Paginate results (adjust the number of items per page as needed)
+        $jurnals = $query->paginate(10);
 
         // Get distinct nama_akun values for the filter dropdown
         $filters = JurnalUmum::select('nama_akun')->distinct()->get();
 
-        $groupedJurnals = $jurnal->groupBy('transaction_id'); // assuming 'transaction_id' exists and is used for pairing
+        // Group the results by 'transaction_id' (or whatever field pairs the debit and credit transactions)
+        $groupedJurnals = $jurnals->groupBy('transaction_id'); // assuming 'transaction_id' exists and is used for pairing
 
         // Pass the filtered, paginated, and grouped results to the view
-        return view('laporan.jurnal_umum.index', compact('jurnal', 'filters', 'groupedJurnals'));
+        return view('laporan.jurnal_umum.index', compact('jurnals', 'filters', 'groupedJurnals'));
     }
-
 
     // Display Buku Besar
     public function bukuBesar(Request $request)
@@ -117,7 +118,7 @@ class JurnalUmumController extends Controller
         $grandTotalCredit = $allTransactions->sum('credit');
 
         // Return the view with all the required data
-        return view('journal.buku_besar', compact(
+        return view('laporan.buku_besar.index', compact(
             'coas',
             'selectedAccount',
             'transactions',

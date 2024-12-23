@@ -4,6 +4,8 @@ namespace App\Models\Masterdata;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Masterdata\CoaKelompok;
+use App\Models\Laporan\JurnalUmum;
 
 class Coa extends Model
 {
@@ -23,7 +25,7 @@ class Coa extends Model
 
     // Fillable columns for mass assignment
     protected $fillable = [
-        'kode',
+        'kode_akun',
         'nama_akun',
         'kelompok_akun',
         'posisi_d_c',
@@ -38,7 +40,7 @@ class Coa extends Model
      * Define a many-to-one relationship with CoaKelompok
      * (Each Coa belongs to one CoaKelompok)
      */
-    public function kelompok()
+    public function kelompokakun()
     {
         return $this->belongsTo(CoaKelompok::class, 'kelompok_akun', 'kelompok_akun');
     }
@@ -50,5 +52,10 @@ class Coa extends Model
     public function perusahaan()
     {
         return $this->belongsTo(Perusahaan::class, 'id_perusahaan', 'id_perusahaan');
+    }
+
+    public function jurnalUmums()
+    {
+        return $this->hasMany(JurnalUmum::class, 'id_coa', 'id_coa');
     }
 }

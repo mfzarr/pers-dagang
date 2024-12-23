@@ -97,7 +97,7 @@
                                 class="feather icon-clipboard"></i></span><span class="pcoded-mtext">Laporan</span></a>
                     <ul class="pcoded-submenu">
                         <li><a href="{{ route ('jurnal-umum.index')}}">Jurnal Umum</a></li>
-                        <li><a href="laporan/buku_besar">Buku Besar</a></li>
+                        <li><a href="{{ route ('buku-besar')}}">Buku Besar</a></li>
                         <li><a href="laporan/neraca">Neraca Saldo</a></li>
                         <li><a href="laporan/laba_rugi">Laporan Laba Rugi</a></li>
                         <li><a href="laporan/perubahan_modal">Laporan Perubahan Modal</a></li>

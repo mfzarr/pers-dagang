@@ -25,12 +25,12 @@
                         @csrf
                         @method('PUT') <!-- This is important for PUT requests -->
 
-                        <!-- Menampilkan pesan kesalahan untuk kode -->
+                        <!-- Menampilkan pesan kesalahan untuk kode_akun -->
                         <div class="form-group">
-                            <label for="kode">Kode Akun:</label>
-                            <input type="text" class="form-control @error('kode') is-invalid @enderror" id="kode" name="kode"
-                                value="{{ old('kode', $coa->kode) }}" required>
-                            @error('kode')
+                            <label for="kode_akun">Kode Akun:</label>
+                            <input type="text" class="form-control @error('kode_akun') is-invalid @enderror" id="kode_akun" name="kode_akun"
+                                value="{{ old('kode_akun', $coa->kode_akun) }}" required>
+                            @error('kode_akun')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

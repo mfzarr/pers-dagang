@@ -19,15 +19,14 @@ class PembelianController extends Controller
     {
         $id_perusahaan = Auth::user()->id_perusahaan;
         $filter = $request->input('filter');
-    
-        // $search = $request->input('search', '');
+        $search = $request->input('search', '');
 
         $query = Pembelian::with(['pembelianDetails', 'supplierRelation'])
-            ->where('id_perusahaan', $id_perusahaan)->get();
+            ->where('id_perusahaan', $id_perusahaan);
 
-        // if ($search) {
-        //     $query->where('no_transaksi_pembelian', 'like', "%{$search}%");
-        // }
+        if ($search) {
+            $query->where('no_transaksi_pembelian', 'like', "%{$search}%");
+        }
 
         if ($filter === 'lunas') {
             $query->whereColumn('total_dibayar', '>=', 'total');
@@ -35,7 +34,9 @@ class PembelianController extends Controller
             $query->whereColumn('total_dibayar', '<', 'total');
         }
 
-        return view('transaksi.pembelian.index', compact( 'query','filter'));
+        $pembelian = $query->paginate(10);
+
+        return view('transaksi.pembelian.index', compact('pembelian', 'filter', 'search'));
     }
 
     public function create()
@@ -43,9 +44,7 @@ class PembelianController extends Controller
         $id_perusahaan = Auth::user()->id_perusahaan;
         $suppliers = Supplier::where('id_perusahaan', $id_perusahaan)->get();
         $produk = Produk::where('id_perusahaan', $id_perusahaan)->get();
-        // $coa = Coa::whereHas('kelompok', function ($query) {
-        //     $query->where('kelompok_akun', '5');
-        // })->get();
+
         return view('transaksi.pembelian.create', compact('suppliers', 'produk'));
     }
 
@@ -55,7 +54,6 @@ class PembelianController extends Controller
             'tanggal' => 'required|date',
             'supplier' => 'required|exists:supplier,id_supplier',
             'tipe_pembayaran' => 'required|in:tunai,kredit',
-            // 'id_coa' => 'required|exists:coa,id_coa',
             'produk' => 'required|array',
             'produk.*.id_produk' => 'required|exists:produk,id_produk',
             'produk.*.qty' => 'required|integer|min:1',
@@ -167,7 +165,7 @@ class PembelianController extends Controller
         $perusahaanId = $pembelian->id_perusahaan;
 
         // Get the COA (Chart of Accounts) for relevant accounts
-        $akunPembelian = Coa::where('id_coa','13')->first(); // Pembelian account
+        $akunPembelian = Coa::where('id_coa', '13')->first(); // Pembelian account
         $akunUtang = Coa::where('id_coa', '7')->first(); // Utang account
         $akunKas = Coa::where('id_coa', '1')->first(); // Kas account
         $transactionId = Str::uuid();

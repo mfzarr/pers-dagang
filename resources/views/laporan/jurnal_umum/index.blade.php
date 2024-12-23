@@ -86,9 +86,9 @@
 
                 <!-- Pagination -->
                 <div class="d-flex justify-content-between align-items-center mt-3">
-                    <a href="{{ $jurnal->previousPageUrl() }}" class="btn btn-outline-primary btn-sm {{ $jurnal->onFirstPage() ? 'disabled' : '' }}">&laquo; Previous</a>
-                    <span>Page {{ $jurnal->currentPage() }} of {{ $jurnal->lastPage() }}</span>
-                    <a href="{{ $jurnal->nextPageUrl() }}" class="btn btn-outline-primary btn-sm {{ $jurnal->hasMorePages() ? '' : 'disabled' }}">Next &raquo;</a>
+                    <a href="{{ $jurnals->previousPageUrl() }}" class="btn btn-outline-primary btn-sm {{ $jurnals->onFirstPage() ? 'disabled' : '' }}">&laquo; Previous</a>
+                    <span>Page {{ $jurnals->currentPage() }} of {{ $jurnals->lastPage() }}</span>
+                    <a href="{{ $jurnals->nextPageUrl() }}" class="btn btn-outline-primary btn-sm {{ $jurnals->hasMorePages() ? '' : 'disabled' }}">Next &raquo;</a>
                 </div>
             </div>
         </div>

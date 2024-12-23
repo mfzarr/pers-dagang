@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Masterdata\Supplier;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use App\Models\laporan\GeneralLedger;
 
 class Pembelian extends Model
 {
@@ -30,15 +31,19 @@ class Pembelian extends Model
         });
     }
 
-
-    public function pembelianDetails()
-    {
-        return $this->hasMany(Pembeliandetail::class, 'id_pembelian', 'id_pembelian');
-    }
-
     // In Pembelian.php model
     public function supplierRelation()
     {
         return $this->belongsTo(Supplier::class, 'supplier', 'id_supplier');
+    }
+
+    public function pelunasanPembelian()
+    {
+        return $this->hasMany(PelunasanPembelian::class, 'id_pembelian');
+    }
+
+    public function pembelianDetails()
+    {
+        return $this->hasMany(Pembeliandetail::class, 'id_pembelian', 'id_pembelian');
     }
 }

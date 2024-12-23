@@ -34,7 +34,7 @@ return new class extends Migration {
         // Membuat tabel coa
         Schema::create('coa', function (Blueprint $table) {
             $table->id('id_coa');
-            $table->integer('kode')->length(4);
+            $table->integer('kode_akun')->length(4);
             $table->string('nama_akun');
             $table->unsignedBigInteger('kelompok_akun'); // Kolom ini digunakan untuk foreign key
             $table->string('posisi_d_c');

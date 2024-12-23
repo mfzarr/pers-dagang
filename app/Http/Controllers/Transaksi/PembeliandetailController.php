@@ -17,7 +17,7 @@ class PembeliandetailController extends Controller
     {
         $pembelian = Pembelian::with('pembelianDetails')->findOrFail($id_pembelian);
         $pembeliandetails = $pembelian->pembelianDetails;
-        $produk = DB::table('barang')->where('id_perusahaan', $pembelian->id_perusahaan)->get();
+        $produk = DB::table('produk')->where('id_perusahaan', $pembelian->id_perusahaan)->get();
 
         return view('transaksi.pembelian.detail.index', compact('pembeliandetails', 'produk', 'pembelian'));
     }
@@ -28,7 +28,7 @@ class PembeliandetailController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_barang' => 'required',
+            'id_produk' => 'required',
             'id_pembelian' => 'required',
             'kuantitas' => 'required|integer',
             'harga' => 'required|numeric',
@@ -36,7 +36,7 @@ class PembeliandetailController extends Controller
 
         Pembeliandetail::create([
             'id_pembelian' => $request->id_pembelian,
-            'id_barang' => $request->id_barang,
+            'id_produk' => $request->id_produk,
             'kuantitas' => $request->kuantitas,
             'harga' => $request->harga,
         ]);

@@ -4,6 +4,7 @@ namespace App\Models\Transaksi;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Masterdata\Produk;
 
 class Pembeliandetail extends Model
 {
@@ -17,4 +18,10 @@ class Pembeliandetail extends Model
     {
         return $this->belongsTo(Pembelian::class, 'id_pembelian');
     }
+
+    public function produkRelation()
+    {
+        return $this->belongsTo(Produk::class, 'id_produk');
+    }
+
 }
