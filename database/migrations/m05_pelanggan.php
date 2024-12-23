@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('jenis_kelamin');
             $table->date('tgl_daftar');
+            $table->integer('jumlah_transaksi')->default(0); // New column for tracking transaction count
             $table->string('status')->default('Aktif');
 
             $table->foreignId('id_perusahaan');

@@ -22,6 +22,8 @@ use App\Http\Controllers\Masterdata\Kategori_barangController;
 use App\Http\Controllers\Masterdata\ProdukController;
 use App\Http\Controllers\Masterdata\Barang1Controller;
 use App\Http\Controllers\Laporan\JurnalUmumController;
+use App\Http\Controllers\Masterdata\DiscountController;
+use App\Http\Controllers\Transaksi\PenjualanController;
 use Illuminate\Support\Facades\Auth;
 
 // Auth routes
@@ -104,6 +106,9 @@ Route::prefix('masterdata')->middleware('auth')->group(function () {
 
     // Barang1 routes
     Route::resource('barang', Barang1Controller::class);
+
+    // Discount routes
+    Route::resource('diskon', DiscountController::class);
 });
 
 // Transaksi routes
@@ -119,6 +124,13 @@ Route::prefix('transaksi')->middleware('auth')->group(function () {
     Route::post('pembelian/{id}/details/store', [PembeliandetailController::class, 'store'])->name('pembeliandetail.store');
     Route::put('pembelian/detail/{id}', [PembeliandetailController::class, 'update'])->name('pembeliandetail.update');
     Route::delete('pembelian/detail/{id}', [PembeliandetailController::class, 'destroy'])->name('pembeliandetail.destroy');
+
+    // Penjualan routes
+    Route::resource('penjualan', PenjualanController::class);
+    Route::get('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'edit'])->name('penjualan.selesaikan');
+    Route::put('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'updateSelesai'])->name('penjualan.updateSelesai');
+    
+    // CRUD Routes for Penjualan Details (individual items within a transaction)
 });
 
 // Laporan routes
@@ -131,5 +143,4 @@ Route::get('/get-user-email/{id}', function ($id) {
     $user = App\Models\User::find($id);
     return response()->json(['email' => $user ? $user->email : null]);
 });
-
 

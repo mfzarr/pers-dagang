@@ -205,5 +205,15 @@
         document.getElementById('total').value = total;
         document.getElementById('total_dibayar').value = total_dibayar;
     }
+
+    document.getElementById('produk[0][id_produk]').addEventListener('change',function(){
+        var id_produk = this.value;
+
+        fetch(`/get-harga/${id_produk}`)
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.harga').value = data.harga;
+        });
+    }); // Trigger change event on page load
 </script>
 @endsection

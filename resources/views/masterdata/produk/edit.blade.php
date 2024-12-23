@@ -56,9 +56,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="harga_jual">Harga Jual</label>
-                                    <input type="text" class="form-control format-number" id="harga_jual" name="harga_jual"
-                                        value="{{ $produk->harga_jual }}" required>
+                                    <label for="harga">Harga Jual</label>
+                                    <input type="text" class="form-control format-number" id="harga" name="harga"
+                                        value="{{ $produk->harga }}" required>
                                 </div>
 
                                 <div class="form-group">

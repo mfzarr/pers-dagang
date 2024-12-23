@@ -16,6 +16,7 @@ class JurnalUmumController extends Controller
         // Get the search term and filter type from the request
         $search = $request->input('search');
         $filter = $request->input('filter');
+        $month = $request->input('month');
         $id_perusahaan = Auth::user()->id_perusahaan;
         
         // Query for JurnalUmum entries with eager loading
@@ -30,22 +31,32 @@ class JurnalUmumController extends Controller
             });
         }
 
+        // Filter by month
+        // if ($month) {
+        //     $query->whereMonth('tanggal_jurnal', $month);
+        // }
+
         // Filter by type (you may adjust the filtering logic according to your needs)
         if ($filter) {
             $query->where('nama_akun', 'like', '%' . $filter . '%');  // Changed to 'like' for flexibility
         }
 
+        // Fetch the paginated, filtered, and grouped journal entries
         // Paginate results (adjust the number of items per page as needed)
-        $jurnals = $query->paginate(100);
+        $jurnals = $query->paginate(10);
 
         // Get distinct nama_akun values for the filter dropdown
         $filters = JurnalUmum::select('nama_akun')->distinct()->get();
+
+        $month = JurnalUmum::selectRaw('MONTH(tanggal_jurnal) as month')
+            ->distinct()
+            ->get();
 
         // Group the results by 'transaction_id' (or whatever field pairs the debit and credit transactions)
         $groupedJurnals = $jurnals->groupBy('transaction_id'); // assuming 'transaction_id' exists and is used for pairing
 
         // Pass the filtered, paginated, and grouped results to the view
-        return view('laporan.jurnal_umum.index', compact('jurnals', 'filters', 'groupedJurnals'));
+        return view('laporan.jurnal_umum.index', compact('jurnals', 'filters', 'groupedJurnals', 'month'));
     }
 
     // Display Buku Besar
@@ -54,7 +65,7 @@ class JurnalUmumController extends Controller
         // Get the authenticated user's company ID
         $id_perusahaan = Auth::user()->id_perusahaan;
 
-        // Get all COA for dropdown, filtered by the authenticated user's company
+        // Get all COA for dropdown, filtered by company ID
         $coas = Coa::where('id_perusahaan', $id_perusahaan)->get();
 
         // Get the selected account
@@ -64,14 +75,14 @@ class JurnalUmumController extends Controller
         $currentBalance = 0;
 
         if ($selectedAccount) {
-            // Fetch the COA record for the selected account, filtered by the authenticated user's company
+            // Fetch the COA record for the selected account
             $coa = Coa::where('id_perusahaan', $id_perusahaan)->find($selectedAccount);
 
             if ($coa) {
                 // Get the starting saldo_awal from the Coa table
                 $saldoAwal = $coa->saldo_awal;
 
-                // Fetch all journal entries for the selected account
+                // Fetch all journal entries for the selected account, filtered by company ID
                 $transactions = JurnalUmum::where('kode_akun', $coa->kode_akun)
                     ->where('id_perusahaan', $id_perusahaan)
                     ->orderBy('tanggal_jurnal', 'asc')
@@ -106,16 +117,16 @@ class JurnalUmumController extends Controller
             }
         }
 
-        // Fetch total balances of all accounts, sum debit and credit, filtered by the authenticated user's company
+        // Fetch total balances of all accounts, filtered by company ID, sum debit and credit
         $totalBalances = Coa::where('id_perusahaan', $id_perusahaan)
             ->withSum('jurnalUmums as total_debit', 'debit')
             ->withSum('jurnalUmums as total_credit', 'credit')
             ->get();
 
-        // Fetch all transactions for View 3 and order by account name (nama_akun), filtered by the authenticated user's company
+        // Fetch all transactions for View 3, filtered by company ID, and order by account name (nama_akun)
         $allTransactions = JurnalUmum::with('coa')
             ->join('coa', 'jurnal_umum.kode_akun', '=', 'coa.kode_akun')
-            ->where('coa.id_perusahaan', $id_perusahaan)
+            ->where('jurnal_umum.id_perusahaan', $id_perusahaan)
             ->orderBy('coa.nama_akun', 'asc') // Order by account name
             ->get();
 

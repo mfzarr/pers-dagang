@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->unsignedBigInteger('id_kategori_barang');
             $table->integer('stok');
-            $table->BigInteger('harga_jual');
+            $table->BigInteger('harga');
             $table->BigInteger('hpp');
             $table->string('status')->default('Aktif');
             $table->unsignedBigInteger('id_perusahaan');

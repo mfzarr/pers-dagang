@@ -83,6 +83,11 @@ class PembelianController extends Controller
                 'harga' => $item['harga'],
                 'dibayar' => $item['dibayar'],
             ]);
+
+            // Update the stock of the selected products
+            $produk = Produk::find($item['id_produk']);
+            $produk->stok += $item['qty'];
+            $produk->save();
         }
 
         $status = ($total_dibayar >= $total) ? 'Lunas' : 'Belum Lunas';
@@ -165,9 +170,9 @@ class PembelianController extends Controller
         $perusahaanId = $pembelian->id_perusahaan;
 
         // Get the COA (Chart of Accounts) for relevant accounts
-        $akunPembelian = Coa::where('id_coa', '13')->first(); // Pembelian account
-        $akunUtang = Coa::where('id_coa', '7')->first(); // Utang account
-        $akunKas = Coa::where('id_coa', '1')->first(); // Kas account
+        $akunPembelian = Coa::where('kode_akun', '5101')->first(); // Pembelian account
+        $akunUtang = Coa::where('kode_akun', '2101')->first(); // Utang account
+        $akunKas = Coa::where('kode_akun', '1101')->first(); // Kas account
         $transactionId = Str::uuid();
 
         // Prepare transaction entries

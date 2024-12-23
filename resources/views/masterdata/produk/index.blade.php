@@ -57,7 +57,7 @@
                                                         <td class="align-middle">{{ $produk->nama}}</td>
                                                         <td class="align-middle">{{ $produk->kategori_barang->nama }}</td>
                                                         <td class="align-middle">{{ $produk->stok }}</td>
-                                                        <td class="align-middle">Rp{{ number_format($produk->harga_jual, 0, ',', '.') }}</td>
+                                                        <td class="align-middle">Rp{{ number_format($produk->harga, 0, ',', '.') }}</td>
                                                         <td class="align-middle">Rp{{ number_format($produk->hpp, 0, ',', '.') }}</td>
                                                         <td class="align-middle">
                                                             @if ($produk->status === 'Aktif')

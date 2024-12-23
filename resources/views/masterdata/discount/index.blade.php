@@ -8,11 +8,12 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">List of Pelanggan</h5>
+                                <h5 class="m-b-10">List of Diskon</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Pelanggan</a></li>
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>                            <li class="breadcrumb-item"><a href="#!">E-Commerce</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Master Data</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Diskon</a></li>
                             </ul>
                         </div>
                     </div>
@@ -23,60 +24,47 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Pelanggan List</h5>
+                            <h5>Diskon List</h5>
                             <div class="float-right">
-                                <a href="{{ route('pelanggan.create') }}"
+                                <a href="{{ route('diskon.create') }}"
                                     class="btn btn-success btn-sm btn-round has-ripple"><i class="feather icon-plus"></i>Add
-                                    Pelanggan</a>
+                                    Diskon</a>
                             </div>
                         </div>
                         <div class="card-body">
-                            @if ($pelanggans->isEmpty())
-                                <p>No pelanggan found for your perusahaan.</p>
+                            @if ($discounts->isEmpty())
+                                <p>No Diskon found for your perusahaan.</p>
                             @else
                                 <div class="table-responsive">
                                     <table id="simpletable" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Nama</th>
-                                                <th>Email</th>
-                                                <th>No Telpon</th>
-                                                <th>Jenis Kelamin</th>
-                                                <th>Tanggal Daftar</th>
-                                                <th>Alamat</th>
-                                                <th>Jumlah Transaksi</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
+                                                {{-- <th>no</th> --}}
+                                                <th>Minimum Transaksi</th>
+                                                <th>Persentasi Diskon</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($pelanggans as $pelanggan)
+                                            {{-- <?php
+                                            $no = 1;
+                                            ?> --}}
+                                            @foreach ($discounts as $diskon)
                                                 <tr>
-                                                    <td>{{ $pelanggan->nama }}</td>
-                                                    <td>{{ $pelanggan->email }}</td>
-                                                    <td>{{ $pelanggan->no_telp }}</td>
-                                                    <td>{{ $pelanggan->jenis_kelamin }}</td>
-                                                    <td>{{ $pelanggan->tgl_daftar }}</td>
-                                                    <td>{{ $pelanggan->alamat }}</td>
-                                                    <td>{{ $pelanggan->jumlah_transaksi}}</td>
+                                                    {{-- <td>{{$no++}}</td> --}}
+                                                    <td>{{ $diskon->min_transaksi }}</td>
+                                                    <td>{{ $diskon->discount_percentage }}%</td>
                                                     <td>
-                                                        @if ($pelanggan->status === 'Aktif')
-                                                            <span class="badge badge-success">Aktif</span>
-                                                        @else
-                                                            <span class="badge badge-danger">Tidak Aktif</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('pelanggan.edit', $pelanggan->id_pelanggan) }}"
+                                                        <a href="{{ route('diskon.edit', $diskon->id_discount) }}"
                                                             class="btn btn-info btn-sm"><i
                                                                 class="feather icon-edit"></i>&nbsp;Edit</a>
-                                                        <form id="delete-form-{{ $pelanggan->id_pelanggan }}"
-                                                            action="{{ route('pelanggan.destroy', $pelanggan->id_pelanggan) }}"
+                                                        <form id="delete-form-{{ $diskon->id_discount }}"
+                                                            action="{{ route('diskon.destroy', $diskon->id_discount) }}"
                                                             method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-sm btn-danger"
-                                                                onclick="confirmDelete({{ $pelanggan->id_pelanggan }})"><i
+                                                                onclick="confirmDelete({{ $diskon->id_discount }})"><i
                                                                     class="feather icon-trash-2"></i>&nbsp;Delete</button>
                                                         </form>
                                                     </td>
@@ -94,7 +82,7 @@
     </div>
 
     <script>
-        function confirmDelete(pelangganId) {
+        function confirmDelete(diskonId) {
             Swal.fire({
                 title: 'Hapus data ini?',
                 text: "Tindakan ini tidak bisa diubah!",
@@ -107,7 +95,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Submit form dengan id yang sesuai
-                    document.getElementById('delete-form-' + pelangganId).submit();
+                    document.getElementById('delete-form-' + diskonId).submit();
                 }
             });
         }

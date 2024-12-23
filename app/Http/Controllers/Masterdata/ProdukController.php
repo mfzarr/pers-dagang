@@ -38,7 +38,7 @@ class ProdukController extends Controller
         $request->validate([
             'nama' => 'required|max:255',
             'id_kategori_barang' => 'required|exists:kategori_barang,id_kategori_barang',            'stok' => 'required|integer',
-            'harga_jual' => 'required|integer',
+            'harga' => 'required|integer',
             'hpp' => 'required|integer',
             'status' => 'required',
         ]);
@@ -47,7 +47,7 @@ class ProdukController extends Controller
             'nama' => $request->nama,
             'id_kategori_barang' => $request->id_kategori_barang, // Kesalahan di sini
             'stok' => $request->stok,
-            'harga_jual' => $request->harga_jual,
+            'harga' => $request->harga,
             'hpp' => $request->hpp,
             'status' => $request->status,
             'id_perusahaan' => Auth::user()->id_perusahaan,
@@ -85,21 +85,21 @@ class ProdukController extends Controller
             'nama' => 'required|max:255',
             'id_kategori_barang' => 'required|exists:kategori_barang,id_kategori_barang',
             'stok' => 'required|integer',
-            'harga_jual' => 'required|integer',
+            'harga' => 'required|integer',
             'hpp' => 'required|integer',
             'status' => 'required',
         ]);
 
         //konversi input
         $stok = str_replace('.', '', $request->stok);
-        $harga_jual = str_replace('.', '', $request->harga_jual);
+        $harga = str_replace('.', '', $request->harga);
         $hpp = str_replace('.', '', $request->hpp);
 
         $produk->update([
             'nama' => $request->nama,
             'id_kategori_barang' => $request->id_kategori_barang,
             'stok' => $stok,
-            'harga_jual' => $harga_jual,
+            'harga' => $harga,
             'hpp' => $hpp,
             'status' => $request->status,
         ]);

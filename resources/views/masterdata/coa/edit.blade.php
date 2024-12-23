@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('coa.update', $coa->id_coa) }}">
+                    <form method="POST" action="{{ route('coa.update', $coas->id_coa) }}">
                         @csrf
                         @method('PUT') <!-- This is important for PUT requests -->
 
@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label for="kode_akun">Kode Akun:</label>
                             <input type="text" class="form-control @error('kode_akun') is-invalid @enderror" id="kode_akun" name="kode_akun"
-                                value="{{ old('kode_akun', $coa->kode_akun) }}" required>
+                                value="{{ old('kode_akun', $coas->kode_akun) }}" required readonly>
                             @error('kode_akun')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label for="nama_akun">Nama Akun:</label>
                             <input type="text" class="form-control @error('nama_akun') is-invalid @enderror" id="nama_akun" name="nama_akun"
-                                value="{{ old('nama_akun', $coa->nama_akun) }}" required>
+                                value="{{ old('nama_akun', $coas->nama_akun) }}" required>
                             @error('nama_akun')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -50,9 +50,9 @@
                             <label for="kelompok_akun">Kelompok Akun:</label>
                             <select class="form-control @error('kelompok_akun') is-invalid @enderror" id="kelompok_akun" name="kelompok_akun" required>
                                 <option value="" selected hidden>Pilih Kelompok</option>
-                                @foreach ($kelompokAkun as $option)
+                                @foreach ($kelompokakun as $option)
                                     <option value="{{ $option->kelompok_akun }}"
-                                        {{ old('kelompok_akun', $coa->kelompok_akun) == $option->kelompok_akun ? 'selected' : '' }}>
+                                        {{ old('kelompok_akun', $coas->kelompok_akun) == $option->kelompok_akun ? 'selected' : '' }}>
                                         {{ $option->nama_kelompok_akun }}
                                     </option>
                                 @endforeach
@@ -66,9 +66,9 @@
                         <div class="form-group">
                             <label for="posisi_d_c">Posisi:</label><br>
                             <input type="radio" id="Debit" name="posisi_d_c" value="Debit"
-                                {{ old('posisi_d_c', $coa->posisi_d_c) == 'Debit' ? 'checked' : '' }}> Debit
+                                {{ old('posisi_d_c', $coas->posisi_d_c) == 'Debit' ? 'checked' : '' }}> Debit
                             <input type="radio" id="Kredit" name="posisi_d_c" value="Kredit"
-                                {{ old('posisi_d_c', $coa->posisi_d_c) == 'Kredit' ? 'checked' : '' }}> Kredit
+                                {{ old('posisi_d_c', $coas->posisi_d_c) == 'Kredit' ? 'checked' : '' }}> Kredit
                             @error('posisi_d_c')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -78,7 +78,7 @@
                         <div class="form-group">
                             <label for="saldo_awal">Saldo Awal:</label>
                             <input type="number" class="form-control @error('saldo_awal') is-invalid @enderror" id="saldo_awal" name="saldo_awal"
-                                value="{{ old('saldo_awal', $coa->saldo_awal) }}" step="0.01" required>
+                                value="{{ old('saldo_awal', $coas->saldo_awal) }}" step="0.01" required>
                             @error('saldo_awal')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

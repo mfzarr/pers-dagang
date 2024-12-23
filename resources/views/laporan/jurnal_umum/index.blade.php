@@ -41,6 +41,17 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        {{-- <div class="col-md-3">
+                            <select name="month" class="form-control" onchange="this.form.submit()">
+                                <option value="">Filter by Month</option>
+                                @foreach(range(1, 12) as $month)
+                                    <option value="{{ $month }}" {{ request('month') == $month ? 'selected' : '' }}>
+                                        {{ date('F', mktime(0, 0, 0, $month, 1)) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div> --}}
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-secondary">Filter</button>
                         </div>
@@ -60,7 +71,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($groupedJurnals as $entries)
+                            @foreach($groupedJurnals->sortBy(function($entries) {
+                                return \Carbon\Carbon::parse($entries->first()->tanggal_jurnal);
+                            }) as $entries)
                                 @foreach($entries as $index => $entry)
                                     <tr>
                                         @if ($index == 0)
@@ -70,8 +83,8 @@
                                         @endif
                                         <td class="{{ $entry->credit > 0 ? 'indent' : '' }}">{{ $entry->nama_akun }}</td>
                                         <td>{{ $entry->kode_akun }}</td>
-                                        <td>{{ $entry->debit == 0.00 ? '-' : number_format($entry->debit, 2) }}</td>
-                                        <td>{{ $entry->credit == 0.00 ? '-' : number_format($entry->credit, 2) }}</td>
+                                        <td>Rp{{ $entry->debit == 0.00 ? '-' : number_format($entry->debit) }}</td>
+                                        <td>Rp{{ $entry->credit == 0.00 ? '-' : number_format($entry->credit) }}</td>
                                     </tr>
                                 @endforeach
                             @endforeach

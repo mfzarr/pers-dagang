@@ -58,7 +58,8 @@
                         <li><a href="{{ route('aset.index') }}">Asset</a></li>
                         <li><a href="{{ route('barang.index') }}">Barang</a></li>
                         <li><a href="{{ route('produk.index') }}">Produk</a></li>
-                       <li><a href="{{ route('kategori-produk.index') }}">Kategori Produk</a></li>
+                        <li><a href="{{ route('kategori-produk.index') }}">Kategori Produk</a></li>
+                        <li><a href="{{ route('diskon.index') }}">Diskon</a></li>
                     </ul>
                 </li>
 
@@ -88,8 +89,7 @@
                             class="pcoded-mtext">Transaksi</span></a>
                     <ul class="pcoded-submenu">
                         <li><a href="{{ route ('pembelian.index')}}">Pembelian Barang Dagang</a></li>
-                        <li><a href="transaksi/main">Transaksi</a></li>
-                        <li><a href="transaksi/penjualan">Penjualan</a></li>
+                        <li><a href="{{ route ('penjualan.index')}}">Penjualan</a></li>
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
@@ -98,11 +98,11 @@
                     <ul class="pcoded-submenu">
                         <li><a href="{{ route ('jurnal-umum.index')}}">Jurnal Umum</a></li>
                         <li><a href="{{ route ('buku-besar')}}">Buku Besar</a></li>
-                        <li><a href="laporan/neraca">Neraca Saldo</a></li>
+                        {{-- <li><a href="laporan/neraca">Neraca Saldo</a></li>
                         <li><a href="laporan/laba_rugi">Laporan Laba Rugi</a></li>
                         <li><a href="laporan/perubahan_modal">Laporan Perubahan Modal</a></li>
                         <li><a href="laporan/laporan_neraca">Laporan Neraca</a></li>
-
+ --}}
                     </ul>
                 </li>
             </ul>
