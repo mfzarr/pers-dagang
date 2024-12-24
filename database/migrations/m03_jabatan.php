@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_jabatan');
             $table->string('nama');
             $table->bigInteger('asuransi')->nullable();
-            $table->bigInteger('tarif_tetap')->nullable();
+            $table->bigInteger('tarif')->nullable();
             // $table->integer('tarif_tidak_tetap')->nullable();   
 
             $table->foreignId('id_perusahaan'); // Foreign key column

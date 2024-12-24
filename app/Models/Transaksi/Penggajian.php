@@ -12,7 +12,6 @@ class Penggajian extends Model
 
     protected $table = 'penggajian';
     protected $primaryKey = 'id_gaji';
-    
     protected $guarded = [];
 
     // Update foreign key to match the database field `id_pegawai`

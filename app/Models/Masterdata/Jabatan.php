@@ -11,7 +11,7 @@ class Jabatan extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nama', 'asuransi', 'tarif_tetap', 'tarif_tidak_tetap', 'id_perusahaan'
+        'nama', 'asuransi', 'tarif', 'tarif_tidak_tetap', 'id_perusahaan'
     ];
 }
 

@@ -22,7 +22,7 @@ class KaryawanController extends Controller
 
         $karyawans = Karyawan::where('karyawan.id_perusahaan', $id_perusahaan) // Specify 'karyawan.id_perusahaan'
             ->join('jabatan', 'karyawan.id_jabatan', '=', 'jabatan.id_jabatan')
-            ->select('karyawan.*', 'jabatan.tarif_tetap')
+            ->select('karyawan.*', 'jabatan.tarif')
             ->get();
 
         return view('masterdata.karyawan.index', compact('karyawans'));
@@ -75,6 +75,34 @@ class KaryawanController extends Controller
         $users = User::where('id_perusahaan', $id_perusahaan)->get();
 
         return view('masterdata.karyawan.edit', compact('karyawan', 'jabatans', 'users'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|max:255',
+            'no_telp' => 'required|max:255',
+            'jenis_kelamin' => 'required|max:255',
+            'email' => 'nullable',
+            'alamat' => 'required|max:255',
+            'status' => 'required',
+            'id_jabatan' => 'required|exists:jabatan,id_jabatan',
+            'id_user' => 'nullable|exists:users,id'
+        ]);
+
+        $karyawan = Karyawan::where('id_perusahaan', Auth::user()->id_perusahaan)->findOrFail($id);
+        $karyawan->update([
+            'nama' => $request->nama,
+            'no_telp' => $request->no_telp,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'email' => $request->email,
+            'alamat' => $request->alamat,
+            'status' => $request->status,
+            'id_jabatan' => $request->id_jabatan,
+            'id_user' => $request->id_user
+        ]);
+
+        return redirect()->route('pegawai.index')->with('success', 'Karyawan updated successfully.');
     }
 
     public function destroy($id)

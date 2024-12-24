@@ -33,10 +33,10 @@
                             <input type="hidden" name="asuransi" id="asuransi_hidden" value="{{ $jabatan->asuransi }}">
                         </div>
                         <div class="form-group">
-                            <label for="tarif_tetap">Tarif Tetap</label>
-                            <input type="text" id="tarif_tetap" class="form-control"
-                                value="{{ number_format($jabatan->tarif_tetap, 0, ',', '.') }}">
-                            <input type="hidden" name="tarif_tetap" id="tarif_tetap_hidden" value="{{ $jabatan->tarif_tetap }}">
+                            <label for="tarif">Tarif Tetap</label>
+                            <input type="text" id="tarif" class="form-control"
+                                value="{{ number_format($jabatan->tarif, 0, ',', '.') }}">
+                            <input type="hidden" name="tarif" id="tarif_hidden" value="{{ $jabatan->tarif }}">
                         </div>
                         {{-- <div class="form-group">
                             <label for="tarif_tidak_tetap">Tarif Tidak Tetap</label>
@@ -70,8 +70,8 @@
         });
 
         // Event listener untuk tarif tetap
-        const tarifTetapInput = document.getElementById('tarif_tetap');
-        const tarifTetapHidden = document.getElementById('tarif_tetap_hidden');
+        const tarifTetapInput = document.getElementById('tarif');
+        const tarifTetapHidden = document.getElementById('tarif_hidden');
         tarifTetapInput.addEventListener('input', function () {
             formatAndSetHiddenField(tarifTetapInput, tarifTetapHidden);
         });

@@ -68,8 +68,8 @@
         });
 
         // Event listener untuk tarif tetap
-        const tarifTetapInput = document.getElementById('tarif_tetap');
-        const tarifTetapHidden = document.getElementById('tarif_tetap_hidden');
+        const tarifTetapInput = document.getElementById('tarif');
+        const tarifTetapHidden = document.getElementById('tarif_hidden');
         tarifTetapInput.addEventListener('input', function () {
             formatAndSetHiddenField(tarifTetapInput, tarifTetapHidden);
         });

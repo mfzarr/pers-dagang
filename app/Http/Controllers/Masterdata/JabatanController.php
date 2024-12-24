@@ -35,18 +35,18 @@ class JabatanController extends Controller
         $request->validate([
             'nama' => 'required|max:255',
             'asuransi' => 'nullable|string',
-            'tarif_tetap' => 'nullable|string',
+            'tarif' => 'nullable|string',
         ]);
     
         // Konversi input dari format ribuan menjadi angka murni
         $asuransi = str_replace('.', '', $request->asuransi);
-        $tarif_tetap = str_replace('.', '', $request->tarif_tetap);
+        $tarif = str_replace('.', '', $request->tarif);
     
         // Simpan data ke database
         Jabatan::create([
             'nama' => $request->nama,
             'asuransi' => $asuransi,
-            'tarif_tetap' => $tarif_tetap,
+            'tarif' => $tarif,
             'id_perusahaan' => Auth::user()->id_perusahaan,
         ]);
     
@@ -71,12 +71,12 @@ class JabatanController extends Controller
         $request->validate([
             'nama' => 'required|max:255',
             'asuransi' => 'nullable|string',
-            'tarif_tetap' => 'nullable|string',
+            'tarif' => 'nullable|string',
         ]);
     
         // Konversi input dari format ribuan menjadi angka murni
         $asuransi = str_replace('.', '', $request->asuransi);
-        $tarif_tetap = str_replace('.', '', $request->tarif_tetap);
+        $tarif = str_replace('.', '', $request->tarif);
     
         // Ambil data jabatan berdasarkan perusahaan
         $jabatan = Jabatan::where('id_perusahaan', Auth::user()->id_perusahaan)
@@ -86,7 +86,7 @@ class JabatanController extends Controller
         $jabatan->update([
             'nama' => $request->nama,
             'asuransi' => $asuransi,
-            'tarif_tetap' => $tarif_tetap,
+            'tarif' => $tarif,
         ]);
     
         return redirect()->route('jabatan.index')->with('success', 'Jabatan updated successfully.');

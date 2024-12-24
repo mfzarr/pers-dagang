@@ -25,6 +25,7 @@ use App\Http\Controllers\Laporan\JurnalUmumController;
 use App\Http\Controllers\Masterdata\DiscountController;
 use App\Http\Controllers\Transaksi\PenjualanController;
 use App\Http\Controllers\Transaksi\presensiController;
+use App\Http\Controllers\Transaksi\PenggajianController;
 use Illuminate\Support\Facades\Auth;
 
 // Auth routes
@@ -113,7 +114,6 @@ Route::prefix('masterdata')->middleware('auth')->group(function () {
 });
 
 // Transaksi routes
-Route::prefix('transaksi')->middleware('auth')->group(function () {
     // Pembelian routes
     Route::resource('/pembelian', PembelianController::class);
     Route::get('pembelian/{id_pembelian}/detail', [PembelianController::class, 'show'])->name('pembelian.detail');
@@ -130,7 +130,14 @@ Route::prefix('transaksi')->middleware('auth')->group(function () {
     Route::resource('penjualan', PenjualanController::class);
     Route::get('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'edit'])->name('penjualan.selesaikan');
     Route::put('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'updateSelesai'])->name('penjualan.updateSelesai');
-});
+
+    //Penggajian routes
+    Route::resource('penggajian', PenggajianController::class);
+    Route::get('/penggajian/get-tarif/{id}', [PenggajianController::class, 'getTarifByKaryawan'])->name('penggajian.get-tarif');
+    Route::get('/penggajian/get-total-service/{id}', [PenggajianController::class, 'getTotalServiceByKaryawan']);
+    Route::get('/penggajian/{id}', [PenggajianController::class, 'show'])->name('penggajian.show');
+    Route::get('/penggajian/get-total-kehadiran/{id}', [PenggajianController::class, 'getTotalKehadiranByKaryawan']);
+    
 
 // Laporan routes
 Route::prefix('laporan')->middleware('auth')->group(function () {

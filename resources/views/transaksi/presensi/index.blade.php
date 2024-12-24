@@ -70,8 +70,7 @@
                                                         style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="button" class="btn btn-icon btn-outline-danger"
-                                                            onclick="confirmDelete({{ $date }})">
+                                                        <button type="submit" class="btn btn-icon btn-outline-danger">
                                                             <i class="feather icon-trash-2"></i>
                                                         </button>
                                                     </form>
@@ -88,23 +87,22 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         function confirmDelete(date) {
+            var form = document.getElementById('delete-form-' + date);
             Swal.fire({
-                title: 'Hapus data ini?',
-                text: "Tindakan ini tidak bisa diubah!",
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, hapus data ini!',
-                cancelButtonText: 'Batal'
+                confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Submit form dengan ID yang sesuai
-                    document.getElementById('delete-form-' + date).submit();
+                    form.submit();
                 }
             });
         }
-    </script>
+    </script> --}}
 @endsection

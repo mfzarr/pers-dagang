@@ -54,7 +54,7 @@
                                                 <td>{{ $karyawan->no_telp }}</td>
                                                 <td>{{ $karyawan->jenis_kelamin }}</td>
                                                 <td>{{ $karyawan->alamat }}</td>
-                                                <td>{{ number_format($karyawan->tarif_tetap, 0, ',', '.') }}</td>
+                                                <td>{{ number_format($karyawan->tarif, 0, ',', '.') }}</td>
                                                 <td>
                                                     @if($karyawan->id_user)
                                                         <i class="fas fa-check-circle text-success"></i>

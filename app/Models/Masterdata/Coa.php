@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Masterdata\CoaKelompok;
 use App\Models\Laporan\JurnalUmum;
+use App\Models\Transaksi\Penjualan;
 
 class Coa extends Model
 {
@@ -57,5 +58,10 @@ class Coa extends Model
     public function jurnalUmums()
     {
         return $this->hasMany(JurnalUmum::class, 'id_coa', 'id_coa');
+    }
+
+    public function penjualan()
+    {
+        return $this->hasMany(Penjualan::class, 'id_perusahaan', 'id_perusahaan');
     }
 }

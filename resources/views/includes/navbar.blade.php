@@ -90,6 +90,8 @@
                     <ul class="pcoded-submenu">
                         <li><a href="{{ route ('pembelian.index')}}">Pembelian Barang Dagang</a></li>
                         <li><a href="{{ route ('penjualan.index')}}">Penjualan</a></li>
+                        <li><a href="{{ route ('penggajian.index') }}">Penggajian</a></li>
+
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">

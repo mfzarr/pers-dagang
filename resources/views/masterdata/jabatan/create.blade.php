@@ -30,8 +30,8 @@
                         <input type="text" name="asuransi" id="asuransi" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="tarif_tetap">Gaji</label>
-                        <input type="text" name="tarif_tetap" id="tarif_tetap" class="form-control">
+                        <label for="tarif">Gaji</label>
+                        <input type="text" name="tarif" id="tarif" class="form-control">
                     </div>
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary">Save</button>
@@ -57,7 +57,7 @@
     });
 
     // Event listener untuk input tarif tetap
-    const tarifTetapInput = document.getElementById('tarif_tetap');
+    const tarifTetapInput = document.getElementById('tarif');
     tarifTetapInput.addEventListener('input', function () {
         formatNumber(tarifTetapInput);
     });

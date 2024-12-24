@@ -49,7 +49,7 @@
                                                     <td>{{ $jabatan->nama }}</td>
                                                     <td>Rp{{ number_format($jabatan->asuransi, 0, ',', '.') }}
                                                     </td>
-                                                    <td>Rp{{ number_format($jabatan->tarif_tetap, 0, ',', '.') }}
+                                                    <td>Rp{{ number_format($jabatan->tarif, 0, ',', '.') }}
                                                     </td>
                                                     <td>
                                                         <a href="{{ route('jabatan.edit', $jabatan->id_jabatan) }}"

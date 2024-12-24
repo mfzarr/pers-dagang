@@ -4,6 +4,10 @@ namespace App\Models\Masterdata;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Masterdata\Perusahaan;
+use App\Models\Masterdata\Jabatan;
+use App\Models\User;
+use App\Models\Transaksi\Presensi;
 
 class Karyawan extends Model
 {
@@ -27,5 +31,15 @@ class Karyawan extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class, 'id_jabatan');
+    }
+
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class, 'id_karyawan');
     }
 }
