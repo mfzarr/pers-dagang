@@ -79,8 +79,8 @@
                     <ul class="pcoded-submenu">
                         <li><a href="{{ route('jabatan.index') }}">Jabatan</a></li>
                         <li><a href="{{ route('pegawai.index') }}">Pegawai</a></li>
-                        <li><a href="pegawai/presensi">Presensi</a></li>
-                        <li><a href="pegawai/penggajian">Penggajian</a></li>
+                        <li><a href="{{ route('presensi.index') }}">Presensi</a></li>
+                        {{-- <li><a href="pegawai/penggajian">Penggajian</a></li> --}}
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">

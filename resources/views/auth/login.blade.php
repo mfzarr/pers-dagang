@@ -144,10 +144,10 @@
 
                         <!-- Email -->
                         <div class="form-group mb-3">
-                            <label class="floating-label" for="Email">Email address</label>
-                            <input type="email" class="form-control" id="Email" name="email" value="{{ old('email') }}" required autofocus>
-                            @if($errors->has('email'))
-                            <span class="text-danger">{{ $errors->first('email') }}</span>
+                            <label class="floating-label" for="login">Email address or Username</label>
+                            <input type="text" class="form-control" id="login" name="login" value="{{ old('login') }}" required autofocus>
+                            @if($errors->has('login'))
+                            <span class="text-danger">{{ $errors->first('login') }}</span>
                             @endif
                         </div>
 

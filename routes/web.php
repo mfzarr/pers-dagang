@@ -24,6 +24,7 @@ use App\Http\Controllers\Masterdata\Barang1Controller;
 use App\Http\Controllers\Laporan\JurnalUmumController;
 use App\Http\Controllers\Masterdata\DiscountController;
 use App\Http\Controllers\Transaksi\PenjualanController;
+use App\Http\Controllers\Transaksi\presensiController;
 use Illuminate\Support\Facades\Auth;
 
 // Auth routes
@@ -129,8 +130,6 @@ Route::prefix('transaksi')->middleware('auth')->group(function () {
     Route::resource('penjualan', PenjualanController::class);
     Route::get('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'edit'])->name('penjualan.selesaikan');
     Route::put('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'updateSelesai'])->name('penjualan.updateSelesai');
-    
-    // CRUD Routes for Penjualan Details (individual items within a transaction)
 });
 
 // Laporan routes
@@ -143,4 +142,15 @@ Route::get('/get-user-email/{id}', function ($id) {
     $user = App\Models\User::find($id);
     return response()->json(['email' => $user ? $user->email : null]);
 });
+
+Route::prefix('presensi')->name('presensi.')->group(function () {
+    Route::get('create', [PresensiController::class, 'create'])->name('create');
+    Route::post('store', [PresensiController::class, 'store'])->name('store');
+    Route::get('index', [PresensiController::class, 'index'])->name('index');
+    Route::get('show/{date}', [PresensiController::class, 'show'])->name('show');
+    Route::get('edit/{date}', [PresensiController::class, 'edit'])->name('edit');
+    Route::delete('destroy/{date}', [PresensiController::class, 'destroy'])->name('destroy');
+    Route::put('update/{date}', [PresensiController::class, 'update'])->name('update');
+});
+
 

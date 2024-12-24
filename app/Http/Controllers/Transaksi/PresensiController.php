@@ -8,7 +8,7 @@ use App\Models\Transaksi\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PresensiController extends Controller
+class presensiController extends Controller
 {
     public function index()
     {

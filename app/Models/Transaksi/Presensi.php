@@ -6,7 +6,7 @@ use App\Models\Perusahaan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Presensi extends Model
+class presensi extends Model
 {
     use HasFactory;
 
