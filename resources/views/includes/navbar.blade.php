@@ -41,12 +41,11 @@
                         <span class="pcoded-mtext">Dashboard</span>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a href="{{ route('perusahaan.index') }}" class="nav-link ">
                         <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                         <span class="pcoded-mtext">Tentang Perusahaan</span>
-                    </a>
+                    </a>    
                 </li>
 
                 <li class="nav-item pcoded-hasmenu">
@@ -57,8 +56,8 @@
                         <li><a href="{{ route('supplier.index') }}">Supplier</a></li>
                         <li><a href="{{ route('aset.index') }}">Asset</a></li>
                         <li><a href="{{ route('barang.index') }}">Barang</a></li>
-                        <li><a href="{{ route('produk.index') }}">Produk</a></li>
                         <li><a href="{{ route('kategori-produk.index') }}">Kategori Produk</a></li>
+                        <li><a href="{{ route('produk.index') }}">Produk</a></li>
                         <li><a href="{{ route('diskon.index') }}">Diskon</a></li>
                     </ul>
                 </li>
@@ -91,6 +90,7 @@
                         <li><a href="{{ route ('pembelian.index')}}">Pembelian Barang Dagang</a></li>
                         <li><a href="{{ route ('penjualan.index')}}">Penjualan</a></li>
                         <li><a href="{{ route ('penggajian.index') }}">Penggajian</a></li>
+                        <li><a href="{{ route ('beban.index') }}">Beban dan Pengeluaran Lainnya</a></li>
 
                     </ul>
                 </li>
@@ -111,3 +111,5 @@
         </div>
     </div>
 </nav>
+
+

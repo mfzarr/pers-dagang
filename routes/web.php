@@ -26,6 +26,7 @@ use App\Http\Controllers\Masterdata\DiscountController;
 use App\Http\Controllers\Transaksi\PenjualanController;
 use App\Http\Controllers\Transaksi\presensiController;
 use App\Http\Controllers\Transaksi\PenggajianController;
+use App\Http\Controllers\Transaksi\BebanController;
 use Illuminate\Support\Facades\Auth;
 
 // Auth routes
@@ -64,7 +65,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Masterdata routes
-Route::prefix('masterdata')->middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {
     // COA routes
     Route::resource('coa', CoaController::class)->except(['show']);
     Route::post('/coa/store', [CoaController::class, 'store'])->name('coa.store');
@@ -115,28 +116,33 @@ Route::prefix('masterdata')->middleware('auth')->group(function () {
 
 // Transaksi routes
     // Pembelian routes
-    Route::resource('/pembelian', PembelianController::class);
-    Route::get('pembelian/{id_pembelian}/detail', [PembelianController::class, 'show'])->name('pembelian.detail');
-    Route::post('pembelian/{id}/pelunasan', [PembelianController::class, 'pelunasan'])->name('pembeliandetail.pelunasan');
-    Route::post('/pembelian/{id}/pelunasan-auto', [PembelianController::class, 'pelunasan'])->name('pembelian.pelunasan.auto');
+    Route::middleware('auth')->group(function () {
+        Route::resource('/pembelian', PembelianController::class);
+        Route::get('pembelian/{id_pembelian}/detail', [PembelianController::class, 'show'])->name('pembelian.detail');
+        Route::post('pembelian/{id}/pelunasan', [PembelianController::class, 'pelunasan'])->name('pembeliandetail.pelunasan');
+        Route::post('/pembelian/{id}/pelunasan-auto', [PembelianController::class, 'pelunasan'])->name('pembelian.pelunasan.auto');
 
-    // CRUD Routes for Pembelian Details (individual items within a transaction)
-    Route::get('pembelian/{id}/details', [PembeliandetailController::class, 'index'])->name('pembeliandetail.index');
-    Route::post('pembelian/{id}/details/store', [PembeliandetailController::class, 'store'])->name('pembeliandetail.store');
-    Route::put('pembelian/detail/{id}', [PembeliandetailController::class, 'update'])->name('pembeliandetail.update');
-    Route::delete('pembelian/detail/{id}', [PembeliandetailController::class, 'destroy'])->name('pembeliandetail.destroy');
+        // CRUD Routes for Pembelian Details (individual items within a transaction)
+        Route::get('pembelian/{id}/details', [PembeliandetailController::class, 'index'])->name('pembeliandetail.index');
+        Route::post('pembelian/{id}/details/store', [PembeliandetailController::class, 'store'])->name('pembeliandetail.store');
+        Route::put('pembelian/detail/{id}', [PembeliandetailController::class, 'update'])->name('pembeliandetail.update');
+        Route::delete('pembelian/detail/{id}', [PembeliandetailController::class, 'destroy'])->name('pembeliandetail.destroy');
 
-    // Penjualan routes
-    Route::resource('penjualan', PenjualanController::class);
-    Route::get('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'edit'])->name('penjualan.selesaikan');
-    Route::put('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'updateSelesai'])->name('penjualan.updateSelesai');
+        // Penjualan routes
+        Route::resource('penjualan', PenjualanController::class);
+        Route::get('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'edit'])->name('penjualan.selesaikan');
+        Route::put('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'updateSelesai'])->name('penjualan.updateSelesai');
 
-    //Penggajian routes
-    Route::resource('penggajian', PenggajianController::class);
-    Route::get('/penggajian/get-tarif/{id}', [PenggajianController::class, 'getTarifByKaryawan'])->name('penggajian.get-tarif');
-    Route::get('/penggajian/get-total-service/{id}', [PenggajianController::class, 'getTotalServiceByKaryawan']);
-    Route::get('/penggajian/{id}', [PenggajianController::class, 'show'])->name('penggajian.show');
-    Route::get('/penggajian/get-total-kehadiran/{id}', [PenggajianController::class, 'getTotalKehadiranByKaryawan']);
+        // Penggajian routes
+        Route::resource('penggajian', PenggajianController::class);
+        Route::get('/penggajian/get-tarif/{id}', [PenggajianController::class, 'getTarifByKaryawan'])->name('penggajian.get-tarif');
+        Route::get('/penggajian/get-total-service/{id}', [PenggajianController::class, 'getTotalServiceByKaryawan']);
+        Route::get('/penggajian/{id}', [PenggajianController::class, 'show'])->name('penggajian.show');
+        Route::get('/penggajian/get-total-kehadiran/{id}', [PenggajianController::class, 'getTotalKehadiranByKaryawan']);
+
+        Route::resource('beban', BebanController::class);
+
+    });
     
 
 // Laporan routes
@@ -150,7 +156,7 @@ Route::get('/get-user-email/{id}', function ($id) {
     return response()->json(['email' => $user ? $user->email : null]);
 });
 
-Route::prefix('presensi')->name('presensi.')->group(function () {
+Route::prefix('presensi')->middleware('auth')->name('presensi.')->group(function () {
     Route::get('create', [PresensiController::class, 'create'])->name('create');
     Route::post('store', [PresensiController::class, 'store'])->name('store');
     Route::get('index', [PresensiController::class, 'index'])->name('index');

@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <h5>Produk List</h5>
@@ -53,12 +53,37 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($produk as $produk)
-                                                    <tr>
-                                                        <td class="align-middle">{{ $produk->nama}}</td>
+                                                    <tr class="produk-row" data-stok="{{ $produk->stok }}"
+                                                        data-nama="{{ $produk->nama }}">
+                                                        <td class="align-middle">{{ $produk->nama }}</td>
                                                         <td class="align-middle">{{ $produk->kategori_barang->nama }}</td>
-                                                        <td class="align-middle">{{ $produk->stok }}</td>
-                                                        <td class="align-middle">Rp{{ number_format($produk->harga, 0, ',', '.') }}</td>
-                                                        <td class="align-middle">Rp{{ number_format($produk->hpp, 0, ',', '.') }}</td>
+                                                        <td>
+                                                            <div class="mb-0">
+                                                                <span>{{ $produk->stok }}</span>
+                                                                <div class="progress">
+                                                                    @php
+                                                                        $percentage = ($produk->stok / 100) * 100;
+                                                                        $progressClass = 'bg-success';
+                                                                        if ($percentage < 25) {
+                                                                            $progressClass = 'bg-danger';
+                                                                        } elseif ($percentage < 50) {
+                                                                            $progressClass = 'bg-warning';
+                                                                        } elseif ($percentage < 75) {
+                                                                            $progressClass = 'bg-info';
+                                                                        }
+                                                                    @endphp
+                                                                    <div class="progress-bar {{ $progressClass }}"
+                                                                        role="progressbar"
+                                                                        style="width: {{ $percentage }}%;"
+                                                                        aria-valuenow="{{ $produk->stok }}"
+                                                                        aria-valuemin="0" aria-valuemax="1000"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            Rp{{ number_format($produk->harga, 0, ',', '.') }}</td>
+                                                        <td class="align-middle">
+                                                            Rp{{ number_format($produk->hpp, 0, ',', '.') }}</td>
                                                         <td class="align-middle">
                                                             @if ($produk->status === 'Aktif')
                                                                 <span class="badge badge-success">Aktif</span>
@@ -94,22 +119,27 @@
                 </div>
             </div>
         </div>
-
         <script>
-            function confirmDelete(produkId) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "This action can't be undone!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById('delete-form-' + produkId).submit();
-                    }
-                })
-            }
+            document.addEventListener('DOMContentLoaded', function() {
+                @if ($lowStockProduk->isNotEmpty())
+                    @foreach ($lowStockProduk as $item)
+                        $.notify({
+                            message: 'Stok Produk "{{ $item->nama }}" tersisa {{ $item->stok }}. Segera lakukan restock atau pembelian barang dagang!'
+                        }, {
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'right'
+                            },
+                            delay: 3000,
+                            timer: 2000,
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            }
+                        });
+                    @endforeach
+                @endif
+            });
         </script>
     @endsection

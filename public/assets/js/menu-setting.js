@@ -1,5 +1,44 @@
 "use strict";
+function saveSettings(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+function loadSettings(key, defaultValue) {
+    const saved = localStorage.getItem(key);
+    return saved ? JSON.parse(saved) : defaultValue;
+}
+
+function applySettings() {
+    // Apply layout type
+    const layoutType = loadSettings('layoutType', 'menu-dark');
+    $('.layout-type > a[data-value="' + layoutType + '"]').click();
+
+    // Apply background color
+    const bgColor = loadSettings('backgroundColor', 'background-default');
+    $('.background-color.flat > a[data-value="' + bgColor + '"]').click();
+
+    // Apply RTL setting
+    const isRTL = loadSettings('isRTL', false);
+    $('#theme-rtl').prop('checked', isRTL).change();
+
+    // Apply menu fixed setting
+    const isMenuFixed = loadSettings('isMenuFixed', true);
+    $('#menu-fixed').prop('checked', isMenuFixed).change();
+
+    // Apply header fixed setting
+    const isHeaderFixed = loadSettings('isHeaderFixed', true);
+    $('#header-fixed').prop('checked', isHeaderFixed).change();
+
+    // Apply box layouts setting
+    const isBoxLayout = loadSettings('isBoxLayout', false);
+    $('#box-layouts').prop('checked', isBoxLayout).change();
+
+    // Apply breadcrumb sticky setting
+    const isBreadcumbSticky = loadSettings('isBreadcumbSticky', false);
+    $('#breadcumb-layouts').prop('checked', isBreadcumbSticky).change();
+}
 $(document).ready(function() {
+    applySettings();
     // =========================================================
     // =========    Menu Customizer [ HTML ] code   ============
     // =========================================================
@@ -139,6 +178,7 @@ $(document).ready(function() {
         } else {
             $('.layout-css').attr("href", "");
         }
+        saveSettings('layoutType', temp);
     });
     // background Color
     $('.background-color.flat > a').on('click', function() {
@@ -154,6 +194,7 @@ $(document).ready(function() {
             $('body').removeClassPrefix('background-');
             $('body').addClass('background-'+ temp.slice(11, temp.length));
         }
+        saveSettings('backgroundColor', temp);
     });
     // background Color outher
     $('.background-color.gradient > a').on('click', function() {
@@ -187,6 +228,7 @@ $(document).ready(function() {
         } else {
             $('.rtl-css').attr("href", "");
         }
+        saveSettings('isRTL', $(this).is(":checked"));
     });
     // Menu Fixed
     $('#menu-fixed').change(function() {
@@ -198,6 +240,7 @@ $(document).ready(function() {
         } else {
             $('.pcoded-navbar').removeClass('menupos-fixed');
         }
+        saveSettings('isMenuFixed', $(this).is(":checked"));
     });
     // Header Fixed
     $('#header-fixed').change(function() {
@@ -206,6 +249,7 @@ $(document).ready(function() {
         } else {
             $('.pcoded-header').removeClass('headerpos-fixed');
         }
+        saveSettings('isHeaderFixed', $(this).is(":checked"));
     });
     // breadcumb sicky
     $('#breadcumb-layouts').change(function() {
@@ -214,6 +258,7 @@ $(document).ready(function() {
         } else {
             $('.page-header').removeClass('breadcumb-sticky');
         }
+        saveSettings('isBreadcumbSticky', $(this).is(":checked"));
     });
     // Box layouts
     $('#box-layouts').change(function() {
@@ -224,6 +269,7 @@ $(document).ready(function() {
             $('body').removeClass('container');
             $('body').removeClass('box-layout');
         }
+        saveSettings('isBoxLayout', $(this).is(":checked"));
     });
     $.fn.removeClassPrefix = function(prefix) {
         this.each(function(i, it) {
@@ -273,6 +319,7 @@ $(document).ready(function() {
                 $('.pcoded-navbar').removeClass('menupos-fixed');
             }
         });
+        
     // ==================    Menu Customizer End   =============
     // =========================================================
 });

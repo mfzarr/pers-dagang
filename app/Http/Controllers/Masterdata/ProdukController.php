@@ -17,8 +17,15 @@ class ProdukController extends Controller
     {
         $id_perusahaan = Auth::user()->id_perusahaan;
         $produk = Produk::where('id_perusahaan', $id_perusahaan)->get();
-        return view('masterdata.produk.index', compact('produk'));
+    
+        // Produk dengan stok di bawah 25%
+        $lowStockProduk = $produk->filter(function ($item) {
+            return $item->stok < 25;
+        });
+    
+        return view('masterdata.produk.index', compact('produk', 'lowStockProduk'));
     }
+    
 
     /**
      * Show the form for creating a new resource.

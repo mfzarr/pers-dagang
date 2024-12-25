@@ -37,7 +37,7 @@
                                 <select class="form-control" id="id_user" name="id_user">
                                     <option value="">Belum Terdaftar</option>
                                     @foreach($users as $user)
-                                        @if($user->role == 'pegawai')
+                                        @if($user->role == 'pegawai' && $user->id_perusahaan == auth()->user()->id_perusahaan)
                                             <option value="{{ $user->id }}">{{ $user->id }} - {{ $user->username }}</option>
                                         @endif
                                     @endforeach

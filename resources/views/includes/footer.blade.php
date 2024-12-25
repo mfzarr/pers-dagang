@@ -54,6 +54,9 @@
 <script src="assets/js/plugins/jquery.dataTables.min.js"></script>
 <script src="assets/js/plugins/dataTables.bootstrap4.min.js"></script>
 <script src="assets/js/pages/data-basic-custom.js"></script>
+<script src="assets/js/plugins/apexcharts.min.js"></script>
+<script src="assets/js/plugins/apexcharts.min.js"></script>
+
 
 <!-- [ Pre-loader ] start -->
 <!-- Required JS -->
@@ -112,3 +115,7 @@
         }
     }
 </script>
+
+<script src="assets/js/plugins/bootstrap-notify.min.js"></script>
+<script src="assets/js/pages/ac-notification.js"></script>      
+<script src="assets/js/plugins/sweetalert.min.js"></script>
