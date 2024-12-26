@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         //  ->timezone('Asia/Jakarta') // Adjust this to match your timezone
         //  ->runInBackground();
         $schedule->command('app:generate_unique_code')->everyFiveMinutes();
+        $schedule->command('stok:hitung-bulanan')->monthlyOn(1, '00:00');
         // $schedule->job(new \App\Jobs\RandomizeKodePerusahaanJob)->everyFiveMinutes();
     }
 

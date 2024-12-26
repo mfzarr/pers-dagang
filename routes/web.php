@@ -27,6 +27,7 @@ use App\Http\Controllers\Transaksi\PenjualanController;
 use App\Http\Controllers\Transaksi\presensiController;
 use App\Http\Controllers\Transaksi\PenggajianController;
 use App\Http\Controllers\Transaksi\BebanController;
+use App\Http\Controllers\Laporan\LaporanLabaRugiController;
 use Illuminate\Support\Facades\Auth;
 
 // Auth routes
@@ -146,9 +147,11 @@ Route::middleware('auth')->group(function () {
     
 
 // Laporan routes
-Route::prefix('laporan')->middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/jurnal-umum', [JurnalUmumController::class, 'index'])->name('jurnal-umum.index');
     Route::get('/buku-besar', [JurnalUmumController::class, 'bukuBesar'])->name('buku-besar');
+    Route::get('/laba-rugi', [LaporanLabaRugiController::class, 'index'])->name('laba-rugi.index');
+
 });
 
 Route::get('/get-user-email/{id}', function ($id) {

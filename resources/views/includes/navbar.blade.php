@@ -50,20 +50,6 @@
 
                 <li class="nav-item pcoded-hasmenu">
                     <a href="#!" class="nav-link "><span class="pcoded-micon"><i
-                                class="feather icon-package"></i></span><span class="pcoded-mtext">Masterdata</span></a>
-                    <ul class="pcoded-submenu">
-                        <li><a href="{{ route('pelanggan.index') }}">Pelanggan</a></li>
-                        <li><a href="{{ route('supplier.index') }}">Supplier</a></li>
-                        <li><a href="{{ route('aset.index') }}">Asset</a></li>
-                        <li><a href="{{ route('barang.index') }}">Barang</a></li>
-                        <li><a href="{{ route('kategori-produk.index') }}">Kategori Produk</a></li>
-                        <li><a href="{{ route('produk.index') }}">Produk</a></li>
-                        <li><a href="{{ route('diskon.index') }}">Diskon</a></li>
-                    </ul>
-                </li>
-
-                <li class="nav-item pcoded-hasmenu">
-                    <a href="#!" class="nav-link "><span class="pcoded-micon"><i
                                 class="feather icon-book"></i></span><span class="pcoded-mtext">Chart Of
                             Account</span></a>
                     <ul class="pcoded-submenu">
@@ -82,7 +68,23 @@
                         {{-- <li><a href="pegawai/penggajian">Penggajian</a></li> --}}
                     </ul>
                 </li>
+
                 <li class="nav-item pcoded-hasmenu">
+                    <a href="#!" class="nav-link "><span class="pcoded-micon"><i
+                                class="feather icon-package"></i></span><span class="pcoded-mtext">Masterdata</span></a>
+                    <ul class="pcoded-submenu">
+                        <li><a href="{{ route('pelanggan.index') }}">Pelanggan</a></li>
+                        <li><a href="{{ route('supplier.index') }}">Supplier</a></li>
+                        <li><a href="{{ route('aset.index') }}">Asset</a></li>
+                        <li><a href="{{ route('barang.index') }}">Barang</a></li>
+                        <li><a href="{{ route('kategori-produk.index') }}">Kategori Produk</a></li>
+                        <li><a href="{{ route('produk.index') }}">Produk</a></li>
+                        <li><a href="{{ route('diskon.index') }}">Diskon</a></li>
+                        {{-- <li><a href="{{ route('stok-produk.index') }}">Stok Produk</a></li> --}}
+                    </ul>
+                </li>
+
+                 <li class="nav-item pcoded-hasmenu">
                     <a href="#!" class="nav-link "><span class="pcoded-micon"><i
                                 class="feather icon-credit-card"></i></span><span
                             class="pcoded-mtext">Transaksi</span></a>
@@ -100,6 +102,7 @@
                     <ul class="pcoded-submenu">
                         <li><a href="{{ route ('jurnal-umum.index')}}">Jurnal Umum</a></li>
                         <li><a href="{{ route ('buku-besar')}}">Buku Besar</a></li>
+                        <li><a href="{{ route ('laba-rugi.index')}}">Laporan Laba Rugi</a></li>
                         {{-- <li><a href="laporan/neraca">Neraca Saldo</a></li>
                         <li><a href="laporan/laba_rugi">Laporan Laba Rugi</a></li>
                         <li><a href="laporan/perubahan_modal">Laporan Perubahan Modal</a></li>

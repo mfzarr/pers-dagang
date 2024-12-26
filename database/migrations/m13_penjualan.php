@@ -25,6 +25,7 @@ return new class extends Migration
 
             $table->date('tgl_transaksi');
             $table->integer('total');
+            $table->decimal('hpp', 15, 2);
             $table->integer('discount')->default(0);
             $table->string('status');
 
@@ -34,7 +35,8 @@ return new class extends Migration
                 ->references('id_perusahaan')
                 ->on('perusahaan')
                 ->onDelete('cascade');
-
+            
+            
             $table->timestamps();
         });
 
@@ -55,6 +57,7 @@ return new class extends Migration
 
             $table->integer('harga');
             $table->integer('kuantitas');
+            $table->decimal('hpp', 15, 2);
 
             $table->unsignedBigInteger('id_pegawai')->nullable();
             $table->foreign('id_pegawai')

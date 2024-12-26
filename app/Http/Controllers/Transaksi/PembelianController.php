@@ -170,7 +170,7 @@ class PembelianController extends Controller
         $perusahaanId = $pembelian->id_perusahaan;
 
         // Get the COA (Chart of Accounts) for relevant accounts
-        $akunPembelian = Coa::where('kode_akun', '5101')->first(); // Pembelian account
+        $akunPembelian = Coa::where('kode_akun', '1103')->first(); // Pembelian account
         $akunUtang = Coa::where('kode_akun', '2101')->first(); // Utang account
         $akunKas = Coa::where('kode_akun', '1101')->first(); // Kas account
         $transactionId = Str::uuid();

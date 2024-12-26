@@ -84,8 +84,11 @@ class PenjualanController extends Controller
         ]);
 
         $total = 0;
+        $total_hpp = 0;
         foreach ($request->produk as $item) {
             $total += $item['kuantitas'] * $item['harga'];
+            $produk = Produk::find($item['id_produk']);
+            $total_hpp += $item['kuantitas'] * $produk->hpp; 
         }
 
         $pelanggan = Pelanggan::findOrFail($request->pelanggan);
@@ -110,6 +113,7 @@ class PenjualanController extends Controller
             'no_transaksi_penjualan' => $this->generateNoTransaksi(),
             'total' => $total - $discount_amount,
             'discount' => $discount_percentage,
+            'hpp' => $total_hpp,
         ]);      
 
         // Save the details
@@ -146,7 +150,7 @@ class PenjualanController extends Controller
         // Get the COA (Chart of Accounts) for relevant accounts
         $akunkas = Coa::where('kode_akun', '1101')->first(); // Example: Accounts Receivable
         $akunpenjualan = Coa::where('kode_akun', '4101')->first(); // Example: Sales Revenue
-        $akunhpp = Coa::where('kode_akun', '5103')->first(); // Example: Cost of Goods Sold
+        $akunhpp = Coa::where('kode_akun', '5101')->first(); // Example: Cost of Goods Sold
         $akunpbd = Coa::where('kode_akun', '1103')->first(); // Example: Cost of Goods Sold
 
         // Generate a unique transaction ID for this group of journal entries
@@ -177,7 +181,8 @@ class PenjualanController extends Controller
                     'id_coa' => $akunhpp->id_coa,
                     'nama_akun' => $akunhpp->nama_akun,
                     'kode_akun' => $akunhpp->kode_akun,
-                    'debit' => $penjualan->penjualanDetails->sum('kuantitas') * $penjualan->penjualanDetails->first()->produkRelation->hpp, // Debit
+                    'debit' => $penjualan->hpp, // Debit the receivables
+                    // 'debit' => $penjualan->penjualanDetails->sum('kuantitas') * $penjualan->penjualanDetails->first()->produkRelation->hpp,
                     'credit' => null, // No credit here
                     'transaction_id' => $transactionId, // Reference the same transaction ID
                 ],
@@ -186,7 +191,8 @@ class PenjualanController extends Controller
                     'nama_akun' => $akunpbd->nama_akun,
                     'kode_akun' => $akunpbd->kode_akun,
                     'debit' => null, // No debit here
-                    'credit' => $penjualan->penjualanDetails->sum('kuantitas') * $penjualan->penjualanDetails->first()->produkRelation->hpp, // Credit
+                    'credit' => $penjualan->hpp, // Debit the receivables
+                    // 'credit' => $penjualan->penjualanDetails->sum('kuantitas') * $penjualan->penjualanDetails->first()->produkRelation->hpp, // Credit
                     'transaction_id' => $transactionId, // Reference the same transaction ID
                 ]
             ],
