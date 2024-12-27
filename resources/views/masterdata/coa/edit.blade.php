@@ -10,6 +10,11 @@
                             <div class="page-header-title">
                                 <h5 class="m-b-10">Edit COA</h5>
                             </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('coa.index') }}">COA</a></li>
+                                <li class="breadcrumb-item"><a>Edit COA</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>

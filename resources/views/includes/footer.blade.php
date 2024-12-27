@@ -53,6 +53,7 @@
 <!-- datatable Js -->
 <script src="assets/js/plugins/jquery.dataTables.min.js"></script>
 <script src="assets/js/plugins/dataTables.bootstrap4.min.js"></script>
+<script src="assets/js/plugins/dataTables.fixedHeader.min.js"></script>
 <script src="assets/js/pages/data-basic-custom.js"></script>
 <script src="assets/js/plugins/apexcharts.min.js"></script>
 <script src="assets/js/plugins/apexcharts.min.js"></script>

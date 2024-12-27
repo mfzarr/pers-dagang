@@ -21,7 +21,12 @@
                         
                         <div class="form-group mb-3">
                             <label class="floating-label" for="kodePerusahaan">Kode Perusahaan</label>
-                            <input type="text" class="form-control" id="kodePerusahaan" name="kode_perusahaan" placeholder="Enter Company Code" required>
+                            <input type="text" class="form-control @error('kode_perusahaan') is-invalid @enderror" id="kodePerusahaan" name="kode_perusahaan" placeholder="Enter Company Code" required>
+                            @error('kode_perusahaan')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <button class="btn btn-primary btn-block mb-4">Submit</button>

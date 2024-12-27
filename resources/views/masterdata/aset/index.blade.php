@@ -4,7 +4,20 @@
     <div class="pcoded-main-container">
         <div class="pcoded-content">
             <div class="page-header">
-                <h5 class="m-b-10">List of Asset</h5>
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">List of Asset</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                            class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('aset.index') }}">Aset</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -35,8 +48,10 @@
                                             @foreach ($assets as $asset)
                                                 <tr>
                                                     <td>{{ $asset->nama_asset }}</td>
-                                                    <td>Rp{{ number_format($asset->harga_perolehan, 0, ',', '.') }}</td>
-                                                    <td>Rp{{ number_format($asset->nilai_sisa, 0, ',', '.') }}</td>
+                                                    <td>Rp{{ number_format($asset->harga_perolehan, 0, ',', '.') }}
+                                                    </td>
+                                                    <td>Rp{{ number_format($asset->nilai_sisa, 0, ',', '.') }}
+                                                    </td>
                                                     <td>{{ $asset->masa_manfaat }}</td>
                                                     <td>
                                                         <!-- Kirimkan ID aset sebagai parameter -->
@@ -46,7 +61,8 @@
                                                         </a>
                                                         <a href="{{ route('aset.depreciation', $asset->id_assets) }}"
                                                             class="btn btn-success btn-sm">
-                                                            <i class="feather icon-clipboard"></i> Depreciation
+                                                            <i class="feather icon-clipboard"></i>
+                                                            Depreciation
                                                         </a>
                                                         <form id="delete-form-{{ $asset->id_assets }}"
                                                             action="{{ route('aset.destroy', $asset->id_assets) }}"

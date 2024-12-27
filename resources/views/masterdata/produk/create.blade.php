@@ -13,7 +13,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('produk.index') }}">Produk</a></li>
-                            <li class="breadcrumb-item"><a href="#!">Add Produk</a></li>
+                            <li class="breadcrumb-item"><a>Add Produk</a></li>
                         </ul>
                     </div>
                 </div>

@@ -10,6 +10,11 @@
                             <div class="page-header-title">
                                 <h5 class="m-b-10">Edit Aset</h5>
                             </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('aset.index') }}">Aset</a></li>
+                                <li class="breadcrumb-item"><a>Edit</a></li>
+                            </ul>    
                         </div>
                     </div>
                 </div>

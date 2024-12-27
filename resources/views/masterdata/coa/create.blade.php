@@ -10,6 +10,11 @@
                         <div class="page-header-title">
                             <h5 class="m-b-10">Tambah COA</h5>
                         </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('coa.index') }}">COA</a></li>
+                            <li class="breadcrumb-item"><a>Tambah COA</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -19,7 +24,6 @@
             <div class="card-header">
                 <h5>Tambah COA Baru</h5>
             </div>
-
             <div class="card-body">
                 <!-- Make sure the form has the correct method and action -->
                 <form method="POST" action="{{ route('coa.store') }}">
@@ -58,7 +62,13 @@
                             <span class="text-danger">{{ $errors->first('posisi_d_c') }}</span>
                         @endif
                     </div>
-                    <input type="hidden" id="saldo_awal" name="saldo_awal" value="0">
+                    <div class="form-group">
+                        <label for="saldo_awal">Saldo Awal:</label>
+                        <input type="number" class="form-control" id="saldo_awal" name="saldo_awal" required>
+                        @if ($errors->has('saldo_awal'))
+                            <span class="text-danger">{{ $errors->first('saldo_awal') }}</span>
+                        @endif
+                    </div>
                     <input type="hidden" name="id_perusahaan" value="{{ auth()->user()->perusahaan->id_perusahaan }}">
                     <!-- Footer with buttons inside the form to ensure proper submission -->
                     <div class="text-right">

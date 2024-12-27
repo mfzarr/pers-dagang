@@ -11,9 +11,10 @@
                                 <h5 class="m-b-10">Add Diskon</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Diskon</a></li>
-                            </ul>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('diskon.index') }}">Diskon</a></li>
+                                <li class="breadcrumb-item"><a>Tambah Diskon</a></li>
+                            </ul>    
                         </div>
                     </div>
                 </div>

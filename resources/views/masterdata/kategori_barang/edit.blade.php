@@ -11,9 +11,10 @@
                                 <h5 class="m-b-10">Edit Kategori Produk</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Kategori Produk</a></li>
-                            </ul>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('kategori-produk.index') }}">Kategori Produk</a></li>
+                                <li class="breadcrumb-item"><a>Edit Kategori Produk</a></li>
+                            </ul> 
                         </div>
                     </div>
                 </div>

@@ -9,13 +9,12 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Data from Table: {{ ucfirst($table) }}</h5>
+                                <h5 class="m-b-10">Data COA Kelompok</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
                                             class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Data Table</a></li>
-                                <li class="breadcrumb-item"><a href="#!">Basic Initialization</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('coa.index') }}">COA</a></li>
                             </ul>
                         </div>
                     </div>

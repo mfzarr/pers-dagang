@@ -11,9 +11,10 @@
                                 <h5 class="m-b-10">Add Pelanggan</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Pelanggan</a></li>
-                            </ul>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('pelanggan.index') }}">Pelanggan</a></li>
+                                <li class="breadcrumb-item"><a>Tambah Pelanggan</a></li>
+                            </ul> 
                         </div>
                     </div>
                 </div>

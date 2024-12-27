@@ -11,9 +11,10 @@
                             <h5 class="m-b-10">Edit Karyawan</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#!">Karyawan</a></li>
-                        </ul>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('pegawai.index') }}">Karyawan</a></li>
+                            <li class="breadcrumb-item"><a>Edit Karyawan</a></li>
+                        </ul>  
                     </div>
                 </div>
             </div>

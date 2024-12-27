@@ -11,10 +11,9 @@
                                 <h5 class="m-b-10">List of Produk</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
-                                            class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Produk</a></li>
-                            </ul>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('produk.index') }}">Produk</a></li>
+                            </ul> 
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('aset.index') }}">Aset</a></li>
-                            <li class="breadcrumb-item active">Penyusutan</li>
+                            <li class="breadcrumb-item"><a>Depresiasi Aset</a></li>
                         </ul>
                     </div>
                 </div>

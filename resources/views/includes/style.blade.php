@@ -18,6 +18,8 @@
 
 <!-- vendor css -->
 <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+<link rel="stylesheet" href="assets/css/plugins/fixedHeader.bootstrap4.min.css">
+<link rel="stylesheet" href="assets/css/plugins/responsive.bootstrap4.min.css">
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
