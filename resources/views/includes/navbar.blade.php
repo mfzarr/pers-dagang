@@ -1,4 +1,4 @@
-<nav class="pcoded-navbar menu-light ">
+<nav class="pcoded-navbar menupos-fixed menu-light brand-blue">
     <div class="navbar-wrapper  ">
         <div class="navbar-content scroll-div ">
 

@@ -82,15 +82,14 @@ class KaryawanController extends Controller
         $request->validate([
             'nama' => 'required|max:255',
             'no_telp' => 'required|max:255',
-            'jenis_kelamin' => 'required|max:255',
-            'email' => 'nullable',
+            'jenis_kelamin' => 'required|in:Pria,Wanita',
+            'email' => 'nullable|email|max:255',
             'alamat' => 'required|max:255',
-            'status' => 'required',
-            'id_jabatan' => 'required|exists:jabatan,id_jabatan',
+            'status' => 'required|in:aktif,non-aktif',
             'id_user' => 'nullable|exists:users,id'
         ]);
-
-        $karyawan = Karyawan::where('id_perusahaan', Auth::user()->id_perusahaan)->findOrFail($id);
+    
+        $karyawan = Karyawan::findOrFail($id);
         $karyawan->update([
             'nama' => $request->nama,
             'no_telp' => $request->no_telp,
@@ -98,11 +97,10 @@ class KaryawanController extends Controller
             'email' => $request->email,
             'alamat' => $request->alamat,
             'status' => $request->status,
-            'id_jabatan' => $request->id_jabatan,
             'id_user' => $request->id_user
         ]);
-
-        return redirect()->route('pegawai.index')->with('success', 'Karyawan updated successfully.');
+    
+        return redirect()->route('pegawai.index')->with('success', 'Karyawan berhasil diupdate.');
     }
 
     public function destroy($id)

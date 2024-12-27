@@ -24,18 +24,30 @@
                     <div class="form-group">
                         <label for="nama_asset">Nama Aset</label>
                         <input type="text" name="nama_asset" class="form-control" required>
+                        @if ($errors->has('nama_asset'))
+                            <span class="text-danger">{{ $errors->first('nama_asset') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="harga_perolehan">Harga Perolehan</label>
                         <input type="text" name="harga_perolehan" id="harga_perolehan" class="form-control">
+                        @if ($errors->has('harga_perolehan'))
+                            <span class="text-danger">{{ $errors->first('harga_perolehan') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="nilai_sisa">Nilai Sisa</label>
                         <input type="text" name="nilai_sisa" id="nilai_sisa" class="form-control">
+                        @if ($errors->has('nilai_sisa'))
+                            <span class="text-danger">{{ $errors->first('nilai_sisa') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="masa_manfaat">Masa Manfaat (Tahun)</label>
                         <input type="number" name="masa_manfaat" class="form-control" required>
+                        @if ($errors->has('masa_manfaat'))
+                            <span class="text-danger">{{ $errors->first('masa_manfaat') }}</span>
+                        @endif
                     </div>
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary">Save</button>

@@ -24,23 +24,35 @@
                         @method('PUT')
                         <div class="form-group">
                             <label for="nama_asset">Nama Aset</label>
-                            <input type="text" name="nama_asset" class="form-control" value="{{ $asset->nama_asset }}" required>
+                            <input type="text" name="nama_asset" class="form-control" value="{{ old('nama_asset', $asset->nama_asset) }}" required>
+                            @if ($errors->has('nama_asset'))
+                                <span class="text-danger">{{ $errors->first('nama_asset') }}</span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="harga_perolehan">Harga Perolehan</label>
                             <input type="text" name="harga_perolehan" id="harga_perolehan" class="form-control"
-                                value="{{ number_format($asset->harga_perolehan, 0, ',', '.') }}">
+                                value="{{ old('harga_perolehan', number_format($asset->harga_perolehan, 0, ',', '.')) }}">
                             <input type="hidden" name="harga_perolehan" id="harga_perolehan_hidden" value="{{ $asset->harga_perolehan }}">
+                            @if ($errors->has('harga_perolehan'))
+                                <span class="text-danger">{{ $errors->first('harga_perolehan') }}</span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="nilai_sisa">Nilai Sisa</label>
                             <input type="text" name="nilai_sisa" id="nilai_sisa" class="form-control"
-                                value="{{ number_format($asset->nilai_sisa, 0, ',', '.') }}">
+                                value="{{ old('nilai_sisa', number_format($asset->nilai_sisa, 0, ',', '.')) }}">
                             <input type="hidden" name="nilai_sisa" id="nilai_sisa_hidden" value="{{ $asset->nilai_sisa }}">
+                            @if ($errors->has('nilai_sisa'))
+                                <span class="text-danger">{{ $errors->first('nilai_sisa') }}</span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="masa_manfaat">Masa Manfaat (Tahun)</label>
-                            <input type="number" name="masa_manfaat" class="form-control" value="{{ $asset->masa_manfaat }}" required
+                            <input type="number" name="masa_manfaat" class="form-control" value="{{ old('masa_manfaat', $asset->masa_manfaat) }}" required>
+                            @if ($errors->has('masa_manfaat'))
+                                <span class="text-danger">{{ $errors->first('masa_manfaat') }}</span>
+                            @endif
                         </div>
                         <div class="text-right">
                             <button type="submit" class="btn btn-primary">Save</button>
@@ -60,25 +72,18 @@
             hiddenField.value = value; // Simpan angka murni ke hidden field
         }
 
-        // Event listener untuk asuransi
-        const asuransiInput = document.getElementById('asuransi');
-        const asuransiHidden = document.getElementById('asuransi_hidden');
-        asuransiInput.addEventListener('input', function () {
-            formatAndSetHiddenField(asuransiInput, asuransiHidden);
+        // Event listener untuk harga perolehan
+        const hargaPerolehanInput = document.getElementById('harga_perolehan');
+        const hargaPerolehanHidden = document.getElementById('harga_perolehan_hidden');
+        hargaPerolehanInput.addEventListener('input', function () {
+            formatAndSetHiddenField(hargaPerolehanInput, hargaPerolehanHidden);
         });
 
-        // Event listener untuk tarif tetap
-        const tarifTetapInput = document.getElementById('tarif');
-        const tarifTetapHidden = document.getElementById('tarif_hidden');
-        tarifTetapInput.addEventListener('input', function () {
-            formatAndSetHiddenField(tarifTetapInput, tarifTetapHidden);
+        // Event listener untuk nilai sisa
+        const nilaiSisaInput = document.getElementById('nilai_sisa');
+        const nilaiSisaHidden = document.getElementById('nilai_sisa_hidden');
+        nilaiSisaInput.addEventListener('input', function () {
+            formatAndSetHiddenField(nilaiSisaInput, nilaiSisaHidden);
         });
-
-        // Opsional: Event listener untuk tarif tidak tetap (jika diperlukan)
-        // const tarifTidakTetapInput = document.getElementById('tarif_tidak_tetap');
-        // const tarifTidakTetapHidden = document.getElementById('tarif_tidak_tetap_hidden');
-        // tarifTidakTetapInput.addEventListener('input', function () {
-        //     formatAndSetHiddenField(tarifTidakTetapInput, tarifTidakTetapHidden);
-        // });
     </script>
 @endsection

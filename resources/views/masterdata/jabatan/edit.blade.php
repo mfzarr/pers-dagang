@@ -24,25 +24,37 @@
                         @method('PUT')
                         <div class="form-group">
                             <label for="nama">Nama</label>
-                            <input type="text" name="nama" class="form-control" value="{{ $jabatan->nama }}" required>
+                            <input type="text" name="nama" class="form-control" value="{{ old('nama', $jabatan->nama) }}" required>
+                            @if ($errors->has('nama'))
+                                <span class="text-danger">{{ $errors->first('nama') }}</span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="asuransi">Asuransi</label>
                             <input type="text" id="asuransi" class="form-control"
-                                value="{{ number_format($jabatan->asuransi, 0, ',', '.') }}">
-                            <input type="hidden" name="asuransi" id="asuransi_hidden" value="{{ $jabatan->asuransi }}">
+                                value="{{ old('asuransi', number_format($jabatan->asuransi, 0, ',', '.')) }}">
+                            <input type="hidden" name="asuransi" id="asuransi_hidden" value="{{ old('asuransi', $jabatan->asuransi) }}">
+                            @if ($errors->has('asuransi'))
+                                <span class="text-danger">{{ $errors->first('asuransi') }}</span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="tarif">Tarif Tetap</label>
                             <input type="text" id="tarif" class="form-control"
-                                value="{{ number_format($jabatan->tarif, 0, ',', '.') }}">
-                            <input type="hidden" name="tarif" id="tarif_hidden" value="{{ $jabatan->tarif }}">
+                                value="{{ old('tarif', number_format($jabatan->tarif, 0, ',', '.')) }}">
+                            <input type="hidden" name="tarif" id="tarif_hidden" value="{{ old('tarif', $jabatan->tarif) }}">
+                            @if ($errors->has('tarif'))
+                                <span class="text-danger">{{ $errors->first('tarif') }}</span>
+                            @endif
                         </div>
                         {{-- <div class="form-group">
                             <label for="tarif_tidak_tetap">Tarif Tidak Tetap</label>
                             <input type="text" id="tarif_tidak_tetap" class="form-control"
-                                value="{{ number_format($jabatan->tarif_tidak_tetap, 0, ',', '.') }}">
-                            <input type="hidden" name="tarif_tidak_tetap" id="tarif_tidak_tetap_hidden" value="{{ $jabatan->tarif_tidak_tetap }}">
+                                value="{{ old('tarif_tidak_tetap', number_format($jabatan->tarif_tidak_tetap, 0, ',', '.')) }}">
+                            <input type="hidden" name="tarif_tidak_tetap" id="tarif_tidak_tetap_hidden" value="{{ old('tarif_tidak_tetap', $jabatan->tarif_tidak_tetap) }}">
+                            @if ($errors->has('tarif_tidak_tetap'))
+                                <span class="text-danger">{{ $errors->first('tarif_tidak_tetap') }}</span>
+                            @endif
                         </div> --}}
                         <div class="text-right">
                             <button type="submit" class="btn btn-primary">Save</button>

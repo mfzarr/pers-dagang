@@ -84,8 +84,8 @@
                             <div class="form-group">
                                 <label for="status">Status</label>
                                 <select class="form-control" id="status" name="status" required>
-                                    <option value="aktif">Aktif</option>
-                                    <option value="non-aktif">Non-Aktif</option>
+                                    <option value="aktif" {{ $karyawan->status == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                                    <option value="non-aktif" {{ $karyawan->status == 'non-aktif' ? 'selected' : '' }}>Non-Aktif</option>
                                 </select>
                                 @error('status')
                                     <div class="text-danger">{{ $message }}</div>

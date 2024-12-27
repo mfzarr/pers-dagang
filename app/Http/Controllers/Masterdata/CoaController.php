@@ -19,7 +19,7 @@ class CoaController extends Controller
         $coas = Coa::where('id_perusahaan', $id_perusahaan)->get();
         return view('masterdata.coa.index', compact('coas'));
     }
-    
+
     /**
      * Store a newly created COA in the database.
      */
@@ -33,11 +33,11 @@ class CoaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_akun' => 'required|numeric|max:4',
+            'kode_akun' => 'required|numeric|digits_between:1,4|unique:coa,kode_akun,NULL,id,id_perusahaan,' . Auth::user()->id_perusahaan,
             'nama_akun' => 'required|string|max:255',
-            'kelompok_akun' => 'required|integer|exists:coa_kelompok,nama_kelompok_akun',
+            'kelompok_akun' => 'required|integer|exists:coa_kelompok,id_kelompok_akun',
             'posisi_d_c' => 'required|string|max:255',
-            'saldo_awal'=>'required|numeric|max:255',
+            'saldo_awal' => 'required|numeric|max:255',
         ]);
         Coa::create([
             'kode_akun' => $request->kode_akun,
@@ -49,7 +49,7 @@ class CoaController extends Controller
         ]);
         return redirect()->route('coa.index')->with('success', 'COA berhasil ditambahkan!');
     }
-        
+
 
     /**
      * Show the form for editing the specified COA record.
@@ -61,7 +61,7 @@ class CoaController extends Controller
         $kelompokakun = CoaKelompok::where('id_perusahaan', $id_perusahaan)->get();
         return view('masterdata.coa.edit', compact('coas', 'kelompokakun'));
     }
-    
+
 
     /**
      * Update the specified COA record.
@@ -69,15 +69,15 @@ class CoaController extends Controller
     public function update(Request $request, $id)
     {
         $coa = Coa::where('id_coa', $id)->firstOrFail();
-    
+
         $request->validate([
             'kode_akun' => 'required|numeric|digits_between:1,4',
             'nama_akun' => 'required|string|max:255',
-            'kelompok_akun' => 'required|integer|between:1,9|exists:coa_kelompok,nama_kelompok_akun',
+            'kelompok_akun' => 'required|integer|exists:coa_kelompok,id_kelompok_akun',
             'posisi_d_c' => 'required|string|max:255',
-            'saldo_awal' => 'required|numeric|max:9999999999',
+            'saldo_awal' => 'required|numeric|max:255',
         ]);
-    
+
         $coa->update([
             'kode_akun' => $request->kode_akun,
             'nama_akun' => $request->nama_akun,
@@ -85,17 +85,17 @@ class CoaController extends Controller
             'posisi_d_c' => $request->posisi_d_c,
             'saldo_awal' => $request->saldo_awal,
         ]);
-    
+
         return redirect()->route('coa.index')->with('success', 'COA berhasil diupdate!');
     }
-    
+
 
     /**
      * Remove the specified COA record.
      */
     public function destroy($id)
     {
-        $coa=Coa::where('id_perusahaan',Auth::user()->id_perusahaan)->findOrFail($id);
+        $coa = Coa::where('id_perusahaan', Auth::user()->id_perusahaan)->findOrFail($id);
         $coa->delete();
 
         return redirect()->route('coa.index')->with('success', 'COA berhasil dihapus!');

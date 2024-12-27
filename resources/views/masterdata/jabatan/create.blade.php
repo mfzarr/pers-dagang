@@ -24,14 +24,23 @@
                     <div class="form-group">
                         <label for="nama">Nama</label>
                         <input type="text" name="nama" class="form-control" required>
+                        @if ($errors->has('nama'))
+                            <span class="text-danger">{{ $errors->first('nama') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="asuransi">Asuransi</label>
                         <input type="text" name="asuransi" id="asuransi" class="form-control">
+                        @if ($errors->has('asuransi'))
+                            <span class="text-danger">{{ $errors->first('asuransi') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="tarif">Gaji</label>
                         <input type="text" name="tarif" id="tarif" class="form-control">
+                        @if ($errors->has('tarif'))
+                            <span class="text-danger">{{ $errors->first('tarif') }}</span>
+                        @endif
                     </div>
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary">Save</button>

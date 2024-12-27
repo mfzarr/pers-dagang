@@ -13,7 +13,7 @@ class PelunasanPembelian extends Model
 
     protected $fillable = [
         'id_pembelian',
-        'id_barang',
+        'id_produk',
         'total_pelunasan',
         'tanggal_pelunasan'
     ];

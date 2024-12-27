@@ -31,6 +31,9 @@
                             <div class="form-group">
                                 <label for="nama">Nama</label>
                                 <input type="text" class="form-control" id="nama" name="nama" required>
+                                @error('nama')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="id_user">User</label>
@@ -42,14 +45,23 @@
                                         @endif
                                     @endforeach
                                 </select>
+                                @error('id_user')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email">
+                                @error('email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>                            
                             <div class="form-group">
                                 <label for="no_telp">No Telp</label>
                                 <input type="text" class="form-control" id="no_telp" name="no_telp" required>
+                                @error('no_telp')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="jenis_kelamin">Jenis Kelamin</label>
@@ -57,10 +69,16 @@
                                     <option value="Pria">Pria</option>
                                     <option value="Wanita">Wanita</option>
                                 </select>
+                                @error('jenis_kelamin')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="alamat">Alamat</label>
                                 <input type="text" class="form-control" id="alamat" name="alamat" required>
+                                @error('alamat')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="status">Status</label>
@@ -68,6 +86,9 @@
                                     <option value="aktif">Aktif</option>
                                     <option value="non-aktif">Non-Aktif</option>
                                 </select>
+                                @error('status')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="id_jabatan">Jabatan</label>
@@ -76,6 +97,9 @@
                                     <option value="{{ $jabatan->id_jabatan }}">{{ $jabatan->nama }}</option>
                                     @endforeach
                                 </select>
+                                @error('id_jabatan')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="text-right">
                                 <button type="submit" class="btn btn-primary">Save</button>

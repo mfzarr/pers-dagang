@@ -6,7 +6,7 @@
             <div class="page-header">
                 <div class="page-block">
                     <div class="row align-items-center">
-                        <div class="col-md-12">
+                        <div class="col-md-12"></div>
                             <div class="page-header-title">
                                 <h5 class="m-b-10">Edit Barang</h5>
                             </div>
@@ -33,10 +33,16 @@
                                     <label for="nama">Nama</label>
                                     <input type="text" class="form-control" id="nama" name="nama"
                                         value="{{ $barang1->nama }}" required>
+                                    @if ($errors->has('nama'))
+                                        <span class="text-danger">{{ $errors->first('nama') }}</span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label for="detail">Detail</label>
                                     <textarea class="form-control" id="detail" name="detail" rows="3" required>{{ $barang1->detail }}</textarea>
+                                    @if ($errors->has('detail'))
+                                        <span class="text-danger">{{ $errors->first('detail') }}</span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label for="satuan">Satuan</label>
@@ -44,6 +50,9 @@
                                         <option value="Pcs" {{ $barang1->satuan == 'Pcs' ? 'selected' : '' }}>Pcs</option>
                                         <option value="Ml" {{ $barang1->satuan == 'Ml' ? 'selected' : '' }}>Ml</option>
                                     </select>
+                                    @if ($errors->has('satuan'))
+                                        <span class="text-danger">{{ $errors->first('satuan') }}</span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label for="kategori">Kategori</label>
@@ -52,6 +61,9 @@
                                         <option value="Perlengkapan" {{ $barang1->kategori == 'Perlengkapan' ? 'selected' : '' }}>Perlengkapan</option>
                                         <option value="Peralatan" {{ $barang1->kategori == 'Peralatan' ? 'selected' : '' }}>Peralatan</option>
                                     </select>
+                                    @if ($errors->has('kategori'))
+                                        <span class="text-danger">{{ $errors->first('kategori') }}</span>
+                                    @endif
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary">Save</button>

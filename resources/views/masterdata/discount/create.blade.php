@@ -30,15 +30,21 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="min_transaksi">Minimum Transaksi</label>
-                                    <input type="number" class="form-control" id="min_transaksi" name="min_transaksi" required>
+                                    <input type="number" class="form-control @error('min_transaksi') is-invalid @enderror" id="min_transaksi" name="min_transaksi" required>
+                                    @error('min_transaksi')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="discount_percentage">Persentasi Diskon</label>
                                     <div class="input-group">
-                                        <input type="number" class="form-control" id="discount_percentage" name="discount_percentage" required>
+                                        <input type="number" class="form-control @error('discount_percentage') is-invalid @enderror" id="discount_percentage" name="discount_percentage" required>
                                         <div class="input-group-append">
                                             <span class="input-group-text">%</span>
                                         </div>
+                                        @error('discount_percentage')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="text-right">
