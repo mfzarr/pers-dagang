@@ -34,6 +34,9 @@
                                     <label for="nama">Nama Produk</label>
                                     <input type="text" class="form-control" id="nama" name="nama"
                                         value="{{ $produk->nama }}" required>
+                                    @error('nama')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -47,24 +50,36 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('id_kategori_barang')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="stok">Stok</label>
                                     <input type="number" class="form-control" id="stok" name="stok"
                                         value="{{ $produk->stok }}" required>
+                                    @error('stok')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="harga">Harga Jual</label>
                                     <input type="text" class="form-control format-number" id="harga" name="harga"
                                         value="{{ $produk->harga }}" required>
+                                    @error('harga')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="hpp">HPP</label>
                                     <input type="text" class="form-control format-number" id="hpp" name="hpp"
                                         value="{{ $produk->hpp }}" required>
+                                    @error('hpp')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -73,6 +88,9 @@
                                         <option value="Aktif" {{ $produk->status == 'Aktif' ? 'selected' : '' }}>Aktif</option>
                                         <option value="Tidak Aktif" {{ $produk->status == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
                                     </select>
+                                    @error('status')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="text-right">

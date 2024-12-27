@@ -31,8 +31,11 @@
                                 @method('PUT')
                                 <div class="form-group">
                                     <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" id="nama" name="nama"
-                                        value="{{ $kategori_barang->nama }}" required>
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"
+                                        value="{{ old('nama', $kategori_barang->nama) }}" required>
+                                    @error('nama')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary">Save</button>

@@ -33,16 +33,25 @@
                                     <label for="nama">Nama</label>
                                     <input type="text" class="form-control" id="nama" name="nama"
                                         value="{{ $pelanggan->nama }}" required>
+                                    @error('nama')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" name="email"
                                         value="{{ $pelanggan->email }}">
+                                    @error('email')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="no_telp">No Telp</label>
                                     <input type="number" class="form-control" id="no_telp" name="no_telp"
                                         value="{{ $pelanggan->no_telp }}" required>
+                                    @error('no_telp')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="jenis_kelamin">Jenis Kelamin</label>
@@ -54,15 +63,24 @@
                                             {{ $pelanggan->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan
                                         </option>
                                     </select>
+                                    @error('jenis_kelamin')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="tgl_daftar">Tanggal Daftar</label>
                                     <input type="date" class="form-control" id="tgl_daftar" name="tgl_daftar"
                                         value="{{ $pelanggan->tgl_daftar }}" required>
+                                    @error('tgl_daftar')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="alamat">Alamat</label>
                                     <textarea class="form-control" id="alamat" name="alamat" required>{{ $pelanggan->alamat }}</textarea>
+                                    @error('alamat')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="status">Status</label>
@@ -72,6 +90,9 @@
                                         <option value="Tidak Aktif"
                                             {{ $pelanggan->status == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
                                     </select>
+                                    @error('status')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary">Save</button>
