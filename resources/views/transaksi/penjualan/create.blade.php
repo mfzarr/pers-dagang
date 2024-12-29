@@ -11,9 +11,9 @@
                             <h5 class="m-b-10">Create Penjualan</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('penjualan.index') }}">Penjualan</a></li>
-                            <li class="breadcrumb-item active">Create Penjualan</li>
+                            <li class="breadcrumb-item active"><a>Tambah Penjualan</a></li>
                         </ul>
                     </div>
                 </div>

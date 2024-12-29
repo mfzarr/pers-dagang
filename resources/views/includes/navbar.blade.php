@@ -103,6 +103,7 @@
                         <li><a href="{{ route ('jurnal-umum.index')}}">Jurnal Umum</a></li>
                         <li><a href="{{ route ('buku-besar')}}">Buku Besar</a></li>
                         <li><a href="{{ route ('laba-rugi.index')}}">Laporan Laba Rugi</a></li>
+                        <li><a href="{{ route ('neraca.index')}}">Neraca Saldo</a></li>
                         {{-- <li><a href="laporan/neraca">Neraca Saldo</a></li>
                         <li><a href="laporan/laba_rugi">Laporan Laba Rugi</a></li>
                         <li><a href="laporan/perubahan_modal">Laporan Perubahan Modal</a></li>

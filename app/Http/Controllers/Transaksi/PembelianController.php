@@ -12,6 +12,7 @@ use App\Models\Masterdata\Coa;
 use Illuminate\Support\Str;
 use App\Models\Laporan\JurnalUmum;
 use Illuminate\Support\Carbon;
+use App\Models\Masterdata\stok_produk;
 
 class PembelianController extends Controller
 {
@@ -88,6 +89,14 @@ class PembelianController extends Controller
             $produk = Produk::find($item['id_produk']);
             $produk->stok += $item['qty'];
             $produk->save();
+
+            //Update Stok Masuk
+            $stok = stok_produk::firstOrCreate(
+                ['id_produk' => $item['id_produk']],
+                ['stok_masuk' => 0, 'stok_keluar' => 0, 'stok_akhir' => 0]
+            );
+            $stok->stok_masuk += $item['qty'];
+            $stok->save();        
         }
 
         $status = ($total_dibayar >= $total) ? 'Lunas' : 'Belum Lunas';

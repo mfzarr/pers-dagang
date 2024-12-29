@@ -12,7 +12,7 @@
                                 <h5 class="m-b-10">Create Pembelian</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('pembelian.index') }}">Pembelian</a></li>
                                 <li class="breadcrumb-item"><a href="#!">Create Pembelian</a></li>
                             </ul>

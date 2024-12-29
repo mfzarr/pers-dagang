@@ -95,6 +95,10 @@
                                                                 class="btn btn-info btn-sm">
                                                                 <i class="feather icon-edit"></i>&nbsp;Edit
                                                             </a>
+                                                            <a href="{{ route('produk.show', $produk->id_produk) }}"
+                                                                class="btn btn-primary btn-sm">
+                                                                <i class="feather icon-eye"></i>&nbsp;Detail
+                                                            </a>
                                                             <form id="delete-form-{{ $produk->id_produk }}"
                                                                 action="{{ route('produk.destroy', $produk->id_produk) }}"
                                                                 method="POST" style="display:inline;">

@@ -11,9 +11,10 @@
                                 <h5 class="m-b-10">List of Presensi</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">Presensi</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('presensi.index') }}">Presensi</a></li>
                             </ul>
+
                         </div>
                     </div>
                 </div>

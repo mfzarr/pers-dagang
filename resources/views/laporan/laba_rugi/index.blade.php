@@ -11,8 +11,8 @@
                             <h5 class="m-b-10">Laporan Laba Rugi</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item active">Laporan Laba Rugi</li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('jurnal-umum.index') }}">Jurnal Umum</a></li>
                         </ul>
                     </div>
                 </div>

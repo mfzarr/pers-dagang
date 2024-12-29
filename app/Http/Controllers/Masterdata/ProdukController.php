@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Masterdata\Produk;
 use App\Models\Masterdata\Kategori_barang;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 
 class ProdukController extends Controller
@@ -40,36 +41,93 @@ class ProdukController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'nama' => 'required|max:255',
+    //         'id_kategori_barang' => 'required|exists:kategori_barang,id_kategori_barang',            
+    //         'stok' => 'required|integer',
+    //         'harga' => 'required|integer',
+    //         'hpp' => 'required|integer',
+    //         'status' => 'required',
+    //     ]);
+
+    //     Produk::create([
+    //         'nama' => $request->nama,
+    //         'id_kategori_barang' => $request->id_kategori_barang, // Kesalahan di sini
+    //         'stok' => $request->stok,
+    //         'harga' => $request->harga,
+    //         'hpp' => $request->hpp,
+    //         'status' => $request->status,
+    //         'id_perusahaan' => Auth::user()->id_perusahaan,
+    //     ]);
+        
+
+    //     return redirect()->route('produk.index')->with('success', 'Produk created successfully.');
+    // }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id_produk)
+    {
+        $id_perusahaan = Auth::user()->id_perusahaan;
+        $produk = Produk::where('id_perusahaan', $id_perusahaan)->findOrFail($id_produk);
+        return view('masterdata.produk.show', compact('produk'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required|max:255',
-            'id_kategori_barang' => 'required|exists:kategori_barang,id_kategori_barang',            'stok' => 'required|integer',
+            'id_kategori_barang' => 'required|exists:kategori_barang,id_kategori_barang',            
+            'stok' => 'required|integer',
             'harga' => 'required|integer',
             'hpp' => 'required|integer',
             'status' => 'required',
         ]);
 
-        Produk::create([
+        $id_perusahaan = Auth::user()->id_perusahaan;
+
+        $produk = Produk::create([
             'nama' => $request->nama,
-            'id_kategori_barang' => $request->id_kategori_barang, // Kesalahan di sini
+            'id_kategori_barang' => $request->id_kategori_barang,
             'stok' => $request->stok,
             'harga' => $request->harga,
             'hpp' => $request->hpp,
             'status' => $request->status,
-            'id_perusahaan' => Auth::user()->id_perusahaan,
+            'id_perusahaan' => $id_perusahaan,
         ]);
-        
+
+        $id_produk = $produk->id_produk;
+        $stok_awal = $request->stok;
+        $bulan = date('Y-m-01');
+
+        $stok_masuk = \DB::table('pembelian_detail')
+            ->where('id_produk', $id_produk)
+            ->whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))
+            ->sum('qty');
+
+        $stok_keluar = \DB::table('penjualan_detail')
+            ->where('id_produk', $id_produk)
+            ->whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))
+            ->sum('kuantitas');
+
+        \DB::table('stok_produk')->insert([
+            'id_produk' => $id_produk,
+            'stok_awal' => $stok_awal,
+            'stok_masuk' => $stok_masuk,
+            'stok_keluar' => $stok_keluar,
+            'bulan' => $bulan,
+            'id_perusahaan' => $id_perusahaan,
+        ]);
 
         return redirect()->route('produk.index')->with('success', 'Produk created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Produk $produk)
-    {
-        //
     }
 
     /**

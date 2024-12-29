@@ -11,9 +11,9 @@
                             <h5 class="m-b-10">Detail Pembelian</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('pembelian.index') }}">Pembelian</a></li>
-                            <li class="breadcrumb-item active">Detail Pembelian</li>
+                            <li class="breadcrumb-item"><a>Detail Pembelian</a></li>
                         </ul>
                     </div>
                 </div>

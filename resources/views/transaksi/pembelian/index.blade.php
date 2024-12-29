@@ -11,8 +11,9 @@
                                 <h5 class="m-b-10">Daftar Transaksi Pembelian</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item active">Pembelian</li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                            class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('pembelian.index') }}">Pembelian</a></li>
                             </ul>
                         </div>
                     </div>
@@ -22,7 +23,10 @@
             <div class="card">
                 <div class="card-header">
                     <h5>List Pembelian</h5>
-                    <a href="{{ route('pembelian.create') }}" class="btn btn-primary">Tambah Pembelian</a>
+                    <div class="float-right">
+                        <a href="{{ route('pembelian.create') }}" class="btn btn-success btn-sm btn-round has-ripple"><i
+                                class="feather icon-plus"></i>Add Pembelian</a>
+                    </div>
                 </div>
 
                 <div class="card-body">

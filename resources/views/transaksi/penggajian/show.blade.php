@@ -11,9 +11,9 @@
                             <h5 class="m-b-10">Detail Penggajian</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('penggajian.index') }}">Penggajian</a></li>
-                            <li class="breadcrumb-item active">Detail Penggajian</li>
+                            <li class="breadcrumb-item"><a>Detail Penggajian</a></li>
                         </ul>
                     </div>
                 </div>

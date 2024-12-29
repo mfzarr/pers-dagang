@@ -11,9 +11,9 @@
                                 <h5 class="m-b-10">kehadiran ({{ $today }})</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('presensi.index') }}">Presensi</a></li>
-                                <li class="breadcrumb-item">Tambah Kehadiran</li>
+                                <li class="breadcrumb-item active"><a>Tambah Kehadiran</a></li>
                             </ul>
                         </div>
                     </div>

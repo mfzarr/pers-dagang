@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Models\Masterdata\stok_produk;
 
 
 class PenjualanController extends Controller
@@ -82,7 +83,12 @@ class PenjualanController extends Controller
             'produk.*.kuantitas' => 'required|integer|min:1',
             'produk.*.pegawai' => 'required|exists:karyawan,id_karyawan',
         ]);
-
+        foreach ($request->produk as $item) {
+            $produk = Produk::find($item['id_produk']);
+            if ($produk->stok < $item['kuantitas']) {
+                return redirect()->back()->withErrors(["Stok tidak mencukupi untuk produk {$produk->nama_produk}. Stok tersedia: {$produk->stok}"]);
+            }
+        }
         $total = 0;
         $total_hpp = 0;
         foreach ($request->produk as $item) {
@@ -129,6 +135,13 @@ class PenjualanController extends Controller
         $produk = Produk::find($item['id_produk']);
         $produk->stok -= $item['kuantitas'];
         $produk->save();
+
+        $stok = stok_produk::firstOrCreate(
+            ['id_produk' => $item['id_produk']],
+            ['stok_masuk' => 0, 'stok_keluar' => 0, 'stok_akhir' => 0]
+        );
+        $stok->stok_keluar += $item['kuantitas'];
+        $stok->save(); 
 
         // Update jumlah_transaksi for the pelanggan
         $pelanggan->increment('jumlah_transaksi');

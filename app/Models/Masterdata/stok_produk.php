@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Masterdata;
 
 use App\Models\Transaksi\Pembeliandetail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Masterdata\Produk;
 use App\Models\Transaksi\PenjualanDetail;
 
-class stokBarang extends Model
+class stok_produk extends Model
 {
     use HasFactory;
 
-    protected $table = 'stok_barang';
+    protected $table ='stok_produk';
 
-    protected $primaryKey = 'id_stok';
+    protected $primaryKey = 'id_stok_produk';
 
     protected $guarded = [];
 
