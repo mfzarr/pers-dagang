@@ -57,11 +57,12 @@ class Perusahaan extends Model
             ['kode_akun' => '1103', 'nama_akun' => 'Persediaan Barang Dagang', 'kelompok_akun' => '1', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'status' => 'seeder', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
             ['kode_akun' => '1104', 'nama_akun' => 'Perlengkapan', 'kelompok_akun' => '1', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'status' => 'seeder', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
             ['kode_akun' => '1201', 'nama_akun' => 'Peralatan', 'kelompok_akun' => '1', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'status' => 'seeder', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode_akun' => '1202', 'nama_akun' => 'Akumulasi Penyusutan Peralatan', 'kelompok_akun' => '1', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 0, 'status' => 'seeder', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
             ['kode_akun' => '2101', 'nama_akun' => 'Utang Dagang', 'kelompok_akun' => '2', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 0, 'status' => 'seeder', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
-            ['kode_akun' => '3101', 'nama_akun' => 'Modal', 'kelompok_akun' => '3', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 0, 'status' => 'manual', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode_akun' => '3101', 'nama_akun' => 'Modal', 'kelompok_akun' => '3', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 0, 'status' => 'seeder', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
             ['kode_akun' => '4101', 'nama_akun' => 'Penjualan', 'kelompok_akun' => '4', 'posisi_d_c' => 'Kredit', 'saldo_awal' => 0, 'status' => 'seeder', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
             ['kode_akun' => '5101', 'nama_akun' => 'Harga Pokok Penjualan', 'kelompok_akun' => '5', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'status' => 'seeder', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
-            ['kode_akun' => '5203', 'nama_akun' => 'Beban Gaji', 'kelompok_akun' => '5', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'status' => 'manual', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
+            ['kode_akun' => '5203', 'nama_akun' => 'Beban Gaji', 'kelompok_akun' => '5', 'posisi_d_c' => 'Debit', 'saldo_awal' => 0, 'status' => 'seeder', 'id_perusahaan' => $this->id_perusahaan, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

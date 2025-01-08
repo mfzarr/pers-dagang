@@ -11,8 +11,8 @@
                             <h5 class="m-b-10">Laporan Neraca</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="neraca">Neraca</li>
+                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item active">Neraca</li>
                         </ul>
                     </div>
                 </div>
@@ -103,6 +103,19 @@
                             <div class="col-8">Jumlah Hutang Jangka Pendek</div>
                             <div class="col-4 text-right">Rp {{ number_format($totalCurrentLiabilities, 0, ',', '.') }}</div>
                         </div>
+
+                        <h6>Hutang Jangka Panjang</h6><br>
+                        {{-- @foreach($currentLiabilities as $liability)
+                        <div class="row">
+                            <div class="col-2">{{ $liability->kode_akun }}</div>
+                            <div class="col-6">{{ $liability->nama_akun }}</div>
+                            <div class="col-4 text-right">Rp {{ number_format($liability->ending_balance, 0, ',', '.') }}</div>
+                        </div>
+                        @endforeach
+                        <div class="row font-weight-bold mb-4">
+                            <div class="col-8">Jumlah Hutang Jangka Panjang</div>
+                            <div class="col-4 text-right">Rp {{ number_format($totalCurrentLiabilities, 0, ',', '.') }}</div>
+                        </div> --}}
 
                         <!-- Equity -->
                         <h6>Modal</h6>

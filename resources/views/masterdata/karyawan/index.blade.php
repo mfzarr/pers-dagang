@@ -12,7 +12,7 @@
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('pegawai.index') }}">Karyawan</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('pegawai.index') }}">Pegawai</a></li>
                         </ul>   
                     </div>
                 </div>
@@ -25,12 +25,12 @@
                     <div class="card-header">
                         <h5>Pegawai List</h5>
                         <div class="float-right">
-                            <a href="{{ route('pegawai.create') }}" class="btn btn-success btn-sm btn-round has-ripple"><i class="feather icon-plus"></i>Add Karyawan</a>
+                            <a href="{{ route('pegawai.create') }}" class="btn btn-success btn-sm btn-round has-ripple"><i class="feather icon-plus"></i>Add Pegawai</a>
                         </div>
                     </div>
                     <div class="card-body">
                         @if($karyawans->isEmpty())
-                            <p>No karyawan found for your perusahaan.</p>
+                            <p>No Karyawan found for your perusahaan.</p>
                         @else
                             <div class="table-responsive">
                                 <table id="simpletable" class="table table-striped table-bordered">

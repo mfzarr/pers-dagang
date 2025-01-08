@@ -61,10 +61,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="id_perusahaan">Perusahaan</label>
-                        <input type="hidden" name="id_perusahaan" id="id_perusahaan" value="{{ auth()->user()->id_perusahaan }}" class="form-control" readonly>
-                    </div>
+                    <input type="hidden" name="id_perusahaan" id="id_perusahaan" value="{{ auth()->user()->id_perusahaan }}">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>

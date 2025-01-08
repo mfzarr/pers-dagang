@@ -15,8 +15,8 @@ class Barang1 extends Model
 
     protected $fillable = [
         'nama',
-        'detail',
-        'satuan',
+        // 'detail',
+        // 'satuan',
         'kategori',
         'id_perusahaan',
     ]; // mass-assignable attributes

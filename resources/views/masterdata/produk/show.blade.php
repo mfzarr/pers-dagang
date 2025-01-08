@@ -47,7 +47,7 @@
                                                 <td>{{ $Stok->stok_awal }}</td>
                                                 <td>{{ $Stok->stok_masuk }}</td>
                                                 <td>{{ $Stok->stok_keluar }}</td>
-                                                <td>{{ $Stok->stok_akhir}}</td>
+                                                <td>{{ $produk->stok}}</td>
                                             </tr>
                                             </tr>
                                         @endforeach

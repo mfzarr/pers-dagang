@@ -110,6 +110,7 @@
                         <li><a href="{{ route ('buku-besar')}}">Buku Besar</a></li>
                         <li><a href="{{ route ('neraca-saldo')}}">Neraca Saldo</a></li>
                         <li><a href="{{ route ('laba-rugi.index')}}">Laporan Laba Rugi</a></li>
+                        <li><a href="{{ route ('perubahan-modal.index')}}">Laporan Perubahan Modal</a></li>
                         <li><a href="{{ route ('neraca.index')}}">Laporan Neraca</a></li>
                         {{-- <li><a href="laporan/neraca">Neraca Saldo</a></li>
                         <li><a href="laporan/laba_rugi">Laporan Laba Rugi</a></li>

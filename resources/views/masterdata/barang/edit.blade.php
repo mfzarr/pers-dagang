@@ -39,7 +39,7 @@
                                         <span class="text-danger">{{ $errors->first('nama') }}</span>
                                     @endif
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="detail">Detail</label>
                                     <textarea class="form-control" id="detail" name="detail" rows="3" required>{{ $barang1->detail }}</textarea>
                                     @if ($errors->has('detail'))
@@ -55,7 +55,7 @@
                                     @if ($errors->has('satuan'))
                                         <span class="text-danger">{{ $errors->first('satuan') }}</span>
                                     @endif
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="kategori">Kategori</label>
                                     <select class="form-control" id="kategori" name="kategori" required>

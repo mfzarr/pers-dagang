@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('barang1', function (Blueprint $table) {
             $table->id('id_barang1');
             $table->string('nama');
-            $table->string('detail');
-            $table->string('satuan');
+            // $table->string('detail');
+            // $table->string('satuan');
             $table->string('kategori');
             $table->foreignId('id_perusahaan'); // Foreign key column
             $table->foreign('id_perusahaan')->references('id_perusahaan')->on('perusahaan')->onDelete('cascade');

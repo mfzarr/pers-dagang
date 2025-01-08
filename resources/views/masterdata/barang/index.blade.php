@@ -37,8 +37,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Nama</th>
-                                                <th>Detail</th>
-                                                <th>Satuan</th>
+                                                {{-- <th>Detail</th>
+                                                <th>Satuan</th> --}}
                                                 <th>Kategori</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -47,8 +47,8 @@
                                             @foreach ($barang1 as $Barang)
                                                 <tr>
                                                     <td>{{ $Barang->nama }}</td>
-                                                    <td>{{ $Barang->detail }}</td>
-                                                    <td>{{ $Barang->satuan }}</td>
+                                                    {{-- <td>{{ $Barang->detail }}</td>
+                                                    <td>{{ $Barang->satuan }}</td> --}}
                                                     <td>{{ $Barang->kategori }}</td>
                                                     <td>
                                                         <a href="{{ route('barang.edit', $Barang->id_barang1) }}"

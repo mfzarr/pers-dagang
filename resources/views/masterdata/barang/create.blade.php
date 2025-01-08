@@ -46,7 +46,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="detail">Detail</label>
                                     <textarea class="form-control" id="detail" name="detail" rows="3" required></textarea>
                                     @error('detail')
@@ -62,7 +62,7 @@
                                     @error('satuan')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="kategori">Kategori</label>
                                     <select class="form-control" id="kategori" name="kategori" required>

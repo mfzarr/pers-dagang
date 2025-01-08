@@ -11,7 +11,8 @@
                                 <h5 class="m-b-10">Edit COA</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                            class="feather icon-home"></i></a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('coa.index') }}">COA</a></li>
                                 <li class="breadcrumb-item"><a>Edit COA</a></li>
                             </ul>
@@ -33,8 +34,9 @@
                         <!-- Menampilkan pesan kesalahan untuk kode_akun -->
                         <div class="form-group">
                             <label for="kode_akun">Kode Akun:</label>
-                            <input type="text" class="form-control @error('kode_akun') is-invalid @enderror" id="kode_akun" name="kode_akun"
-                                value="{{ old('kode_akun', $coas->kode_akun) }}" required readonly>
+                            <input type="text" class="form-control @error('kode_akun') is-invalid @enderror"
+                                id="kode_akun" name="kode_akun" value="{{ old('kode_akun', $coas->kode_akun) }}" required
+                                readonly>
                             @error('kode_akun')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -43,8 +45,9 @@
                         <!-- Menampilkan pesan kesalahan untuk nama akun -->
                         <div class="form-group">
                             <label for="nama_akun">Nama Akun:</label>
-                            <input type="text" class="form-control @error('nama_akun') is-invalid @enderror" id="nama_akun" name="nama_akun"
-                                value="{{ old('nama_akun', $coas->nama_akun) }}" required>
+                            <input type="text" class="form-control @error('nama_akun') is-invalid @enderror"
+                                id="nama_akun" name="nama_akun" value="{{ old('nama_akun', $coas->nama_akun) }}" 
+                                required {{ $coas->status == 'seeder' ? 'readonly' : '' }}>
                             @error('nama_akun')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -53,7 +56,8 @@
                         <!-- Menampilkan pesan kesalahan untuk kelompok akun -->
                         <div class="form-group">
                             <label for="kelompok_akun">Kelompok Akun:</label>
-                            <select class="form-control @error('kelompok_akun') is-invalid @enderror" id="kelompok_akun" name="kelompok_akun" required>
+                            <select class="form-control @error('kelompok_akun') is-invalid @enderror" id="kelompok_akun"
+                                name="kelompok_akun" required disabled>
                                 <option value="" selected hidden>Pilih Kelompok</option>
                                 @foreach ($kelompokakun as $option)
                                     <option value="{{ $option->kelompok_akun }}"
@@ -62,6 +66,8 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <input type="hidden" name="kelompok_akun"
+                                value="{{ old('kelompok_akun', $coas->kelompok_akun) }}">
                             @error('kelompok_akun')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -71,26 +77,27 @@
                         <div class="form-group">
                             <label for="posisi_d_c">Posisi:</label><br>
                             <input type="radio" id="Debit" name="posisi_d_c" value="Debit"
-                                {{ old('posisi_d_c', $coas->posisi_d_c) == 'Debit' ? 'checked' : '' }}> Debit
+                                {{ old('posisi_d_c', $coas->posisi_d_c) == 'Debit' ? 'checked' : '' }} disabled> Debit
                             <input type="radio" id="Kredit" name="posisi_d_c" value="Kredit"
-                                {{ old('posisi_d_c', $coas->posisi_d_c) == 'Kredit' ? 'checked' : '' }}> Kredit
+                                {{ old('posisi_d_c', $coas->posisi_d_c) == 'Kredit' ? 'checked' : '' }} disabled> Kredit
+                            <input type="hidden" name="posisi_d_c" value="{{ old('posisi_d_c', $coas->posisi_d_c) }}">
                             @error('posisi_d_c')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
-
                         <!-- Menampilkan pesan kesalahan untuk saldo awal -->
                         <div class="form-group">
                             <label for="saldo_awal">Saldo Awal:</label>
-                            <input type="number" class="form-control @error('saldo_awal') is-invalid @enderror" id="saldo_awal" name="saldo_awal"
-                                value="{{ old('saldo_awal', $coas->saldo_awal) }}" step="0.01" required>
+                            <input type="number" class="form-control @error('saldo_awal') is-invalid @enderror"
+                                id="saldo_awal" name="saldo_awal" value="{{ old('saldo_awal', $coas->saldo_awal) }}"
+                                step="0.01" required>
                             @error('saldo_awal')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <input type="hidden" name="id_perusahaan" value="{{ auth()->user()->perusahaan->id_perusahaan }}">
-                        
+
                         <div class="text-right">
                             <button type="submit" class="btn btn-primary">Save</button>
                             <button type="button" class="btn btn-danger"

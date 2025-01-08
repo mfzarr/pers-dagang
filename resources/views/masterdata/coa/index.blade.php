@@ -53,12 +53,12 @@
                                                 <td>{{ $coa->nama_akun }}</td>
                                                 <td>{{ $coa->kelompokakun->nama_kelompok_akun }}</td>
                                                 <td>{{ $coa->posisi_d_c }}</td>
-                                                <td>{{ $coa->saldo_awal }}</td>
+                                                <td>Rp{{ number_format($coa->saldo_awal) }}</td>
                                                 <td>
+                                                    <a href="{{ route('coa.edit', $coa->id_coa) }}"
+                                                        class="btn btn-info btn-sm"><i
+                                                            class="feather icon-edit"></i>&nbsp;Edit</a>
                                                     @if ($coa->status !== 'seeder')
-                                                        <a href="{{ route('coa.edit', $coa->id_coa) }}"
-                                                            class="btn btn-info btn-sm"><i
-                                                                class="feather icon-edit"></i>&nbsp;Edit</a>
                                                         <form action="{{ route('coa.destroy', $coa->id_coa) }}"
                                                             method="POST" class="d-inline"
                                                             id="delete-form-{{ $coa->id_coa }}">

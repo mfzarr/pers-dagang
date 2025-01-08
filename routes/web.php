@@ -30,6 +30,7 @@ use App\Http\Controllers\Transaksi\BebanController;
 use App\Http\Controllers\Laporan\LaporanLabaRugiController;
 use App\Http\Controllers\Laporan\LaporanNeracaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Laporan\LaporanPerubahanModalController;
 use Illuminate\Support\Facades\Auth;
 
 // Auth routes
@@ -153,6 +154,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/neraca-saldo', [JurnalUmumController::class, 'neracasaldo'])->name('neraca-saldo');
     Route::get('/laba-rugi', [LaporanLabaRugiController::class, 'index'])->name('laba-rugi.index');
     Route::get('/neraca', [LaporanNeracaController::class, 'index'])->name('neraca.index');
+    Route::get('/perubahan-modal', [LaporanPerubahanModalController::class, 'index'])->name('perubahan-modal.index');
 });
 
 Route::get('/get-user-email/{id}', function ($id) {

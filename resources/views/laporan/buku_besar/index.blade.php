@@ -18,9 +18,10 @@
                 <!-- View 1: Buku Besar per Akun -->
                 <div id="view1" class="view-section" style="display: block;">
                     <!-- Form to Select Account -->
-                    <form method="GET" action="{{ route('buku-besar') }}" class="mb-4">
-                        <div class="form-group">
-                            <label for="account">Pilih Akun</label>
+                    <form method="GET" action="{{ route('buku-besar') }}" class="mb-4 d-flex align-items-center">
+                        <!-- Account Selector -->
+                        <div class="mr-3">
+                            <label for="account" class="col-form-label">Pilih Akun</label>
                             <select name="account" id="account" class="form-control" required>
                                 <option value="" disabled selected>Pilih Akun</option>
                                 @foreach($coas as $coa)
@@ -30,14 +31,49 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Lihat Buku Besar</button>
+
+                        <!-- Month Selector -->
+                        <div class="mr-3">
+                            <label for="month" class="col-form-label">Pilih Bulan</label>
+                            <select name="month" id="month" class="form-control" required>
+                                @foreach($months as $monthNumber => $monthName)
+                                <option value="{{ $monthNumber }}" {{ $monthNumber == $selectedMonth ? 'selected' : '' }}>
+                                    {{ $monthName }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Year Selector -->
+                        <div class="mr-3">
+                            <label for="year" class="col-form-label">Pilih Tahun</label>
+                            <select name="year" id="year" class="form-control" required>
+                                <option value="{{ $selectedYear }}" selected>{{ $selectedYear }}</option>
+                                <!-- Optionally, you can add other years, e.g., previous year, next year, etc. -->
+                            </select>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div>
+                            <button type="submit" class="btn btn-primary">Lihat Buku Besar</button>
+                        </div>
                     </form>
 
-                    <!-- Display Transactions -->
-                    @if($selectedAccount)
-                    <h6>Buku Besar</h6>
-                    <h6>Akun {{ $coa->kode_akun }} - {{ $coa->nama_akun }}</h6>
-                    <h6>Bulan: {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</h6>
+
+
+                    <div class="text-center mb-4">
+                        <!-- Display Transactions -->
+                        @if($selectedAccount)
+                        @php
+                        // Find the selected Coa by ID
+                        $selectedCoa = $coas->firstWhere('id_coa', $selectedAccount);
+                        @endphp
+
+                        <h4>Buku Besar</h4>
+                        <h6>Akun {{ $selectedCoa->kode_akun }} - {{ $selectedCoa->nama_akun }}</h6>
+                        <h6>{{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</h6>
+                    </div>
+
 
                     <div class="table-responsive mt-4">
                         <table class="table table-striped table-bordered">
@@ -53,7 +89,7 @@
                                 <!-- New row to display saldo_awal -->
                                 <tr>
                                     <td colspan="2"><strong>Saldo Awal</strong></td>
-                                    <td colspan="2">Rp{{ number_format($saldoAwal) }}</td>
+                                    <td colspan="2">{{ number_format($saldoAwal, 0) }}</td>
                                 </tr>
 
                                 <!-- Transactions -->
@@ -77,20 +113,20 @@
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($transaction->tanggal_jurnal)->format('d M') }}</td>
                                     <td>{{ $transaction->nama_akun }}</td>
-                                    <td>Rp{{ $transaction->debit ? number_format($transaction->debit) : '0' }}</td>
-                                    <td>Rp{{ $transaction->credit ? number_format($transaction->credit) : '0' }}</td>
+                                    <td>{{ $transaction->debit ? number_format($transaction->debit, 0) : '0' }}</td>
+                                    <td>{{ $transaction->credit ? number_format($transaction->credit, 0) : '0' }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="2"><strong>Total</strong></td>
-                                    <td><strong>Rp{{ number_format($totalDebit, 2) }}</strong></td>
-                                    <td><strong>Rp{{ number_format($totalCredit, 2) }}</strong></td>
+                                    <td><strong>{{ number_format($totalDebit, 0) }}</strong></td>
+                                    <td><strong>{{ number_format($totalCredit, 0) }}</strong></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"><strong>Saldo Akhir</strong></td>
-                                    <td colspan="2"><strong>Rp{{ number_format($runningBalance, 2) }}</strong></td> <!-- Display running balance -->
+                                    <td colspan="2"><strong>{{ number_format($runningBalance, 0) }}</strong></td> <!-- Display running balance -->
                                 </tr>
                             </tfoot>
                         </table>
@@ -99,6 +135,7 @@
                     <p class="text-muted">Silakan pilih akun untuk melihat Buku Besar.</p>
                     @endif
                 </div>
+
 
 
                 <!-- View 2: Total Saldo Semua Akun -->
@@ -120,7 +157,7 @@
                                 $totalDebit = 0;
                                 $totalCredit = 0;
                                 @endphp
-                                @foreach($totalBalances->where('id_perusahaan', auth()->user()->id_perusahaan) as $coa)
+                                @foreach($totalBalances as $coa)
                                 @php
                                 // Use the total debit and credit values directly
                                 $coaDebit = $coa->total_debit;
@@ -130,24 +167,23 @@
                                 @endphp
                                 <tr>
                                     <td>{{ $coa->kode_akun }} - {{ $coa->nama_akun }}</td>
-                                    <td>{{ number_format($coaDebit, 2) }}</td>
-                                    <td>{{ number_format($coaCredit, 2) }}</td>
-                                    <td>{{ number_format($coa->saldo_awal, 2) }}</td> <!-- Display Saldo Awal here -->
+                                    <td>{{ number_format($coaDebit, 0) }}</td>
+                                    <td>{{ number_format($coaCredit, 0) }}</td>
+                                    <td>{{ number_format($coa->saldo_awal, 0) }}</td> <!-- Display Saldo Awal here -->
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="1"><strong>Total Keseluruhan</strong></td>
-                                    <td><strong>{{ number_format($totalDebit, 2) }}</strong></td>
-                                    <td><strong>{{ number_format($totalCredit, 2) }}</strong></td>
-                                    <td><strong>{{ number_format($totalDebit - $totalCredit, 2) }}</strong></td> <!-- Total Saldo Awal here -->
+                                    <td><strong>{{ number_format($totalDebit, 0) }}</strong></td>
+                                    <td><strong>{{ number_format($totalCredit, 0) }}</strong></td>
+                                    <td><strong>{{ number_format($totalDebit - $totalCredit, 0) }}</strong></td> <!-- Total Saldo Awal here -->
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                 </div>
-
 
                 <!-- View 3: Semua Transaksi -->
                 <div id="view3" class="view-section" style="display: none;">
@@ -164,20 +200,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($allTransactions->where('id_perusahaan', auth()->user()->id_perusahaan) as $transaction)
+                                @foreach($allTransactions as $transaction)
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($transaction->tanggal_jurnal)->format('d M') }}</td>
                                     <td>{{ $transaction->coa->nama_akun }}</td>
-                                    <td>{{ number_format($transaction->debit, 2) }}</td>
-                                    <td>{{ number_format($transaction->credit, 2) }}</td>
+                                    <td>{{ number_format($transaction->debit, 0) }}</td>
+                                    <td>{{ number_format($transaction->credit, 0) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="2"><strong>Total Keseluruhan</strong></td>
-                                    <td><strong>{{ number_format($grandTotalDebit, 2) }}</strong></td>
-                                    <td><strong>{{ number_format($grandTotalCredit, 2) }}</strong></td>
+                                    <td><strong>{{ number_format($grandTotalDebit, 0) }}</strong></td>
+                                    <td><strong>{{ number_format($grandTotalCredit, 0) }}</strong></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -187,6 +223,7 @@
         </div>
     </div>
 </div>
+
 <script>
     // Switch views on button click
     function switchView(viewNumber) {

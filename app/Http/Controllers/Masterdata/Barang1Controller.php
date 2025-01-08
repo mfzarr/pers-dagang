@@ -33,15 +33,15 @@ class Barang1Controller extends Controller
     {
         $request->validate([
             'nama' => 'required|max:255',
-            'detail' => 'required|max:255',
-            'satuan' => 'required|max:255',
+            // 'detail' => 'required|max:255',
+            // 'satuan' => 'required|max:255',
             'kategori' => 'required|max:255',
         ]);
 
         Barang1::create([
             'nama' => $request->nama,
-            'detail' => $request->detail,
-            'satuan' => $request->satuan,
+            // 'detail' => $request->detail,
+            // 'satuan' => $request->satuan,
             'kategori' => $request->kategori,
             'id_perusahaan' => Auth::user()->id_perusahaan,
         ]);
@@ -75,8 +75,8 @@ class Barang1Controller extends Controller
     {
         $request->validate([
             'nama' => 'required|max:255',
-            'detail' => 'required|max:255',
-            'satuan' => 'required|max:255',
+            // 'detail' => 'required|max:255',
+            // 'satuan' => 'required|max:255',
             'kategori' => 'required|max:255',
         ]);
 
@@ -84,8 +84,8 @@ class Barang1Controller extends Controller
             ->findOrFail($id);
         $barang1->update([
             'nama' => $request->nama,
-            'detail' => $request->detail,
-            'satuan' => $request->satuan,
+            // 'detail' => $request->detail,
+            // 'satuan' => $request->satuan,
             'kategori' => $request->kategori,
         ]);
         return redirect()->route('barang.index')->with('success', 'Barang1 updated successfully.');

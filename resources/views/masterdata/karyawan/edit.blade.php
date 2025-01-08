@@ -8,13 +8,13 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Edit Karyawan</h5>
+                                <h5 class="m-b-10">Edit Pegawai</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
                                             class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('pegawai.index') }}">Karyawan</a></li>
-                                <li class="breadcrumb-item"><a>Edit Karyawan</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('pegawai.index') }}">Pegawai</a></li>
+                                <li class="breadcrumb-item"><a>Edit Pegawai</a></li>
                             </ul>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Edit Karyawan</h5>
+                            <h5>Edit Pegawai</h5>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('pegawai.update', $karyawan->id_karyawan) }}" method="POST">
