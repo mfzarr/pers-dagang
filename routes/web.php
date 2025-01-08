@@ -29,6 +29,7 @@ use App\Http\Controllers\Transaksi\PenggajianController;
 use App\Http\Controllers\Transaksi\BebanController;
 use App\Http\Controllers\Laporan\LaporanLabaRugiController;
 use App\Http\Controllers\Laporan\LaporanNeracaController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 
 // Auth routes
@@ -40,9 +41,7 @@ Route::get('/', function () {
 })->name('home');
 
 // Dashboard route
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
 // Registration routes
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
@@ -63,17 +62,18 @@ Route::middleware('auth')->group(function () {
         ->name('handle-input-kode');
 
     Route::get('/perusahaan', [MenampilkanPerusahaanController::class, 'index'])
-        ->name('perusahaan.index');
+        ->name('perusahaan.index')
+        ->middleware('role:owner');
 });
 
 // Masterdata routes
 Route::middleware('auth')->group(function () {
     // COA routes
-    Route::resource('coa', CoaController::class)->except(['show']);
-    Route::post('/coa/store', [CoaController::class, 'store'])->name('coa.store');
+    Route::resource('coa', CoaController::class)->except(['show'])->middleware('role:owner');
+    Route::post('/coa/store', [CoaController::class, 'store'])->name('coa.store')->middleware('role:owner');
 
     // CoaKelompok routes
-    Route::resource('coa-kelompok', CoaKelompokController::class);
+    Route::resource('coa-kelompok', CoaKelompokController::class)->middleware('role:owner');
 
     // Roles routes
     Route::resource('user_role', RolesController::class);
@@ -88,10 +88,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('supplier', SupplierController::class);
 
     // Karyawan routes
-    Route::resource('pegawai', KaryawanController::class);
+    Route::resource('pegawai', KaryawanController::class)->middleware('role:owner');;
 
     // Jabatan routes
-    Route::resource('jabatan', JabatanController::class);
+    Route::resource('jabatan', JabatanController::class)->middleware('role:owner');;
 
     // Users routes
     Route::resource('users', UsersController::class);
@@ -117,40 +117,40 @@ Route::middleware('auth')->group(function () {
 });
 
 // Transaksi routes
-    // Pembelian routes
-    Route::middleware('auth')->group(function () {
-        Route::resource('/pembelian', PembelianController::class);
-        Route::get('pembelian/{id_pembelian}/detail', [PembelianController::class, 'show'])->name('pembelian.detail');
-        Route::post('pembelian/{id}/pelunasan', [PembelianController::class, 'pelunasan'])->name('pembeliandetail.pelunasan');
-        Route::post('/pembelian/{id}/pelunasan-auto', [PembelianController::class, 'pelunasan'])->name('pembelian.pelunasan.auto');
+// Pembelian routes
+Route::middleware('auth')->group(function () {
+    Route::resource('/pembelian', PembelianController::class);
+    Route::get('pembelian/{id_pembelian}/detail', [PembelianController::class, 'show'])->name('pembelian.detail');
+    Route::post('pembelian/{id}/pelunasan', [PembelianController::class, 'pelunasan'])->name('pembeliandetail.pelunasan');
+    Route::post('/pembelian/{id}/pelunasan-auto', [PembelianController::class, 'pelunasan'])->name('pembelian.pelunasan.auto');
 
-        // CRUD Routes for Pembelian Details (individual items within a transaction)
-        Route::get('pembelian/{id}/details', [PembeliandetailController::class, 'index'])->name('pembeliandetail.index');
-        Route::post('pembelian/{id}/details/store', [PembeliandetailController::class, 'store'])->name('pembeliandetail.store');
-        Route::put('pembelian/detail/{id}', [PembeliandetailController::class, 'update'])->name('pembeliandetail.update');
-        Route::delete('pembelian/detail/{id}', [PembeliandetailController::class, 'destroy'])->name('pembeliandetail.destroy');
+    // CRUD Routes for Pembelian Details (individual items within a transaction)
+    Route::get('pembelian/{id}/details', [PembeliandetailController::class, 'index'])->name('pembeliandetail.index');
+    Route::post('pembelian/{id}/details/store', [PembeliandetailController::class, 'store'])->name('pembeliandetail.store');
+    Route::put('pembelian/detail/{id}', [PembeliandetailController::class, 'update'])->name('pembeliandetail.update');
+    Route::delete('pembelian/detail/{id}', [PembeliandetailController::class, 'destroy'])->name('pembeliandetail.destroy');
 
-        // Penjualan routes
-        Route::resource('penjualan', PenjualanController::class);
-        Route::get('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'edit'])->name('penjualan.selesaikan');
-        Route::put('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'updateSelesai'])->name('penjualan.updateSelesai');
+    // Penjualan routes
+    Route::resource('penjualan', PenjualanController::class);
+    Route::get('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'edit'])->name('penjualan.selesaikan');
+    Route::put('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'updateSelesai'])->name('penjualan.updateSelesai');
 
-        // Penggajian routes
-        Route::resource('penggajian', PenggajianController::class);
-        Route::get('/penggajian/get-tarif/{id}', [PenggajianController::class, 'getTarifByKaryawan'])->name('penggajian.get-tarif');
-        Route::get('/penggajian/get-total-service/{id}', [PenggajianController::class, 'getTotalServiceByKaryawan']);
-        Route::get('/penggajian/{id}', [PenggajianController::class, 'show'])->name('penggajian.show');
-        Route::get('/penggajian/get-total-kehadiran/{id}', [PenggajianController::class, 'getTotalKehadiranByKaryawan']);
+    // Penggajian routes
+    Route::resource('penggajian', PenggajianController::class)->middleware('role:owner');
+    Route::get('/penggajian/get-tarif/{id}', [PenggajianController::class, 'getTarifByKaryawan'])->name('penggajian.get-tarif')->middleware('role:owner');
+    Route::get('/penggajian/get-total-service/{id}', [PenggajianController::class, 'getTotalServiceByKaryawan'])->middleware('role:owner');
+    Route::get('/penggajian/{id}', [PenggajianController::class, 'show'])->name('penggajian.show')->middleware('role:owner');
+    Route::get('/penggajian/get-total-kehadiran/{id}', [PenggajianController::class, 'getTotalKehadiranByKaryawan'])->middleware('role:owner');
 
-        Route::resource('beban', BebanController::class);
+    Route::resource('beban', BebanController::class);
+});
 
-    });
-    
 
 // Laporan routes
 Route::middleware('auth')->group(function () {
     Route::get('/jurnal-umum', [JurnalUmumController::class, 'index'])->name('jurnal-umum.index');
     Route::get('/buku-besar', [JurnalUmumController::class, 'bukuBesar'])->name('buku-besar');
+    Route::get('/neraca-saldo', [JurnalUmumController::class, 'neracasaldo'])->name('neraca-saldo');
     Route::get('/laba-rugi', [LaporanLabaRugiController::class, 'index'])->name('laba-rugi.index');
     Route::get('/neraca', [LaporanNeracaController::class, 'index'])->name('neraca.index');
 });
@@ -160,7 +160,7 @@ Route::get('/get-user-email/{id}', function ($id) {
     return response()->json(['email' => $user ? $user->email : null]);
 });
 
-Route::prefix('presensi')->middleware('auth')->name('presensi.')->group(function () {
+Route::prefix('presensi')->middleware('role:owner')->name('presensi.')->group(function () {
     Route::get('create', [PresensiController::class, 'create'])->name('create');
     Route::post('store', [PresensiController::class, 'store'])->name('store');
     Route::get('index', [PresensiController::class, 'index'])->name('index');
@@ -169,5 +169,3 @@ Route::prefix('presensi')->middleware('auth')->name('presensi.')->group(function
     Route::delete('destroy/{date}', [PresensiController::class, 'destroy'])->name('destroy');
     Route::put('update/{date}', [PresensiController::class, 'update'])->name('update');
 });
-
-

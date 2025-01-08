@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Masterdata\Produk;
 use App\Models\Masterdata\Kategori_barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -118,11 +119,14 @@ class ProdukController extends Controller
             ->whereYear('created_at', date('Y'))
             ->sum('kuantitas');
 
+        $stok_akhir = $stok_awal - $stok_keluar;
+
         \DB::table('stok_produk')->insert([
             'id_produk' => $id_produk,
             'stok_awal' => $stok_awal,
             'stok_masuk' => $stok_masuk,
             'stok_keluar' => $stok_keluar,
+            'stok_akhir' => $stok_akhir,
             'bulan' => $bulan,
             'id_perusahaan' => $id_perusahaan,
         ]);
@@ -175,11 +179,33 @@ class ProdukController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id_produk)
     {
-        $produk = Produk::where('id_perusahaan', Auth::user()->id_perusahaan)->findOrFail($id);
-        $produk->delete();
-
-        return redirect()->route('produk.index')->with('success', 'Produk deleted successfully.');
+        $id_perusahaan = Auth::user()->id_perusahaan;
+    
+        DB::beginTransaction();
+    
+        try {
+            // Hapus stok_produk terkait
+            DB::table('stok_produk')
+                ->where('id_produk', $id_produk)
+                ->where('id_perusahaan', $id_perusahaan)
+                ->delete();
+    
+            // Hapus produk
+            $produk = Produk::where('id_produk', $id_produk)
+                            ->where('id_perusahaan', $id_perusahaan)
+                            ->firstOrFail();
+            $produk->delete();
+    
+            DB::commit();
+    
+            return redirect()->route('produk.index')->with('success', 'Produk dan stok terkait berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('produk.index')->with('error', 'Gagal menghapus produk. Silakan coba lagi.');
+        }
     }
+
+    
 }

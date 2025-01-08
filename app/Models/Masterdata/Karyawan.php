@@ -18,7 +18,7 @@ class Karyawan extends Model
     protected $primaryKey = 'id_karyawan';
 
     protected $fillable = [
-        'nama', 'no_telp', 'jenis_kelamin', 'email', 'alamat', 'status', 'id_jabatan', 'id_perusahaan', 'id_user'
+        'nama', 'no_telp', 'jenis_kelamin', 'email', 'alamat', 'status', 'id_jabatan', 'id_perusahaan', 'id_user','nik'
     ];
 
     public $timestamps = true;

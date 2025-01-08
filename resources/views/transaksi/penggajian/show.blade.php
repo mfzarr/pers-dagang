@@ -40,7 +40,7 @@
                             </tr>
                             <tr>
                                 <th>Total Gaji Bersih</th>
-                                <td>{{ number_format($penggajian->total_gaji_bersih, 2) }}</td>
+                                <td>{{ number_format($penggajian->total_gaji_bersih) }}</td>
                             </tr>
                         </table>
                     </div>
@@ -60,7 +60,7 @@
 
                             <tr>
                                 <th>Tarif</th>
-                                <td>{{ number_format($penggajian->tarif, 2) }}</td>
+                                <td>{{ number_format($penggajian->tarif) }}</td>
                             </tr>
                         </table>
                     </div>
@@ -77,11 +77,11 @@
                             </tr>
                             <tr>
                                 <th>Total Service</th>
-                                <td>{{ number_format($penggajian->total_service, 2) }}</td>
+                                <td>{{ number_format($penggajian->total_service) }}</td>
                             </tr>
                             <tr>
                                 <th>Bonus Service</th>
-                                <td>{{ number_format($penggajian->bonus_service, 2) }}</td>
+                                <td>{{ number_format($penggajian->bonus_service) }}</td>
                             </tr>
                             <tr>
                                 <th>Total Kehadiran</th>
@@ -89,11 +89,31 @@
                             </tr>
                             <tr>
                                 <th>Bonus Kehadiran</th>
-                                <td>{{ number_format($penggajian->bonus_kehadiran, 2) }}</td>
+                                <td>{{ number_format($penggajian->bonus_kehadiran) }}</td>
                             </tr>
                             <tr>
                                 <th>Total Bonus Kehadiran</th>
-                                <td>{{ number_format($penggajian->total_bonus_kehadiran, 2) }}</td>
+                                <td>{{ number_format($penggajian->total_bonus_kehadiran) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Lembur</th>
+                                <td>{{ number_format($penggajian->lembur) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tunjangan Makan</th>
+                                <td>{{ number_format($penggajian->tunjangan_makan) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tunjangan Jabatan</th>
+                                <td>{{ number_format($penggajian->tunjangan_jabatan) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Total Potongan</th>
+                                <td>{{ number_format($penggajian->potongan_gaji) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Asuransi</th>
+                                <td>{{ number_format($penggajian->karyawan->jabatan->asuransi) }}</td>
                             </tr>
                         </table>
                     </div>

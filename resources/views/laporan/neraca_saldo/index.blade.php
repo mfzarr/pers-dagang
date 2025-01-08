@@ -9,12 +9,12 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Data COA Kelompok</h5>
+                                <h5 class="m-b-10">Neraca Saldo</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
                                             class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('coa-kelompok.index') }}">COA Kelompok</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('neraca-saldo') }}">neraca-saldo</a></li>
                             </ul>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Data Coa Kelompok</h5>
+                            <h5>Neraca Saldo</h5>
                             {{-- <div class="card-header-right">
                             <button class="btn btn-primary" data-toggle="modal" data-target="#addmodal">Tambah Data</button>
                         </div> --}}
@@ -40,32 +40,41 @@
                                 <table id="simpletable" class="table table-striped table-bordered nowrap">
                                     <thead>
                                         <tr>
-                                            <th>Kelompok Akun</th>
-                                            <th>Nama Kelompok Akun</th>
+                                            <th>Akun</th>
+                                            <th>Total Debit</th>
+                                            <th>Total Kredit</th>
+                                            <th>Saldo Awal</th> <!-- Added Saldo Awal column -->
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($coaKelompoks as $item)
-                                            <tr>
-                                                <td>{{ $item->kelompok_akun }}</td>
-                                                <td>{{ $item->nama_kelompok_akun }}</td>
-                                                <!-- <td>{{ $item->nama }}</td> -->
-                                                {{-- <td>
-                                            <!-- Tombol Edit -->
-                                            <button type="button" class="btn btn-warning edit-button" data-toggle="modal" data-target="#editmodal" data-id="{{ $item->id_coa }}">
-                                                Edit
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <!-- Tombol Delete -->
-                                            <button type="button" class="btn btn-outline-danger delete-button" data-toggle="modal" data-target="#deletemodal" data-id="{{ $item->id_coa }}">
-                                                Delete
-                                            </button>
-                                        </td> --}}
-
-                                            </tr>
+                                        @php
+                                        $totalDebit = 0;
+                                        $totalCredit = 0;
+                                        @endphp
+                                        @foreach($totalBalances->where('id_perusahaan', auth()->user()->id_perusahaan) as $coa)
+                                        @php
+                                        // Use the total debit and credit values directly
+                                        $coaDebit = $coa->total_debit;
+                                        $coaCredit = $coa->total_credit;
+                                        $totalDebit += $coaDebit;
+                                        $totalCredit += $coaCredit;
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $coa->kode_akun }} - {{ $coa->nama_akun }}</td>
+                                            <td>{{ number_format($coaDebit, 2) }}</td>
+                                            <td>{{ number_format($coaCredit, 2) }}</td>
+                                            <td>{{ number_format($coa->saldo_awal, 2) }}</td> <!-- Display Saldo Awal here -->
+                                        </tr>
                                         @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="1"><strong>Total Keseluruhan</strong></td>
+                                            <td><strong>{{ number_format($totalDebit, 2) }}</strong></td>
+                                            <td><strong>{{ number_format($totalCredit, 2) }}</strong></td>
+                                            <td><strong>{{ number_format($totalDebit - $totalCredit, 2) }}</strong></td> <!-- Total Saldo Awal here -->
+                                        </tr>
+                                    </tfoot>                                               
                                 </table>
                             </div>
                             {{-- <div class="text-right mt-3">
@@ -80,9 +89,4 @@
             <!-- [ Main Content ] end -->
         </div>
     </div>
-
-    <!-- Modal includes -->
-    @include('masterdata/' . $table . '/modal')
-    @include('masterdata/' . $table . '/edit')
-    @include('masterdata/' . $table . '/delete')
 @endsection

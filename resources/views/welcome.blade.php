@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <title>Projek SIA Perusahaan Dagang</title>
+    <title>Proyek SIA Perusahaan Dagang</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Welcome to Projek SIA" />
-    <meta name="keywords" content="Projek SIA, Laravel, Welcome Page">
+    <meta name="description" content="Welcome to Proyek SIA" />
+    <meta name="keywords" content="Proyek SIA, Laravel, Welcome Page">
     <meta name="author" content="Your Name" />
 
     <!-- Favicon icon -->
@@ -67,7 +67,7 @@
         <img src="assets/images/logosia.png" alt="Logo" class="logo">
 
         <!-- Welcome Text -->
-        <h1>Projek SIA Perusahaan Dagang</h1>
+        <h1>Proyek SIA Perusahaan Dagang</h1>
         <p>Manage Your Business More Simply and Efficiently.</p>
 
         <!-- Buttons -->
@@ -102,7 +102,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2024 Projek SIA. All rights reserved.</p>
+        <p>© 2024 Proyek SIA. All rights reserved.</p>
         <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
     </footer>
 

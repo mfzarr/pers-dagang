@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Login Projek SIA</title>
+    <title>Login Proyek SIA</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="" />
@@ -23,7 +23,7 @@
                     </div>
                     <div class="align-items-center text-center flex-grow-1">
                         <div class="col-md-12">
-                            <h4 class="mb-3 f-w-400">Projek SIA</h4>
+                            <h4 class="mb-3 f-w-400">Proyek SIA</h4>
 
                             <!-- Login Form with Client-Side Validation -->
                             <form id="loginForm" method="POST" action="{{ route('login') }}">
@@ -111,7 +111,7 @@
 <html lang="en">
 
 <head>
-    <title>Login Projek SIA</title>
+    <title>Login Proyek SIA</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />

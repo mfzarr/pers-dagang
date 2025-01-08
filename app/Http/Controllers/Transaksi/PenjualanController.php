@@ -129,6 +129,7 @@ class PenjualanController extends Controller
                 'harga' => $item['harga'],
                 'kuantitas' => $item['kuantitas'],
                 'id_pegawai' => $item['pegawai'],
+                // 'hpp' => $total_hpp,
             ]);
         }
 

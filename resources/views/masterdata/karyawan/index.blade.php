@@ -38,6 +38,7 @@
                                         <tr>
                                             <th>Nama</th>
                                             <th>Email</th>
+                                            <th>NIK</th>
                                             <th>No Telp</th>
                                             <th>Jenis Kelamin</th>
                                             <th>Alamat</th>
@@ -51,10 +52,11 @@
                                             <tr>
                                                 <td>{{ $karyawan->nama }}</td>
                                                 <td>{{ $karyawan->email }}</td>
+                                                <td>{{ $karyawan->nik }}</td>
                                                 <td>{{ $karyawan->no_telp }}</td>
                                                 <td>{{ $karyawan->jenis_kelamin }}</td>
                                                 <td>{{ $karyawan->alamat }}</td>
-                                                <td>{{ number_format($karyawan->tarif, 0, ',', '.') }}</td>
+                                                <td>Rp{{ number_format($karyawan->tarif, 0, ',', '.') }}</td>
                                                 <td>
                                                     @if($karyawan->id_user)
                                                         <i class="fas fa-check-circle text-success"></i>

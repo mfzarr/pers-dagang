@@ -31,6 +31,7 @@ class Coa extends Model
         'kelompok_akun',
         'posisi_d_c',
         'saldo_awal',
+        'status',
         'id_perusahaan',
     ];
 

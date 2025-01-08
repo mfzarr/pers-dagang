@@ -20396,7 +20396,7 @@ body {
     font-size: 14px;
     color: #373a3c;
     font-weight: 400;
-    background: #4680ff;
+    background-image: url("../images/nav-bg/body-bg-5.jpg");
     position: relative;
 }
 
@@ -30588,7 +30588,7 @@ text.highcharts-drilldown-data-label {
 
 /* image varient start */
 .aut-bg-img {
-    background-image: url("../images/auth/bg.jpg");
+    background-image: url("../images/auth/wallpaperflare.com_wallpaper.jpg");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;

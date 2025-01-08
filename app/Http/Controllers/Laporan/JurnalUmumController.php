@@ -136,4 +136,93 @@ class JurnalUmumController extends Controller
             'grandTotalCredit'
         ));
     }
+
+    public function neracasaldo(Request $request)
+    {
+        // Get the authenticated user's company ID
+        $id_perusahaan = Auth::user()->id_perusahaan;
+
+        // Get all COA for dropdown, filtered by the authenticated user's company
+        $coas = Coa::where('id_perusahaan', $id_perusahaan)->get();
+
+        // Get the selected account
+        $selectedAccount = $request->input('account');
+        $transactions = [];
+        $saldoAwal = 0;
+        $currentBalance = 0;
+
+        if ($selectedAccount) {
+            // Fetch the COA record for the selected account, filtered by the authenticated user's company
+            $coa = Coa::where('id_perusahaan', $id_perusahaan)->find($selectedAccount);
+
+            if ($coa) {
+                // Get the starting saldo_awal from the Coa table
+                $saldoAwal = $coa->saldo_awal;
+
+                // Fetch all journal entries for the selected account
+                $transactions = JurnalUmum::where('kode_akun', $coa->kode_akun)
+                    ->where('id_perusahaan', $id_perusahaan)
+                    ->orderBy('tanggal_jurnal', 'asc')
+                    ->get();
+
+                // Initialize current balance with saldo_awal
+                $currentBalance = $saldoAwal;
+
+                // Fetch the account type (posisi_debit_credit) from TipeAkun
+                $tipeAkun = $coa->tipeAkun;
+
+                // Calculate the balance by iterating through the journal entries
+                foreach ($transactions as $transaction) {
+                    if ($tipeAkun && $tipeAkun->posisi_debit_credit === 'debit') {
+                        // If posisi_debit_credit is 'debit', debit increases the balance
+                        if ($transaction->debit) {
+                            $currentBalance += $transaction->debit;
+                        }
+                        if ($transaction->credit) {
+                            $currentBalance -= $transaction->credit;
+                        }
+                    } else {
+                        // If posisi_debit_credit is 'credit', credit increases the balance
+                        if ($transaction->credit) {
+                            $currentBalance += $transaction->credit;
+                        }
+                        if ($transaction->debit) {
+                            $currentBalance -= $transaction->debit;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Fetch total balances of all accounts, sum debit and credit, filtered by the authenticated user's company
+        $totalBalances = Coa::where('id_perusahaan', $id_perusahaan)
+            ->withSum('jurnalUmums as total_debit', 'debit')
+            ->withSum('jurnalUmums as total_credit', 'credit')
+            ->get();
+
+        // Fetch all transactions for View 3 and order by account name (nama_akun), filtered by the authenticated user's company
+        $allTransactions = JurnalUmum::with('coa')
+            ->join('coa', 'jurnal_umum.kode_akun', '=', 'coa.kode_akun')
+            ->where('coa.id_perusahaan', $id_perusahaan)
+            ->orderBy('coa.nama_akun', 'asc') // Order by account name
+            ->get();
+
+        // Sum up the grand totals for debit and credit
+        $grandTotalDebit = $allTransactions->sum('debit');
+        $grandTotalCredit = $allTransactions->sum('credit');
+
+        // Return the view with all the required data
+        return view('laporan.neraca_saldo.index', compact(
+            'coas',
+            'selectedAccount',
+            'transactions',
+            'saldoAwal',
+            'currentBalance',
+            'totalBalances',
+            'allTransactions',
+            'grandTotalDebit',
+            'grandTotalCredit'
+        ));
+    }
+
 }

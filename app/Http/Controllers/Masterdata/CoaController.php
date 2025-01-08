@@ -38,7 +38,9 @@ class CoaController extends Controller
             'kelompok_akun' => 'required|integer|exists:coa_kelompok,id_kelompok_akun',
             'posisi_d_c' => 'required|string|max:255',
             'saldo_awal' => 'required|numeric',
+            'status' => 'nullable|string',
         ]);
+        
         Coa::create([
             'kode_akun' => $request->kode_akun,
             'nama_akun' => $request->nama_akun,

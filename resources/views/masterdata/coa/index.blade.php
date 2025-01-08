@@ -12,7 +12,8 @@
                                 <h5 class="m-b-10">Data COA</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                            class="feather icon-home"></i></a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('coa.index') }}">COA</a></li>
                             </ul>
                         </div>
@@ -28,7 +29,8 @@
                         <div class="card-header">
                             <h5>Data COA</h5>
                             <div class="float-right">
-                                <a href="{{ route('coa.create') }}" class="btn btn-success btn-sm btn-round has-ripple"><i class="feather icon-plus"></i>Tambah COA</a>
+                                <a href="{{ route('coa.create') }}" class="btn btn-success btn-sm btn-round has-ripple"><i
+                                        class="feather icon-plus"></i>Tambah COA</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -53,15 +55,20 @@
                                                 <td>{{ $coa->posisi_d_c }}</td>
                                                 <td>{{ $coa->saldo_awal }}</td>
                                                 <td>
-                                                    <a href="{{ route('coa.edit', $coa->id_coa) }}"
-                                                        class="btn btn-info btn-sm"><i class="feather icon-edit"></i>&nbsp;Edit</a>
-                                                    <form action="{{ route('coa.destroy', $coa->id_coa) }}" method="POST"
-                                                        class="d-inline" id="delete-form-{{ $coa->id_coa }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-sm btn-danger"
-                                                            onclick="confirmDelete({{ $coa->id_coa }})"><i class="feather icon-trash-2"></i>&nbsp;Delete</button>
-                                                    </form> 
+                                                    @if ($coa->status !== 'seeder')
+                                                        <a href="{{ route('coa.edit', $coa->id_coa) }}"
+                                                            class="btn btn-info btn-sm"><i
+                                                                class="feather icon-edit"></i>&nbsp;Edit</a>
+                                                        <form action="{{ route('coa.destroy', $coa->id_coa) }}"
+                                                            method="POST" class="d-inline"
+                                                            id="delete-form-{{ $coa->id_coa }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-sm btn-danger"
+                                                                onclick="confirmDelete({{ $coa->id_coa }})"><i
+                                                                    class="feather icon-trash-2"></i>&nbsp;Delete</button>
+                                                        </form>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

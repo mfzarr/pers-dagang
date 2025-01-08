@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Create Perusahaan - Projek SIA</title>
+    <title>Create Perusahaan - Proyek SIA</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -35,8 +35,8 @@
 
                         <!-- Nama Perusahaan -->
                         <div class="form-group mb-3">
-                            <label class="floating-label" for="nama">Nama Perusahaan</label>
-                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" placeholder="Enter company name" required>
+                            <label class="" for="nama">Nama Perusahaan</label>
+                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" placeholder="" required>
                             @error('nama')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -46,8 +46,8 @@
 
                         <!-- Alamat Perusahaan -->
                         <div class="form-group mb-3">
-                            <label class="floating-label" for="alamat">Alamat Perusahaan</label>
-                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" placeholder="Enter company address" required>
+                            <label class="" for="alamat">Alamat Perusahaan</label>
+                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" placeholder="" required>
                             @error('alamat')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

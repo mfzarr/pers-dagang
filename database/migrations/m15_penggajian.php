@@ -26,6 +26,10 @@ return new class extends Migration
             $table->unsignedInteger('total_kehadiran'); // Count from presensi
             $table->unsignedInteger('bonus_kehadiran'); // Additional bonus per attendance
             $table->unsignedInteger('total_bonus_kehadiran'); // total_kehadiran * bonus_kehadiran
+            $table->unsignedInteger('tunjangan_makan');
+            $table->unsignedInteger('tunjangan_jabatan');
+            $table->unsignedInteger('lembur');
+            $table->unsignedInteger('potongan_gaji');
             $table->unsignedInteger('total_gaji_bersih'); // Calculated final salary
             
             // Foreign key to perusahaan

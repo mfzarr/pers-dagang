@@ -33,7 +33,20 @@ class KaryawanController extends Controller
     {
         $id_perusahaan = Auth::user()->id_perusahaan;
         $jabatans = Jabatan::where('id_perusahaan', $id_perusahaan)->get();
-        $users = User::where('id_perusahaan', $id_perusahaan)->get(); // Fetch users of the same perusahaan
+
+        // Get all user IDs that are already associated with karyawan
+        $usedUserIds = Karyawan::where('id_perusahaan', $id_perusahaan)->pluck('id_user')->toArray();
+
+        // Fetch users of the same perusahaan that are not yet associated with any karyawan
+        $users = User::where('id_perusahaan', $id_perusahaan)
+            ->whereNotIn('id', $usedUserIds)
+            ->where('role', 'pegawai')
+            ->get();
+        // Fetch users of the same perusahaan that are not yet associated with any karyawan
+        $users = User::where('id_perusahaan', $id_perusahaan)
+            ->whereNotIn('id', $usedUserIds)
+            ->where('role', 'pegawai')
+            ->get();
 
         return view('masterdata.karyawan.create', compact('jabatans', 'users'));
     }
@@ -42,13 +55,14 @@ class KaryawanController extends Controller
     {
         $request->validate([
             'nama' => 'required|max:255',
-            'no_telp' => 'required|max:255',
+            'no_telp' => 'required|digits_between:7,13',
             'jenis_kelamin' => 'required|max:255',
             'email' => 'nullable',
             'alamat' => 'required|max:255',
             'status' => 'required',
             'id_jabatan' => 'required|exists:jabatan,id_jabatan',
-            'id_user' => 'nullable|exists:users,id'
+            'id_user' => 'nullable|exists:users,id',
+            'nik' => 'required|digits:16',
         ]);
 
         Karyawan::create([
@@ -60,7 +74,8 @@ class KaryawanController extends Controller
             'status' => $request->status,
             'id_jabatan' => $request->id_jabatan,
             'id_perusahaan' => Auth::user()->id_perusahaan,
-            'id_user' => $request->id_user
+            'id_user' => $request->id_user,
+            'nik' => $request->nik,
         ]);
 
         return redirect()->route('pegawai.index')->with('success', 'Karyawan created successfully.');
@@ -72,8 +87,22 @@ class KaryawanController extends Controller
         $id_perusahaan = Auth::user()->id_perusahaan;
         $karyawan = Karyawan::where('id_perusahaan', $id_perusahaan)->findOrFail($id);
         $jabatans = Jabatan::where('id_perusahaan', $id_perusahaan)->get();
-        $users = User::where('id_perusahaan', $id_perusahaan)->get();
-
+        
+        // Get all user IDs that are already associated with karyawan, except the current karyawan
+        $usedUserIds = Karyawan::where('id_perusahaan', $id_perusahaan)
+                               ->where('id_karyawan', '!=', $id)
+                               ->pluck('id_user')
+                               ->toArray();
+        
+        // Fetch users of the same perusahaan that are not yet associated with any karyawan or associated with the current karyawan
+        $users = User::where('id_perusahaan', $id_perusahaan)
+                     ->where(function($query) use ($usedUserIds, $karyawan) {
+                         $query->whereNotIn('id', $usedUserIds)
+                               ->orWhere('id', $karyawan->id_user);
+                     })
+                     ->where('role', 'pegawai')
+                     ->get();
+    
         return view('masterdata.karyawan.edit', compact('karyawan', 'jabatans', 'users'));
     }
 
@@ -81,14 +110,16 @@ class KaryawanController extends Controller
     {
         $request->validate([
             'nama' => 'required|max:255',
-            'no_telp' => 'required|max:255',
-            'jenis_kelamin' => 'required|in:Pria,Wanita',
-            'email' => 'nullable|email|max:255',
+            'no_telp' => 'required|digits_between:7,13',
+            'jenis_kelamin' => 'required|max:255',
+            'email' => 'nullable',
             'alamat' => 'required|max:255',
-            'status' => 'required|in:aktif,non-aktif',
-            'id_user' => 'nullable|exists:users,id'
+            'status' => 'required',
+            // 'id_jabatan' => 'required|exists:jabatan,id_jabatan',
+            'id_user' => 'nullable|exists:users,id',
+            'nik' => 'required|digits:16',
         ]);
-    
+
         $karyawan = Karyawan::findOrFail($id);
         $karyawan->update([
             'nama' => $request->nama,
@@ -97,24 +128,25 @@ class KaryawanController extends Controller
             'email' => $request->email,
             'alamat' => $request->alamat,
             'status' => $request->status,
-            'id_user' => $request->id_user
+            'id_user' => $request->id_user,
+            'nik' => $request->nik,
+            // 'id_jabatan' => $request->id_jabatan,
         ]);
-    
+
         return redirect()->route('pegawai.index')->with('success', 'Karyawan berhasil diupdate.');
     }
 
     public function destroy($id)
     {
         $id_perusahaan = Auth::user()->id_perusahaan;
-    
+
         // Cari karyawan berdasarkan ID dan pastikan hanya karyawan dari perusahaan yang sesuai
         $karyawan = Karyawan::where('id_perusahaan', $id_perusahaan)->findOrFail($id);
-    
+
         // Hapus karyawan
         $karyawan->delete();
-    
+
         // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('pegawai.index')->with('success', 'Karyawan deleted successfully.');
     }
-    
 }

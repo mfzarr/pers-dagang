@@ -1,44 +1,112 @@
 "use strict";
 function saveSettings(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    try {
+        localStorage.setItem('menu_' + key, value); // Simpan ke local storage
+        console.log('Saved:', 'menu_' + key, '=', value); // Debugging
+    } catch (e) {
+        console.error('Error saving to localStorage:', e);
+    }
 }
 
-function loadSettings(key, defaultValue) {
-    const saved = localStorage.getItem(key);
-    return saved ? JSON.parse(saved) : defaultValue;
+
+function getSettings(key) {
+    const value = localStorage.getItem('menu_' + key);
+    console.log('Retrieved:', 'menu_' + key, '=', value); // Debugging
+    return value;
+}
+
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+function loadSettings() {
+    const layoutType = getSettings('layoutType') || 'menu-dark';
+    const backgroundColor = getSettings('backgroundColor') || 'background-default';
+    const rtl = getSettings('rtl') === 'true';
+    const menuFixed = getSettings('menuFixed') === 'true';
+    const headerFixed = getSettings('headerFixed') === 'true';
+    const boxLayouts = getSettings('boxLayouts') === 'true';
+    const breadcumbLayouts = getSettings('breadcumbLayouts') === 'true';
+
+    // Terapkan pengaturan
+    $('.layout-type > a[data-value="' + layoutType + '"]').click();
+    $('.background-color.flat > a[data-value="' + backgroundColor + '"]').click();
+    $('#theme-rtl').prop('checked', rtl).trigger('change');
+    $('#menu-fixed').prop('checked', menuFixed).trigger('change');
+    $('#header-fixed').prop('checked', headerFixed).trigger('change');
+    $('#box-layouts').prop('checked', boxLayouts).trigger('change');
+    $('#breadcumb-layouts').prop('checked', breadcumbLayouts).trigger('change');
+
+    console.log('Settings loaded'); // Debugging
 }
 
 function applySettings() {
     // Apply layout type
-    const layoutType = loadSettings('layoutType', 'menu-dark');
+    const layoutType = getCookie('menu_layoutType') || 'menu-dark';
     $('.layout-type > a[data-value="' + layoutType + '"]').click();
 
     // Apply background color
-    const bgColor = loadSettings('backgroundColor', 'background-default');
+    const bgColor = getCookie('menu_backgroundColor') || 'background-default';
     $('.background-color.flat > a[data-value="' + bgColor + '"]').click();
 
     // Apply RTL setting
-    const isRTL = loadSettings('isRTL', false);
-    $('#theme-rtl').prop('checked', isRTL).change();
+    const isRTL = getCookie('menu_rtl') === 'true';
+    $('#theme-rtl').prop('checked', isRTL).trigger('change');
 
     // Apply menu fixed setting
-    const isMenuFixed = loadSettings('isMenuFixed', true);
-    $('#menu-fixed').prop('checked', isMenuFixed).change();
+    const isMenuFixed = getCookie('menu_menuFixed') === 'true';
+    $('#menu-fixed').prop('checked', isMenuFixed).trigger('change');
 
     // Apply header fixed setting
-    const isHeaderFixed = loadSettings('isHeaderFixed', true);
-    $('#header-fixed').prop('checked', isHeaderFixed).change();
+    const isHeaderFixed = getCookie('menu_headerFixed') === 'true';
+    $('#header-fixed').prop('checked', isHeaderFixed).trigger('change');
 
     // Apply box layouts setting
-    const isBoxLayout = loadSettings('isBoxLayout', false);
-    $('#box-layouts').prop('checked', isBoxLayout).change();
+    const isBoxLayout = getCookie('menu_boxLayouts') === 'true';
+    $('#box-layouts').prop('checked', isBoxLayout).trigger('change');
 
     // Apply breadcrumb sticky setting
-    const isBreadcumbSticky = loadSettings('isBreadcumbSticky', false);
-    $('#breadcumb-layouts').prop('checked', isBreadcumbSticky).change();
+    const isBreadcumbSticky = getCookie('menu_breadcumbLayouts') === 'true';
+    $('#breadcumb-layouts').prop('checked', isBreadcumbSticky).trigger('change');
 }
-$(document).ready(function() {
-    applySettings();
+$(document).ready(function () {
+    loadSettings(); // Load settings saat halaman dimuat
+
+    $('.layout-type > a').click(function () {
+        const layoutValue = $(this).data('value');
+        saveSettings('layoutType', layoutValue); // Simpan layout
+        console.log('Layout saved:', layoutValue); // Debugging
+    });
+
+    $('.background-color.flat > a').click(function () {
+        const bgColorValue = $(this).data('value');
+        saveSettings('backgroundColor', bgColorValue); // Simpan background color
+        console.log('Background color saved:', bgColorValue); // Debugging
+    });
+
+    $('#theme-rtl, #menu-fixed, #header-fixed, #box-layouts, #breadcumb-layouts').change(function () {
+        const settingKey = $(this).attr('id');
+        const settingValue = $(this).prop('checked');
+        saveSettings(settingKey, settingValue); // Simpan pengaturan lainnya
+        console.log('Setting saved:', settingKey, '=', settingValue); // Debugging
+    });
     // =========================================================
     // =========    Menu Customizer [ HTML ] code   ============
     // =========================================================
@@ -195,6 +263,27 @@ $(document).ready(function() {
             $('body').addClass('background-'+ temp.slice(11, temp.length));
         }
         saveSettings('backgroundColor', temp);
+    });
+
+    
+    $('#theme-rtl').on('change', function() {
+        saveSettings('rtl', this.checked);
+    });
+    
+    $('#menu-fixed').on('change', function() {
+        saveSettings('menuFixed', this.checked);
+    });
+    
+    $('#header-fixed').on('change', function() {
+        saveSettings('headerFixed', this.checked);
+    });
+    
+    $('#box-layouts').on('change', function() {
+        saveSettings('boxLayouts', this.checked);
+    });
+    
+    $('#breadcumb-layouts').on('change', function() {
+        saveSettings('breadcumbLayouts', this.checked);
     });
     // background Color outher
     $('.background-color.gradient > a').on('click', function() {

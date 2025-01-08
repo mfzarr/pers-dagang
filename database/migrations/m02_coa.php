@@ -39,6 +39,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('kelompok_akun'); // Kolom ini digunakan untuk foreign key
             $table->string('posisi_d_c');
             $table->integer('saldo_awal')->default(0);
+            $table->string('status')->default('manual'); // New column added here
             $table->unsignedBigInteger('id_perusahaan');
             $table->timestamps();
 

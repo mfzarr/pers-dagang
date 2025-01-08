@@ -99,13 +99,10 @@
                                                                 class="btn btn-primary btn-sm">
                                                                 <i class="feather icon-eye"></i>&nbsp;Detail
                                                             </a>
-                                                            <form id="delete-form-{{ $produk->id_produk }}"
-                                                                action="{{ route('produk.destroy', $produk->id_produk) }}"
-                                                                method="POST" style="display:inline;">
+                                                            <form action="{{ route('produk.destroy', $produk->id_produk) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini beserta stoknya?');">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="button" class="btn btn-danger btn-sm"
-                                                                    onclick="confirmDelete({{ $produk->id_produk }})">
+                                                                <button type="submit" class="btn btn-sm btn-danger">
                                                                     <i class="feather icon-trash-2"></i>&nbsp;Delete
                                                                 </button>
                                                             </form>

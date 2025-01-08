@@ -18,10 +18,6 @@
     @include('includes.navbar')
     <!-- [ Header ] start -->
     @include('includes.header')
-    <!-- [ Header ] end -->
-
-
-
     <!-- [ Main Content ] start -->
     @yield('content')
     <!-- [ Main Content ] end -->
@@ -29,7 +25,11 @@
 
     @include('includes.footer')
 
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            loadSettings(); // Jalankan loadSettings setiap halaman dimuat
+        });
+    </script>
 </body>
 
 </html>

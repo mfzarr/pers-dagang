@@ -41,9 +41,7 @@
                                 <select class="form-control" id="id_user" name="id_user">
                                     <option value="">Belum Terdaftar</option>
                                     @foreach($users as $user)
-                                        @if($user->role == 'pegawai' && $user->id_perusahaan == auth()->user()->id_perusahaan)
-                                            <option value="{{ $user->id }}">{{ $user->id }} - {{ $user->username }}</option>
-                                        @endif
+                                        <option value="{{ $user->id }}">{{ $user->id }} - {{ $user->username }}</option>
                                     @endforeach
                                 </select>
                                 @error('id_user')
@@ -58,8 +56,15 @@
                                 @enderror
                             </div>                            
                             <div class="form-group">
+                                <label for="nik">NIK</label>
+                                <input type="number" class="form-control" id="nik" name="nik" required>
+                                @error('nik')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label for="no_telp">No Telp</label>
-                                <input type="text" class="form-control" id="no_telp" name="no_telp" required>
+                                <input type="number" class="form-control" id="no_telp" name="no_telp" required>
                                 @error('no_telp')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror

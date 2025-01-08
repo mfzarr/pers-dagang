@@ -52,6 +52,10 @@ class PenggajianController extends Controller
             'bonus' => 'required|numeric|min:0|max:100',
             'total_service' => 'required|integer',
             'bonus_kehadiran' => 'required|integer',
+            'tunjangan_makan' => 'required|integer',
+            'tunjangan_jabatan' => 'required|integer',
+            'lembur' => 'required|integer',
+            'potongan_gaji' => 'required|integer',
         ]);
 
         $karyawan = Karyawan::find($request->id_karyawan);
@@ -65,7 +69,7 @@ class PenggajianController extends Controller
 
         $bonus_service = ($request->bonus / 100) * $request->total_service;
         $total_bonus_kehadiran = $total_kehadiran * $request->bonus_kehadiran;
-        $total_gaji_bersih = $jabatan->tarif + $bonus_service + $total_bonus_kehadiran - $jabatan->asuransi;
+        $total_gaji_bersih = $jabatan->tarif + $bonus_service + $total_bonus_kehadiran - $jabatan->asuransi + $request->tunjangan_makan + $request->tunjangan_jabatan + $request->lembur - $request->potongan_gaji;
 
         $no_transaksi_gaji = 'GJ/' . now()->format('Ymd') . '/' . str_pad(Penggajian::max('id_gaji') + 1, 4, '0', STR_PAD_LEFT);
 
@@ -81,6 +85,10 @@ class PenggajianController extends Controller
             'total_kehadiran' => $total_kehadiran,
             'bonus_kehadiran' => $request->bonus_kehadiran,
             'total_bonus_kehadiran' => $total_bonus_kehadiran,
+            'tunjangan_makan' => $request->tunjangan_makan,
+            'tunjangan_jabatan' => $request->tunjangan_jabatan,
+            'lembur' => $request->lembur,
+            'potongan_gaji' => $request->potongan_gaji,
             'total_gaji_bersih' => $total_gaji_bersih,
             'id_perusahaan' => Auth::user()->id_perusahaan
         ]);

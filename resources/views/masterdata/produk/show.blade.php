@@ -36,6 +36,7 @@
                                             <th>Stok Awal</th>
                                             <th>Stok Masuk</th>
                                             <th>Stok Keluar</th>
+                                            <th>Stok Akhir</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -46,6 +47,7 @@
                                                 <td>{{ $Stok->stok_awal }}</td>
                                                 <td>{{ $Stok->stok_masuk }}</td>
                                                 <td>{{ $Stok->stok_keluar }}</td>
+                                                <td>{{ $Stok->stok_akhir}}</td>
                                             </tr>
                                             </tr>
                                         @endforeach

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('alamat');
             $table->string('status');
+            $table->string('nik');
             $table->foreignId('id_jabatan');
             $table->foreignId('id_perusahaan');
             $table->foreignId('id_user')->nullable(); // Make id_user nullable

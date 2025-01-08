@@ -57,7 +57,6 @@ return new class extends Migration
 
             $table->integer('harga');
             $table->integer('kuantitas');
-            $table->decimal('hpp', 15, 2);
 
             $table->unsignedBigInteger('id_pegawai')->nullable();
             $table->foreign('id_pegawai')

@@ -69,7 +69,7 @@
                                         <td>{{ $gaji->no_transaksi_gaji }}</td>
                                         <td>{{ $gaji->tanggal_penggajian }}</td>
                                         <td>{{ $gaji->karyawan ? $gaji->karyawan->nama : 'N/A' }}</td>
-                                        <td>{{ $gaji->total_gaji_bersih }}</td>
+                                        <td>Rp{{ number_format($gaji->total_gaji_bersih) }}</td>
                                         <td>
                                             <a href="{{ route('penggajian.show', $gaji->id_gaji) }}"
                                                 class="btn btn-info btn-sm">
