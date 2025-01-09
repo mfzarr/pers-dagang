@@ -89,7 +89,7 @@
                                 <!-- New row to display saldo_awal -->
                                 <tr>
                                     <td colspan="2"><strong>Saldo Awal</strong></td>
-                                    <td colspan="2">{{ number_format($saldoAwal, 0) }}</td>
+                                    <td colspan="2">Rp{{ number_format($saldoAwal) }}</td>
                                 </tr>
 
                                 <!-- Transactions -->
@@ -113,20 +113,20 @@
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($transaction->tanggal_jurnal)->format('d M') }}</td>
                                     <td>{{ $transaction->nama_akun }}</td>
-                                    <td>{{ $transaction->debit ? number_format($transaction->debit, 0) : '0' }}</td>
-                                    <td>{{ $transaction->credit ? number_format($transaction->credit, 0) : '0' }}</td>
+                                    <td>Rp{{ $transaction->debit ? number_format($transaction->debit) : '0' }}</td>
+                                    <td>Rp{{ $transaction->credit ? number_format($transaction->credit) : '0' }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="2"><strong>Total</strong></td>
-                                    <td><strong>{{ number_format($totalDebit, 0) }}</strong></td>
-                                    <td><strong>{{ number_format($totalCredit, 0) }}</strong></td>
+                                    <td><strong>Rp{{ number_format($totalDebit) }}</strong></td>
+                                    <td><strong>Rp{{ number_format($totalCredit) }}</strong></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"><strong>Saldo Akhir</strong></td>
-                                    <td colspan="2"><strong>{{ number_format($runningBalance, 0) }}</strong></td> <!-- Display running balance -->
+                                    <td colspan="2"><strong>Rp{{ number_format($runningBalance) }}</strong></td> <!-- Display running balance -->
                                 </tr>
                             </tfoot>
                         </table>
@@ -167,18 +167,18 @@
                                 @endphp
                                 <tr>
                                     <td>{{ $coa->kode_akun }} - {{ $coa->nama_akun }}</td>
-                                    <td>{{ number_format($coaDebit, 0) }}</td>
-                                    <td>{{ number_format($coaCredit, 0) }}</td>
-                                    <td>{{ number_format($coa->saldo_awal, 0) }}</td> <!-- Display Saldo Awal here -->
+                                    <td>Rp{{ number_format($coaDebit) }}</td>
+                                    <td>{{ number_format($coaCredit) }}</td>
+                                    <td>{{ number_format($coa->saldo_awal) }}</td> <!-- Display Saldo Awal here -->
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="1"><strong>Total Keseluruhan</strong></td>
-                                    <td><strong>{{ number_format($totalDebit, 0) }}</strong></td>
-                                    <td><strong>{{ number_format($totalCredit, 0) }}</strong></td>
-                                    <td><strong>{{ number_format($totalDebit - $totalCredit, 0) }}</strong></td> <!-- Total Saldo Awal here -->
+                                    <td><strong>{{ number_format($totalDebit) }}</strong></td>
+                                    <td><strong>{{ number_format($totalCredit) }}</strong></td>
+                                    <td><strong>{{ number_format($totalDebit - $totalCredit) }}</strong></td> <!-- Total Saldo Awal here -->
                                 </tr>
                             </tfoot>
                         </table>
@@ -204,16 +204,16 @@
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($transaction->tanggal_jurnal)->format('d M') }}</td>
                                     <td>{{ $transaction->coa->nama_akun }}</td>
-                                    <td>{{ number_format($transaction->debit, 0) }}</td>
-                                    <td>{{ number_format($transaction->credit, 0) }}</td>
+                                    <td>{{ number_format($transaction->debit) }}</td>
+                                    <td>{{ number_format($transaction->credit) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="2"><strong>Total Keseluruhan</strong></td>
-                                    <td><strong>{{ number_format($grandTotalDebit, 0) }}</strong></td>
-                                    <td><strong>{{ number_format($grandTotalCredit, 0) }}</strong></td>
+                                    <td><strong>{{ number_format($grandTotalDebit) }}</strong></td>
+                                    <td><strong>{{ number_format($grandTotalCredit) }}</strong></td>
                                 </tr>
                             </tfoot>
                         </table>

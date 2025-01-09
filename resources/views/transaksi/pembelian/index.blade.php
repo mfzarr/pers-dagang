@@ -94,8 +94,8 @@
                                         @endif
 
                                         <td>{{ $item->tipe_pembayaran }}</td>
-                                        <td>{{ $item->total_dibayar }}</td>
-                                        <td>{{ $item->total }}</td>
+                                        <td>Rp{{ number_format($item->total_dibayar) }}</td>
+                                        <td>Rp{{ number_format($item->total) }}</td>
                                         <td>
                                             @if ($item->total_dibayar >= $item->total)
                                                 <span class="badge badge-success">Lunas</span>

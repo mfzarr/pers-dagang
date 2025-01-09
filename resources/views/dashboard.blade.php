@@ -32,7 +32,7 @@
                                 <div class="col-md-12 col-xl-4">
                                     <div class="card bg-c-green order-card">
                                         <div class="card-body">
-                                            <h6 class="text-white">Pendapatan</h6>
+                                            <h6 class="text-white">Total Penjualan</h6>
                                             <h2 class="text-white">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</h2>
                                             <p class="m-b-0">Bulan Ini</p>
                                             <i class="card-icon fas fa-money-check-alt"></i>
@@ -52,7 +52,7 @@
                                 <div class="col-md-6 col-xl-4">
                                     <div class="card bg-c-blue order-card">
                                         <div class="card-body">
-                                            <h6 class="text-white">Total Sales</h6>
+                                            <h6 class="text-white">Total Pendapatan</h6>
                                             <h2 class="text-white">Rp {{ number_format($totalSales, 0, ',', '.') }}</h2>
                                             <p class="m-b-0">Total Penjualan - HPP Bulan Ini</p>
                                             <i class="card-icon fas fa-gift"></i>

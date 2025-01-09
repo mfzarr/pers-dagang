@@ -75,7 +75,7 @@
                                         <td>{{ $item->tgl_transaksi }}</td>
                                         <td>{{ $item->pelangganRelation->nama ?? 'N/A' }}</td>
                                         <td>{{ $item->userRelation->username ?? 'N/A' }}</td>
-                                        <td>{{ number_format($item->total, 2) }}</td>
+                                        <td>Rp{{ number_format($item->total) }}</td>
                                         <td>{{ $item->discount }}%</td>
                                         <td>
                                             @if ($item->status == 'Lunas')

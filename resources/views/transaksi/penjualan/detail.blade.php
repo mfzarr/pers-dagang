@@ -40,7 +40,7 @@
                         <p><strong>Status:</strong>
                             {!! $penjualan->status == 'Lunas'
                             ? '<span class="badge badge-success">Lunas</span>'
-                            : '<span class="badge badge-danger">Belum Lunas</span>' !!}
+                            : '<span class="badge badge-success">Lunas</span>' !!}
                         </p>
                     </div>
                     <div class="col-md-6">
@@ -64,10 +64,10 @@
                             @foreach($penjualan->penjualanDetails as $detail)
                             <tr>
                                 <td>{{ $detail->produkRelation->nama ?? 'N/A' }}</td>
-                                <td>{{ number_format($detail->harga, 2) }}</td>
+                                <td>Rp{{ number_format($detail->harga) }}</td>
                                 <td>{{ $detail->kuantitas }}</td>
                                 <td>{{ $detail->pegawaiRelation->nama ?? 'N/A' }}</td>
-                                <td>{{ number_format($detail->total, 2) }}</td>
+                                <td>Rp{{ number_format($detail->total) }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -78,7 +78,7 @@
                             </tr>
                             <tr>
                                 <td colspan="4" class="text-right"><strong>Total:</strong></td>
-                                <td>{{ number_format($penjualan->total, 2) }}</td>
+                                <td>Rp{{ number_format($penjualan->total) }}</td>
                             </tr>
                         </tfoot>
                     </table>

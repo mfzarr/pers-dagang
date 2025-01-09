@@ -49,7 +49,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->nama_beban }}</td>
-                                            <td>{{ number_format($item->harga, 2) }}</td>
+                                            <td>Rp{{ number_format($item->harga) }}</td>
                                             <td>{{ $item->tanggal }}</td>
                                             <td>{{ $item->coa->kode_akun }}</td>
                                             <td>{{ $item->coa->nama_akun }}</td>

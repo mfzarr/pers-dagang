@@ -112,11 +112,11 @@
                                 {{ $entry->nama_akun }}
                             </td>
                             <td>{{ $entry->kode_akun }}</td>
-                            <td class="text-right">
-                                {{ $entry->debit > 0 ? number_format($entry->debit, 2, ',', '.') : '-' }}
+                            <td class="text-right">Rp
+                                {{ $entry->debit > 0 ? number_format($entry->debit) : '-' }}
                             </td>
-                            <td class="text-right">
-                                {{ $entry->credit > 0 ? number_format($entry->credit, 2, ',', '.') : '-' }}
+                            <td class="text-right">Rp
+                                {{ $entry->credit > 0 ? number_format($entry->credit) : '-' }}
                             </td>
                         </tr>
                         @endforeach
@@ -136,11 +136,11 @@
                     <tfoot>
                         <tr class="bg-light font-weight-bold">
                             <td colspan="3" class="text-right">Total:</td>
-                            <td class="text-right">
-                                {{ number_format($jurnals->sum('debit'), 2, ',', '.') }}
+                            <td class="text-right">Rp
+                                {{ number_format($jurnals->sum('debit')) }}
                             </td>
-                            <td class="text-right">
-                                {{ number_format($jurnals->sum('credit'), 2, ',', '.') }}
+                            <td class="text-right">Rp
+                                {{ number_format($jurnals->sum('credit')) }}
                             </td>
                         </tr>
                     </tfoot>

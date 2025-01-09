@@ -70,9 +70,9 @@
                             <tr>
                                 <td>{{ $detail->produkRelation->nama ?? 'N/A' }}</td>
                                 <td>{{ $detail->qty }}</td>
-                                <td>{{ $detail->harga }}</td>
-                                <td>{{ $detail->sub_total_harga }}</td>
-                                <td>{{ $detail->dibayar }}</td>
+                                <td>Rp{{ number_format($detail->harga) }}</td>
+                                <td>Rp{{ number_format($detail->sub_total_harga) }}</td>
+                                <td>Rp{{ number_format($detail->dibayar) }}</td>
                             </tr>
                             @endforeach
                         </tbody>

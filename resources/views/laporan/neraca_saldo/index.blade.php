@@ -68,16 +68,16 @@
                                     <tr>
                                         <td>{{ $balance->kode_akun }}</td>
                                         <td>{{ $balance->nama_akun }}</td>
-                                        <td>{{ number_format($balance->total_debit, 2) }}</td>
-                                        <td>{{ number_format($balance->total_credit, 2) }}</td>
+                                        <td>Rp{{ number_format($balance->total_debit) }}</td>
+                                        <td>Rp{{ number_format($balance->total_credit) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th colspan="2">Total</th>
-                                        <th>{{ number_format($grandTotalDebit, 2) }}</th>
-                                        <th>{{ number_format($grandTotalCredit, 2) }}</th>
+                                        <th>Rp{{ number_format($grandTotalDebit) }}</th>
+                                        <th>Rp{{ number_format($grandTotalCredit) }}</th>
                                     </tr>
                                 </tfoot>
                             </table>
