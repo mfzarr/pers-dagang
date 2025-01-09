@@ -58,17 +58,36 @@
                                                     <a href="{{ route('coa.edit', $coa->id_coa) }}"
                                                         class="btn btn-info btn-sm"><i
                                                             class="feather icon-edit"></i>&nbsp;Edit</a>
+                                                    {{-- Delete Coa Disable ketika sudah terhubung ke jurnal         --}}
                                                     @if ($coa->status !== 'seeder')
-                                                        <form action="{{ route('coa.destroy', $coa->id_coa) }}"
-                                                            method="POST" class="d-inline"
-                                                            id="delete-form-{{ $coa->id_coa }}">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-sm btn-danger"
-                                                                onclick="confirmDelete({{ $coa->id_coa }})"><i
+                                                        @if (!$coa->jurnalUmums()->exists())
+                                                            <form action="{{ route('coa.destroy', $coa->id_coa) }}"
+                                                                method="POST" class="d-inline"
+                                                                id="delete-form-{{ $coa->id_coa }}">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="button" class="btn btn-sm btn-danger"
+                                                                    onclick="confirmDelete({{ $coa->id_coa }})"><i
+                                                                        class="feather icon-trash-2"></i>&nbsp;Delete</button>
+                                                            </form>
+                                                        @else
+                                                            <button type="button" class="btn btn-sm btn-danger" disabled><i
                                                                     class="feather icon-trash-2"></i>&nbsp;Delete</button>
-                                                        </form>
+                                                        @endif
                                                     @endif
+
+                                                    {{-- Delete COA Manual --}}
+                                                    {{-- @if ($coa->status !== 'seeder')
+                                                    <form action="{{ route('coa.destroy', $coa->id_coa) }}"
+                                                        method="POST" class="d-inline"
+                                                        id="delete-form-{{ $coa->id_coa }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-sm btn-danger"
+                                                            onclick="confirmDelete({{ $coa->id_coa }})"><i
+                                                                class="feather icon-trash-2"></i>&nbsp;Delete</button>
+                                                    </form>
+                                                @endif --}}
                                                 </td>
                                             </tr>
                                         @endforeach

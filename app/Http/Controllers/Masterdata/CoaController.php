@@ -92,14 +92,27 @@ class CoaController extends Controller
     }
 
 
-    /**
-     * Remove the specified COA record.
-     */
+    // Delete COA ketika tidak ada jurnal yang terkait
     public function destroy($id)
     {
         $coa = Coa::where('id_perusahaan', Auth::user()->id_perusahaan)->findOrFail($id);
+    
+        // Check if there are any related journal entries
+        if ($coa->jurnalUmums()->exists()) {
+            return redirect()->route('coa.index')->with('error', 'COA tidak bisa dihapus karena berhubungan dengan jurnal!');
+        }
+    
         $coa->delete();
-
+    
         return redirect()->route('coa.index')->with('success', 'COA berhasil dihapus!');
     }
+    
+    // Delete COA Bebas
+    // public function destroy($id)
+    // {
+    //     $coa = Coa::where('id_perusahaan', Auth::user()->id_perusahaan)->findOrFail($id);
+    //     $coa->delete();
+
+    //     return redirect()->route('coa.index')->with('success', 'COA berhasil dihapus!');
+    // }
 }
