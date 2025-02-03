@@ -105,7 +105,9 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('pembelian.detail', $item->id_pembelian) }}"
-                                                class="btn btn-sm btn-info">Detail</a>
+                                                class="btn btn-sm btn-info">                                                
+                                                <i class="feather icon-eye"></i> Detail
+                                            </a>
 
                                             <!-- Pelunasan Button -->
                                             @if ($item->status === 'Belum Lunas')
@@ -122,7 +124,7 @@
                                                 @method('DELETE')
                                                 <button type="button" class="btn btn-sm btn-danger"
                                                     onclick="confirmDelete('{{ route('pembelian.destroy', $item->id_pembelian) }}')">
-                                                    Hapus
+                                                    <i class="feather icon-trash-2"></i>&nbsp;Delete
                                                 </button>
                                             </form>
                                         </td>

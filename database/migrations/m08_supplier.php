@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create supplier table
         Schema::create('supplier', function (Blueprint $table) {
             $table->id('id_supplier');
             $table->string('nama', 50);
@@ -23,6 +24,19 @@ return new class extends Migration
             $table->foreign('id_perusahaan')->references('id_perusahaan')->on('perusahaan')->onDelete('cascade');
         });
 
+        // Create pivot table for many-to-many relationship between supplier and produk
+        Schema::create('produk_supplier', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('id_produk');
+            $table->unsignedBigInteger('id_supplier');
+            $table->timestamps();
+
+            $table->foreign('id_produk')->references('id_produk')->on('produk')->onDelete('cascade');
+            $table->foreign('id_supplier')->references('id_supplier')->on('supplier')->onDelete('cascade');
+
+            // Ensure that each combination of product and supplier is unique
+            $table->unique(['id_produk', 'id_supplier']);
+        });
     }
 
     /**
@@ -30,6 +44,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('produk_supplier');
         Schema::dropIfExists('supplier');
     }
 };

@@ -2,11 +2,12 @@
 
 namespace App\Models\Masterdata;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Masterdata\Supplier;
 use App\Models\Masterdata\Perusahaan;
-use App\Models\Masterdata\Kategori_barang;
 use App\Models\Masterdata\stok_produk;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Masterdata\Kategori_barang;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Produk extends Model
 {
@@ -37,6 +38,11 @@ class Produk extends Model
     public function stok_produk()
     {
         return $this->hasMany(stok_produk::class, 'id_produk', 'id_produk');
+    }
+
+    public function suppliers()
+    {
+        return $this->belongsToMany(Supplier::class, 'produk_supplier', 'id_produk', 'id_supplier');
     }
 
     

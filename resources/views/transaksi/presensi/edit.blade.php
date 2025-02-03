@@ -32,11 +32,23 @@
                     @csrf
                     @method('PUT')
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Nama</th>
                                 <th>Status</th>
+                                <th>Jam Masuk</th>
+                                <th>Jam Keluar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,7 +56,7 @@
                             <tr>
                                 <td>{{ $record->karyawan->nama }}</td>
                                 <td>
-                                    <select name="status[{{ $record->id_karyawan }}]" class="form-control" required>
+                                    <select name="status[{{ $record->id_karyawan }}]" class="form-control status-select" data-id="{{ $record->id_karyawan }}" required>
                                         <option value="hadir" @if($record->status == 'hadir') selected @endif>Hadir</option>
                                         <option value="izin" @if($record->status == 'izin') selected @endif>Izin</option>
                                         <option value="sakit" @if($record->status == 'sakit') selected @endif>Sakit</option>
@@ -52,15 +64,44 @@
                                         <option value="terlambat" @if($record->status == 'terlambat') selected @endif>Terlambat</option>
                                     </select>
                                 </td>
+                                <td>
+                                    <input type="time" name="jam_masuk[{{ $record->id_karyawan }}]" class="form-control jam-masuk" id="jam_masuk_{{ $record->id_karyawan }}" value="{{ $record->jam_masuk ? \Carbon\Carbon::parse($record->jam_masuk)->format('H:i') : '' }}">
+                                </td>
+                                <td>
+                                    <input type="time" name="jam_keluar[{{ $record->id_karyawan }}]" class="form-control" value="{{ $record->jam_keluar ? \Carbon\Carbon::parse($record->jam_keluar)->format('H:i') : '' }}">
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
 
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <a href="{{ route('presensi.index') }}" class="btn btn-danger">Kembali</a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const statusSelects = document.querySelectorAll('.status-select');
+        statusSelects.forEach(select => {
+            select.addEventListener('change', function () {
+                const id = this.getAttribute('data-id');
+                const jamMasukInput = document.getElementById(`jam_masuk_${id}`);
+                if (this.value === 'izin' || this.value === 'sakit' || this.value === 'alpha') {
+                    jamMasukInput.value = '';
+                } else {
+                    jamMasukInput.disabled = false;
+                }
+            });
+
+            // Trigger change event on page load to handle pre-selected values
+            select.dispatchEvent(new Event('change'));
+        });
+    });
+</script>
 @endsection

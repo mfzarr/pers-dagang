@@ -12,7 +12,9 @@ return new class extends Migration
             $table->id('id_presensi');
             $table->unsignedBigInteger('id_karyawan'); // Foreign key to the karyawan table
             $table->date('tanggal_presensi'); // The date of attendance
-            $table->enum('status', ['hadir', 'izin', 'sakit', 'alpha', 'terlambat']); // Status of the attendance
+            $table->time('jam_masuk')->nullable();
+            $table->time('jam_keluar')->nullable();
+            $table->enum('status', ['hadir', 'izin', 'sakit', 'alpha', 'terlambat', 'pulang_cepat']);
             $table->unsignedBigInteger('id_perusahaan'); // Foreign key to the perusahaan table
             $table->timestamps();
 

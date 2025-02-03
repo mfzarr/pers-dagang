@@ -3,21 +3,7 @@
 @section('content')
     <div class="pcoded-main-container">
         <div class="pcoded-content">
-            <div class="page-header">
-                <div class="page-block">
-                    <div class="row align-items-center">
-                        <div class="col-md-12">
-                            <div class="page-header-title">
-                                <h5 class="m-b-10">List of Supplier</h5>
-                            </div>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('supplier.index') }}">Supplier</a></li>
-                            </ul> 
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- ... existing code ... -->
 
             <div class="row">
                 <div class="col-lg-12">
@@ -41,6 +27,7 @@
                                                 <th>Nama</th>
                                                 <th>No Telp</th>
                                                 <th>Alamat</th>
+                                                <th>Produk</th>
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -51,6 +38,17 @@
                                                     <td>{{ $supplier->nama }}</td>
                                                     <td>{{ $supplier->no_telp }}</td>
                                                     <td>{{ $supplier->alamat }}</td>
+                                                    <td>
+                                                        @if ($supplier->products->isNotEmpty())
+                                                            <ul>
+                                                                @foreach ($supplier->products as $product)
+                                                                    <li>{{ $product->nama }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @else
+                                                            <span class="text-muted">No products</span>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         @if ($supplier->status === 'Aktif')
                                                             <span class="badge badge-success">Aktif</span>

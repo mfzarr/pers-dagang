@@ -51,12 +51,12 @@
 <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
 <script src="{{ asset('assets/js/menu-setting.min.js') }}"></script>
 <!-- datatable Js -->
-<script src="assets/js/plugins/jquery.dataTables.min.js"></script>
-<script src="assets/js/plugins/dataTables.bootstrap4.min.js"></script>
-<script src="assets/js/plugins/dataTables.fixedHeader.min.js"></script>
-<script src="assets/js/pages/data-basic-custom.js"></script>
-<script src="assets/js/plugins/apexcharts.min.js"></script>
-<script src="assets/js/plugins/apexcharts.min.js"></script>
+<script src="{{ asset('assets/js/plugins/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/dataTables.fixedHeader.min.js') }}"></script>
+<script src="{{ asset('assets/js/pages/data-basic-custom.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/apexcharts.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/apexcharts.min.js') }}"></script>
 
 
 <!-- [ Pre-loader ] start -->
@@ -64,7 +64,17 @@
 <script src="{{ asset('assets/js/plugins/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('assets/js/pages/data-basic-custom.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 
+<script src="{{ asset('assets/js/plugins/select2.full.min.js') }}"></script>
+<!-- form-select-custom Js -->
+ <script src="{{ asset('assets/js/pages/form-select2.js') }}"></script>
+<!-- [ Pre-loader ] end -->
+
+<!-- [ Pre-loader ] start -->
+<script src="{{ asset('assets/js/plugins/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/js/pages/form-select-custom.js') }}"></script>
 <!-- [ Footer ] end -->
 
 <!-- Apex Chart -->
@@ -119,5 +129,5 @@
 
 <script src="assets/js/plugins/bootstrap-notify.min.js"></script>
 <script src="assets/js/pages/ac-notification.js"></script>      
-<script src="assets/js/plugins/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

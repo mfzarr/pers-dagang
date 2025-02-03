@@ -55,6 +55,21 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label for="products">Produk</label>
+                                    <select class="js-example-basic-multiple col-sm-12 @error('products') is-invalid @enderror" id="products" name="products[]" multiple="multiple" required>
+                                        <optgroup label="Produk Aktif">
+                                            @foreach($products as $product)
+                                                @if($product->status == 'Aktif')
+                                                    <option value="{{ $product->id_produk }}" {{ in_array($product->id_produk, old('products', $supplier->products->pluck('id_produk')->toArray())) ? 'selected' : '' }}>{{ $product->nama }}</option>
+                                                @endif
+                                            @endforeach
+                                        </optgroup>
+                                    </select>
+                                    @error('products')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label for="status">Status</label>
                                     <select class="form-control @error('status') is-invalid @enderror" id="status" name="status" required>
                                         <option value="Aktif" {{ old('status', $supplier->status) == 'Aktif' ? 'selected' : '' }}>Aktif</option>
@@ -75,4 +90,5 @@
             </div>
         </div>
     </div>
-@endsection
+    @endsection
+    

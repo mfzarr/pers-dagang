@@ -30,6 +30,9 @@
                         <tr>
                             <th>Name</th>
                             <th>Status</th>
+                            <th>Jam Masuk</th>
+                            <th>Jam Keluar</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,10 +40,31 @@
                         <tr>
                             <td>{{ $record->karyawan->nama }}</td>
                             <td>{{ ucfirst($record->status) }}</td>
+                            <td>{{ $record->jam_masuk ?? '--' }}</td>
+                            <td>{{ $record->jam_keluar ?? '--' }}</td>
+                            <td>
+                                @if(in_array($record->status, ['izin', 'sakit', 'alpha']))
+                                    --
+                                @else
+                                    @if(!$record->jam_keluar)
+                                        <form action="{{ route('presensi.createExitTime', ['date' => $date, 'id' => $record->id_presensi]) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-primary">
+                                                <i class="feather icon-clock"></i> Jam Keluar
+                                            </button>
+                                        </form>
+                                    @else
+                                        <span class="text-success">Jam keluar telah direkam</span>
+                                    @endif
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <div class="text-right">
+                    <a href="{{ route('presensi.index') }}" class="btn btn-secondary mt-3">Back</a>
+                </div>
             </div>
         </div>
     </div>

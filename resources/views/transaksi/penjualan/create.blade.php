@@ -48,9 +48,11 @@
                         <select id="pelanggan" name="pelanggan" class="form-control" required onchange="updateDiscountInfo()">
                             <option value="">Pilih Pelanggan</option>
                             @foreach($pelanggan as $item)
+                            @if($item->status == 'Aktif')
                             <option value="{{ $item->id_pelanggan }}" data-jumlah-transaksi="{{ $item->jumlah_transaksi }}">
                                 {{ $item->nama }}
                             </option>
+                            @endif
                             @endforeach
                         </select>
                     </div>
@@ -82,7 +84,9 @@
                                         <select name="produk[0][id_produk]" class="form-control produk-select" onchange="updateHarga(this)" required>
                                             <option value="">Select Produk</option>
                                             @foreach($produk as $item)
+                                            @if($item->status == 'Aktif')
                                             <option value="{{ $item->id_produk }}" data-harga="{{ $item->harga }}">{{ $item->nama }}</option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </td>
@@ -92,7 +96,9 @@
                                         <select name="produk[0][pegawai]" class="form-control" required>
                                             <option value="">Select Pegawai</option>
                                             @foreach($pegawai as $item)
+                                            @if($item->status == 'aktif')
                                             <option value="{{ $item->id_karyawan }}">{{ $item->nama }}</option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </td>

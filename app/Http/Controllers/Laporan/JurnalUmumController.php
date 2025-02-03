@@ -358,22 +358,22 @@ class JurnalUmumController extends Controller
             ->select('coa.*')
             ->selectRaw('
                 CASE 
-                    WHEN LOWER(nama_akun) LIKE "%akumulasi penyusutan%" THEN 0
+                    WHEN LOWER(nama_akun) LIKE \'%akumulasi penyusutan%\' THEN 0
                     ELSE (CASE WHEN kelompok_akun IN (1, 5) THEN saldo_awal ELSE 0 END) + 
                         (SELECT COALESCE(SUM(debit), 0) FROM jurnal_umum 
                         WHERE jurnal_umum.id_coa = coa.id_coa 
-                        AND YEAR(tanggal_jurnal) = ? AND MONTH(tanggal_jurnal) = ?)
+                        AND EXTRACT(YEAR FROM tanggal_jurnal) = ? AND EXTRACT(MONTH FROM tanggal_jurnal) = ?)
                 END as total_debit', [$selectedYear, $selectedMonth])
             ->selectRaw('
                 CASE 
-                    WHEN LOWER(nama_akun) LIKE "%akumulasi penyusutan%" THEN saldo_awal + 
+                    WHEN LOWER(nama_akun) LIKE \'%akumulasi penyusutan%\' THEN saldo_awal + 
                         (SELECT COALESCE(SUM(credit), 0) FROM jurnal_umum 
                         WHERE jurnal_umum.id_coa = coa.id_coa 
-                        AND YEAR(tanggal_jurnal) = ? AND MONTH(tanggal_jurnal) = ?)
+                        AND EXTRACT(YEAR FROM tanggal_jurnal) = ? AND EXTRACT(MONTH FROM tanggal_jurnal) = ?)
                     ELSE (CASE WHEN kelompok_akun IN (2, 3, 4) THEN saldo_awal ELSE 0 END) + 
                         (SELECT COALESCE(SUM(credit), 0) FROM jurnal_umum 
                         WHERE jurnal_umum.id_coa = coa.id_coa 
-                        AND YEAR(tanggal_jurnal) = ? AND MONTH(tanggal_jurnal) = ?)
+                        AND EXTRACT(YEAR FROM tanggal_jurnal) = ? AND EXTRACT(MONTH FROM tanggal_jurnal) = ?)
                 END as total_credit', [$selectedYear, $selectedMonth, $selectedYear, $selectedMonth])
             ->get();
     

@@ -10,6 +10,7 @@ use App\Models\Laporan\JurnalUmum;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PenggajianController extends Controller
 {
@@ -36,7 +37,7 @@ class PenggajianController extends Controller
     public function getTotalKehadiranByKaryawan($id)
     {
         // Count the total 'hadir' status from presensi table for the selected employee
-        $total_kehadiran = \DB::table('presensi')
+        $total_kehadiran = DB::table('presensi')
             ->where('id_karyawan', $id)
             ->where('status', 'hadir')
             ->count();
@@ -56,13 +57,14 @@ class PenggajianController extends Controller
             'tunjangan_jabatan' => 'required|integer',
             'lembur' => 'required|integer',
             'potongan_gaji' => 'required|integer',
+            'detail_potongan' => 'nullable|string',
         ]);
 
         $karyawan = Karyawan::find($request->id_karyawan);
         $jabatan = $karyawan->jabatan;
 
         // Fetch total_kehadiran from the presensi table
-        $total_kehadiran = \DB::table('presensi')
+        $total_kehadiran = DB::table('presensi')
             ->where('id_karyawan', $request->id_karyawan)
             ->where('status', 'hadir')
             ->count();
@@ -90,7 +92,8 @@ class PenggajianController extends Controller
             'lembur' => $request->lembur,
             'potongan_gaji' => $request->potongan_gaji,
             'total_gaji_bersih' => $total_gaji_bersih,
-            'id_perusahaan' => Auth::user()->id_perusahaan
+            'id_perusahaan' => Auth::user()->id_perusahaan,
+            'detail_potongan' => $request->detail_potongan,
         ]);
 
         // Create journal entries after successfully creating the payroll record
@@ -152,7 +155,7 @@ class PenggajianController extends Controller
     public function getTotalServiceByKaryawan($id)
     {
         // Sum all 'total' from 'penjualan' based on 'id_pegawai' in 'penjualan_detail'
-        $total_service = \DB::table('penjualan_detail')
+        $total_service = DB::table('penjualan_detail')
             ->join('penjualan', 'penjualan.id_penjualan', '=', 'penjualan_detail.id_penjualan')
             ->where('penjualan_detail.id_pegawai', $id)
             ->sum('penjualan.total');

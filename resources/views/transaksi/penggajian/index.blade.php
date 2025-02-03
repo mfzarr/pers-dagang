@@ -80,7 +80,9 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn btn-danger btn-sm"
-                                                    onclick="confirmDelete('{{ route('penggajian.destroy', $gaji->id_gaji) }}')">Hapus</button>
+                                                    onclick="confirmDelete('{{ route('penggajian.destroy', $gaji->id_gaji) }}')">                                                        
+                                                    <i class="feather icon-trash-2"></i>&nbsp;Delete
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>

@@ -130,6 +130,7 @@ Route::middleware('auth')->group(function () {
     Route::post('pembelian/{id}/details/store', [PembeliandetailController::class, 'store'])->name('pembeliandetail.store');
     Route::put('pembelian/detail/{id}', [PembeliandetailController::class, 'update'])->name('pembeliandetail.update');
     Route::delete('pembelian/detail/{id}', [PembeliandetailController::class, 'destroy'])->name('pembeliandetail.destroy');
+    Route::get('/get-products-by-supplier/{supplierId}', [PembelianController::class, 'getProductsBySupplier'])->name('get-products-by-supplier');
 
     // Penjualan routes
     Route::resource('penjualan', PenjualanController::class);
@@ -170,4 +171,6 @@ Route::prefix('presensi')->middleware('role:owner')->name('presensi.')->group(fu
     Route::get('edit/{date}', [PresensiController::class, 'edit'])->name('edit');
     Route::delete('destroy/{date}', [PresensiController::class, 'destroy'])->name('destroy');
     Route::put('update/{date}', [PresensiController::class, 'update'])->name('update');
+    Route::post('presensi/create-exit-time/{date}/{id}', [PresensiController::class, 'createExitTime'])->name('presensi.createExitTime');
+    Route::post('create-exit-time/{date}/{id}', [PresensiController::class, 'createExitTime'])->name('createExitTime');
 });

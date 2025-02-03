@@ -88,7 +88,9 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('penjualan.show', $item->id_penjualan) }}"
-                                                class="btn btn-sm btn-info">Detail</a>
+                                                class="btn btn-sm btn-info">
+                                                <i class="feather icon-eye"></i>
+                                                Detail</a>
 
                                             @if ($item->status != 'Selesai')
                                                 <a href="{{ route('penjualan.selesaikan', $item->id_penjualan) }}"
@@ -99,7 +101,9 @@
                                                 method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                <button type="submit" class="btn btn-sm btn-danger">                                                        
+                                                    <i class="feather icon-trash-2"></i>&nbsp;Delete
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>

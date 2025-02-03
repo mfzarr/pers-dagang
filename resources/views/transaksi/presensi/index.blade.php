@@ -58,21 +58,17 @@
                                                 <td>{{ $summary['alpha'] }}</td>
                                                 <td>{{ $summary['terlambat'] }}</td>
                                                 <td>
-                                                    <a href="{{ route('presensi.show', $date) }}"
-                                                        class="btn btn-icon btn-outline-primary"><i
-                                                            class="feather icon-eye"></i>
+                                                    <a href="{{ route('presensi.show', $date) }}" class="btn btn-sm btn-primary btn-round has-ripple">
+                                                        <i class="feather icon-eye"></i> View
                                                     </a>
-                                                    <a href="{{ route('presensi.edit', $date) }}"
-                                                        class="btn btn-icon btn-outline-success"><i
-                                                            class="feather icon-edit"></i>
+                                                    <a href="{{ route('presensi.edit', $date) }}" class="btn btn-sm btn-success btn-round has-ripple">
+                                                        <i class="feather icon-edit"></i> Edit
                                                     </a>
-                                                    <form id="delete-form-{{ $date }}"
-                                                        action="{{ route('presensi.destroy', $date) }}" method="POST"
-                                                        style="display:inline;">
+                                                    <form id="delete-form-{{ $date }}" action="{{ route('presensi.destroy', $date) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-icon btn-outline-danger">
-                                                            <i class="feather icon-trash-2"></i>
+                                                        <button type="submit" class="btn btn-sm btn-danger btn-round has-ripple">
+                                                            <i class="feather icon-trash-2"></i> Delete
                                                         </button>
                                                     </form>
                                                 </td>

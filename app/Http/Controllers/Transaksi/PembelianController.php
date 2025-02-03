@@ -40,13 +40,34 @@ class PembelianController extends Controller
         return view('transaksi.pembelian.index', compact('pembelian', 'filter', 'search'));
     }
 
+    // public function create()
+    // {
+    //     $id_perusahaan = Auth::user()->id_perusahaan;
+    //     $suppliers = Supplier::where('id_perusahaan', $id_perusahaan)->get();
+    //     $produk = Produk::where('id_perusahaan', $id_perusahaan)->get();
+
+    //     return view('transaksi.pembelian.create', compact('suppliers', 'produk'));
+    // }
+
     public function create()
     {
         $id_perusahaan = Auth::user()->id_perusahaan;
-        $suppliers = Supplier::where('id_perusahaan', $id_perusahaan)->get();
+        $suppliers = Supplier::where('id_perusahaan', $id_perusahaan)->with('products')->get();
+        
+        // Fetch all products for the company
         $produk = Produk::where('id_perusahaan', $id_perusahaan)->get();
-
+        
         return view('transaksi.pembelian.create', compact('suppliers', 'produk'));
+    }
+
+    public function getProductsBySupplier($supplierId)
+    {
+        $id_perusahaan = Auth::user()->id_perusahaan;
+        $products = Produk::where('id_perusahaan', $id_perusahaan)
+                          ->where('id_supplier', $supplierId)
+                          ->get();
+        
+        return response()->json($products);
     }
 
     public function store(Request $request)

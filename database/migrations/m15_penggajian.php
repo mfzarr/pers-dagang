@@ -29,7 +29,8 @@ return new class extends Migration
             $table->unsignedInteger('tunjangan_makan');
             $table->unsignedInteger('tunjangan_jabatan');
             $table->unsignedInteger('lembur');
-            $table->unsignedInteger('potongan_gaji');
+            $table->unsignedInteger('potongan_gaji')->nullable();
+            $table->string('detail_potongan')->nullable();
             $table->unsignedInteger('total_gaji_bersih'); // Calculated final salary
             
             // Foreign key to perusahaan

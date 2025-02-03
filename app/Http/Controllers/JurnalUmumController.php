@@ -43,7 +43,7 @@ class JurnalUmumController extends Controller
 
         // Fetch the paginated, filtered, and grouped journal entries
         // Paginate results (adjust the number of items per page as needed)
-        $jurnals = $query->paginate(10);
+        $jurnals = $query->paginate(50);
 
         // Get distinct nama_akun values for the filter dropdown
         $filters = JurnalUmum::select('nama_akun')->distinct()->get();

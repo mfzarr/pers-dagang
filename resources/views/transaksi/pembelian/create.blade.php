@@ -12,7 +12,8 @@
                                 <h5 class="m-b-10">Create Pembelian</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                            class="feather icon-home"></i></a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('pembelian.index') }}">Pembelian</a></li>
                                 <li class="breadcrumb-item"><a href="#!">Create Pembelian</a></li>
                             </ul>
@@ -61,10 +62,15 @@
                                 {{-- Supplier --}}
                                 <div class="form-group">
                                     <label for="supplier" class="form-label">Supplier</label>
-                                    <select id="supplier" name="supplier" class="form-control" required>
+                                    <select id="supplier" name="supplier" class="form-control" required
+                                        onchange="updateProductOptions()">
                                         <option value="">Select Supplier</option>
                                         @foreach ($suppliers as $supplier)
-                                            <option value="{{ $supplier->id_supplier }}">{{ $supplier->nama }}</option>
+                                            @if ($supplier->status == 'Aktif')
+                                                <option value="{{ $supplier->id_supplier }}"
+                                                    data-products="{{ json_encode($supplier->products) }}">{{ $supplier->nama }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -102,9 +108,11 @@
                                                         onchange="updateHarga(this)" required>
                                                         <option value="">Select Produk</option>
                                                         @foreach ($produk as $item)
-                                                            <option value="{{ $item->id_produk }}"
-                                                                data-harga="{{ $item->hpp }}">{{ $item->nama }}
-                                                            </option>
+                                                            @if ($item->status == 'Aktif')
+                                                                <option value="{{ $item->id_produk }}"
+                                                                    data-harga="{{ $item->hpp }}">{{ $item->nama }}
+                                                                </option>
+                                                            @endif
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -151,6 +159,44 @@
 
     {{-- Script to handle row addition, deletion, and calculations --}}
     <script>
+    function updateProductOptions() {
+        const supplierSelect = document.getElementById('supplier');
+        const selectedSupplier = supplierSelect.options[supplierSelect.selectedIndex];
+        const products = JSON.parse(selectedSupplier.dataset.products || '[]');
+
+        // Update all product dropdowns
+        document.querySelectorAll('.produk-select').forEach(select => {
+            // Save the current selection
+            const currentSelection = select.value;
+
+            // Clear existing options
+            select.innerHTML = '<option value="">Select Produk</option>';
+
+            // Add new options based on the selected supplier and status
+            products.forEach(product => {
+                if (product.status === 'Aktif') {
+                    const option = document.createElement('option');
+                    option.value = product.id_produk;
+                    option.textContent = product.nama;
+                    option.dataset.harga = product.hpp;
+                    select.appendChild(option);
+                }
+            });
+
+            // Restore the previous selection if it's still available
+            if (currentSelection) {
+                const option = select.querySelector(`option[value="${currentSelection}"]`);
+                if (option) {
+                    option.selected = true;
+                }
+            }
+
+            // Trigger the change event to update the price
+            select.dispatchEvent(new Event('change'));
+        });
+    }
+    
+
         function updateHarga(selectElement) {
             const selectedOption = selectElement.options[selectElement.selectedIndex];
             const harga = selectedOption.getAttribute('data-harga');
@@ -158,12 +204,17 @@
             row.querySelector('.harga').value = harga; // Set harga value
             calculateSubtotal(row.querySelector('.kuantitas'));
         }
+        document.addEventListener('DOMContentLoaded', function() {
+        updateProductOptions();
+    });
 
+        // Modify the addRow function to include the updateProductOptions call
         function addRow() {
             const table = document.getElementById("produkTable").getElementsByTagName('tbody')[0];
             const rowCount = table.rows.length;
             const row = table.insertRow(rowCount);
             row.innerHTML = document.querySelector("#produkTable tbody tr").innerHTML.replace(/\[0\]/g, `[${rowCount}]`);
+            updateProductOptions(); // Update options for the new row
         }
 
         function removeRow(button) {

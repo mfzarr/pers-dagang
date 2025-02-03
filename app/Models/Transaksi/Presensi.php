@@ -14,7 +14,7 @@ class presensi extends Model
     protected $primaryKey = 'id_presensi';
     
     protected $fillable = [
-        'id_karyawan', 'tanggal_presensi', 'status', 'id_perusahaan'
+        'id_karyawan', 'tanggal_presensi', 'status', 'id_perusahaan','jam_masuk','jam_keluar',
     ];
 
     // Relationship: A Presensi belongs to a Karyawan

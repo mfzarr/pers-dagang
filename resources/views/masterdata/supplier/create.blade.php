@@ -13,7 +13,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('supplier.index') }}">Supplier</a></li>
-                            <li class="breadcrumb-item"><a>Tambah Supplier</a></li>
+                            <li class="breadcrumb-item active">Tambah Supplier</li>
                         </ul> 
                     </div>
                 </div>
@@ -50,7 +50,21 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
+                            <div class="form-group">
+                                <label for="products">Produk</label>
+                                <select class="js-example-basic-multiple col-sm-12 @error('products') is-invalid @enderror" id="products" name="products[]" multiple="multiple" required>
+                                    <optgroup label="Produk Aktif">
+                                        @foreach($products as $product)
+                                            @if($product->status == 'Aktif')
+                                                <option value="{{ $product->id_produk }}">{{ $product->nama }}</option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                                @error('products')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="form-group">
                                 <label for="status">Status</label>
                                 <select class="form-control @error('status') is-invalid @enderror" id="status" name="status" required>

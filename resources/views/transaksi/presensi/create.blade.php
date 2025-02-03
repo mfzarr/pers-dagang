@@ -8,12 +8,12 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">kehadiran ({{ $today }})</h5>
+                                <h5 class="m-b-10">Presensi Karyawan ({{ $today }})</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('presensi.index') }}">Presensi</a></li>
-                                <li class="breadcrumb-item active"><a>Tambah Kehadiran</a></li>
+                                <li class="breadcrumb-item active"><a>Tambah Presensi</a></li>
                             </ul>
                         </div>
                     </div>
@@ -22,10 +22,19 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h5>Kehadiran</h5>
+                    <h5>Tambah Presensi</h5>
                 </div>
-
                 <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('presensi.store') }}">
                         @csrf
                         <input type="hidden" name="tanggal_presensi" value="{{ $today }}">
@@ -33,8 +42,9 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    <th>Nama</th>
                                     <th>Status</th>
+                                    <th>Jam Masuk</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,27 +52,43 @@
                                     <tr>
                                         <td>{{ $karyawan->nama }}</td>
                                         <td>
-                                            <select name="status[{{ $karyawan->id_karyawan }}]" class="form-control"
-                                                required>
-
+                                            <select name="status[{{ $karyawan->id_karyawan }}]" class="form-control status-select" data-id="{{ $karyawan->id_karyawan }}" required>
                                                 <option value="hadir">Hadir</option>
                                                 <option value="izin">Izin</option>
                                                 <option value="sakit">Sakit</option>
                                                 <option value="alpha">Alpha</option>
+                                                <option value="terlambat">Terlambat</option>
                                             </select>
                                         </td>
+                                        <td><input type="text" name="jam_masuk[{{ $karyawan->id_karyawan }}]" class="form-control jam-masuk" id="jam_masuk_{{ $karyawan->id_karyawan }}" value="{{ now()->setTimezone('Asia/Jakarta')->format('H:i') }}" readonly></td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
 
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <a href="{{ route('pegawai.index') }}" class="btn btn-danger">Back</a>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <a href="{{ route('presensi.index') }}" class="btn btn-danger">Kembali</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const statusSelects = document.querySelectorAll('.status-select');
+            statusSelects.forEach(select => {
+                select.addEventListener('change', function () {
+                    const karyawanId = this.getAttribute('data-id');
+                    const jamMasukInput = document.getElementById('jam_masuk_' + karyawanId);
+                    if (this.value === 'izin' || this.value === 'sakit' || this.value === 'alpha') {
+                        jamMasukInput.value = '';
+                    } else {
+                        jamMasukInput.value = '{{ now()->setTimezone('Asia/Jakarta')->format('H:i') }}';
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

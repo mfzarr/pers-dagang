@@ -2,8 +2,9 @@
 
 namespace App\Models\Masterdata;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Masterdata\Produk;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Supplier extends Model
 {
@@ -22,4 +23,9 @@ class Supplier extends Model
     ]; // mass-assignable fields
 
     public $timestamps = true; // uses created_at and updated_at columns
+
+    public function products()
+    {
+        return $this->belongsToMany(Produk::class, 'produk_supplier', 'id_supplier', 'id_produk');
+    }
 }

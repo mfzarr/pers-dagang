@@ -168,17 +168,17 @@
                                 <tr>
                                     <td>{{ $coa->kode_akun }} - {{ $coa->nama_akun }}</td>
                                     <td>Rp{{ number_format($coaDebit) }}</td>
-                                    <td>{{ number_format($coaCredit) }}</td>
-                                    <td>{{ number_format($coa->saldo_awal) }}</td> <!-- Display Saldo Awal here -->
+                                    <td>Rp{{ number_format($coaCredit) }}</td>
+                                    <td>Rp{{ number_format($coa->saldo_awal) }}</td> <!-- Display Saldo Awal here -->
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="1"><strong>Total Keseluruhan</strong></td>
-                                    <td><strong>{{ number_format($totalDebit) }}</strong></td>
-                                    <td><strong>{{ number_format($totalCredit) }}</strong></td>
-                                    <td><strong>{{ number_format($totalDebit - $totalCredit) }}</strong></td> <!-- Total Saldo Awal here -->
+                                    <td><strong>Rp{{ number_format($totalDebit) }}</strong></td>
+                                    <td><strong>Rp{{ number_format($totalCredit) }}</strong></td>
+                                    <td><strong>Rp{{ number_format($totalDebit - $totalCredit) }}</strong></td> <!-- Total Saldo Awal here -->
                                 </tr>
                             </tfoot>
                         </table>
@@ -204,16 +204,16 @@
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($transaction->tanggal_jurnal)->format('d M') }}</td>
                                     <td>{{ $transaction->coa->nama_akun }}</td>
-                                    <td>{{ number_format($transaction->debit) }}</td>
-                                    <td>{{ number_format($transaction->credit) }}</td>
+                                    <td>Rp{{ number_format($transaction->debit) }}</td>
+                                    <td>Rp{{ number_format($transaction->credit) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="2"><strong>Total Keseluruhan</strong></td>
-                                    <td><strong>{{ number_format($grandTotalDebit) }}</strong></td>
-                                    <td><strong>{{ number_format($grandTotalCredit) }}</strong></td>
+                                    <td><strong>Rp{{ number_format($grandTotalDebit) }}</strong></td>
+                                    <td><strong>Rp{{ number_format($grandTotalCredit) }}</strong></td>
                                 </tr>
                             </tfoot>
                         </table>

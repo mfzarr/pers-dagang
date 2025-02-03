@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -42,32 +43,33 @@ return new class extends Migration
 
         Schema::create('penjualan_detail', function (Blueprint $table) {
             $table->id('id_penjualan_detail'); // Primary key
-
+        
             $table->unsignedBigInteger('id_penjualan');
             $table->foreign('id_penjualan')
                 ->references('id_penjualan')
                 ->on('penjualan')
                 ->onDelete('cascade');
-
+        
             $table->unsignedBigInteger('id_produk');
             $table->foreign('id_produk')
                 ->references('id_produk')
                 ->on('produk')
                 ->onDelete('cascade');
-
+        
             $table->integer('harga');
             $table->integer('kuantitas');
-
+        
             $table->unsignedBigInteger('id_pegawai')->nullable();
             $table->foreign('id_pegawai')
                 ->references('id_karyawan')
                 ->on('karyawan')
                 ->nullOnDelete();
-
+        
             $table->timestamps();
-
-            $table->integer('total')->virtualAs('harga * kuantitas');
         });
+        
+        // Add the generated column after table creation
+        DB::statement('ALTER TABLE penjualan_detail ADD COLUMN total INTEGER GENERATED ALWAYS AS (harga * kuantitas) STORED');
     }
 
     public function down(): void

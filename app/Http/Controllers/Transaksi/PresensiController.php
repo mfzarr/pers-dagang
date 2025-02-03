@@ -48,24 +48,39 @@ class presensiController extends Controller
 
         return view('transaksi.presensi.create', compact('karyawans', 'today'));
     }
+
     public function update(Request $request, $date)
     {
-        // Validate the incoming request
         $request->validate([
             'status' => 'required|array',
             'status.*' => 'in:hadir,izin,sakit,alpha,terlambat',
+            'jam_masuk' => 'nullable|array',
+            'jam_masuk.*' => 'nullable|date_format:H:i',
+            'jam_keluar' => 'nullable|array',
+            'jam_keluar.*' => 'nullable|date_format:H:i',
         ]);
-
-        // Loop through the status values and update each attendance record
+    
         foreach ($request->status as $karyawanId => $status) {
-            Presensi::where('id_karyawan', $karyawanId)
+            $attendance = Presensi::where('id_karyawan', $karyawanId)
                 ->where('tanggal_presensi', $date)
-                ->where('id_perusahaan', auth()->user()->perusahaan->id_perusahaan)
-                ->update(['status' => $status]);
+                ->first();
+    
+            if ($attendance) {
+                $updateData = ['status' => $status];
+    
+                if (in_array($status, ['izin', 'sakit', 'alpha'])) {
+                    $updateData['jam_masuk'] = null;
+                    $updateData['jam_keluar'] = null;
+                } else {
+                    $updateData['jam_masuk'] = $request->jam_masuk[$karyawanId] ?? $attendance->jam_masuk;
+                    $updateData['jam_keluar'] = $request->jam_keluar[$karyawanId] ?? $attendance->jam_keluar;
+                }
+    
+                $attendance->update($updateData);
+            }
         }
-
-        // Redirect back to the index route after updating
-        return redirect()->route('presensi.index')->with('success', 'Attendance updated successfully');
+    
+        return redirect()->route('presensi.index')->with('success', 'Attendance records updated successfully.');
     }
 
     public function edit($date)
@@ -78,7 +93,6 @@ class presensiController extends Controller
         return view('transaksi.presensi.edit', compact('attendance', 'date'));
     }
 
-
     public function destroy($date)
     {
         // Delete the attendance records for the specified date
@@ -89,7 +103,6 @@ class presensiController extends Controller
         return redirect()->route('presensi.index')->with('success', 'Attendance records deleted successfully.');
     }
 
-
     // Store the attendance record for each employee
     public function store(Request $request)
     {
@@ -97,34 +110,36 @@ class presensiController extends Controller
             'tanggal_presensi' => 'required|date',
             'status' => 'required|array',
             'status.*' => 'in:hadir,izin,sakit,alpha,terlambat',
+            'jam_masuk' => 'nullable|array',
+            'jam_masuk.*' => 'nullable|date_format:H:i',
+            'jam_keluar' => 'nullable|array',
+            'jam_keluar.*' => 'nullable|date_format:H:i',
         ]);
-
-        // Loop through each employee and save/update their attendance status
+    
         foreach ($request->status as $karyawanId => $status) {
-            // Check if the attendance record for this employee on the specified date exists
-            $attendance = Presensi::where('id_karyawan', $karyawanId)
-                ->where('tanggal_presensi', $request->tanggal_presensi)
-                ->first();
-
-            if ($attendance) {
-                // If the record exists, update it
-                $attendance->update([
-                    'status' => $status,
-                ]);
+            $data = [
+                'id_karyawan' => $karyawanId,
+                'tanggal_presensi' => $request->tanggal_presensi,
+                'status' => $status,
+                'id_perusahaan' => auth()->user()->perusahaan->id_perusahaan,
+            ];
+    
+            if (in_array($status, ['izin', 'sakit', 'alpha'])) {
+                $data['jam_masuk'] = null;
+                $data['jam_keluar'] = null;
             } else {
-                // If the record does not exist, create a new one
-                Presensi::create([
-                    'id_karyawan' => $karyawanId,
-                    'tanggal_presensi' => $request->tanggal_presensi,
-                    'status' => $status,
-                    'id_perusahaan' => auth()->user()->perusahaan->id_perusahaan,
-                ]);
+                $data['jam_masuk'] = $request->jam_masuk[$karyawanId] ?? null;
+                $data['jam_keluar'] = $request->jam_keluar[$karyawanId] ?? null;
             }
+    
+            Presensi::updateOrCreate(
+                ['id_karyawan' => $karyawanId, 'tanggal_presensi' => $request->tanggal_presensi],
+                $data
+            );
         }
-
-        return redirect()->route('presensi.index')->with('success', 'Attendance records updated successfully.');
+    
+        return redirect()->route('presensi.index')->with('success', 'Attendance records created successfully.');
     }
-
 
     // Show detailed attendance records for a specific date
     public function show($date)
@@ -135,4 +150,19 @@ class presensiController extends Controller
 
         return view('transaksi.presensi.show', compact('attendance', 'date'));
     }
+    public function createExitTime(Request $request, $date, $id)
+    {
+        $presensi = Presensi::findOrFail($id);
+    
+        if ($presensi->jam_keluar) {
+            return redirect()->back()->with('error', 'Exit time is already set for this record.');
+        }
+    
+        $presensi->jam_keluar = now()->setTimezone('Asia/Jakarta')->format('H:i:s');
+        $presensi->save();
+    
+        return redirect()->route('presensi.show', $date)->with('success', 'Exit time has been recorded successfully.');
+    }
+
 }
+// Create the 'jam_keluar' for each employee when the button is clicked
