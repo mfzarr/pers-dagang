@@ -19,13 +19,12 @@
             </div>
         </div>
 
-
         <div class="card">
             <div class="card-header">
                 <h5>List Jurnal Umum</h5>
             </div>
 
-            <div class="card-body">
+            <div class="card-body" style="padding: 20px;">
                 <!-- Search Form -->
                 <form method="GET" action="{{ route('jurnal-umum.index') }}" class="mb-4">
                     <div class="row align-items-center">
@@ -79,11 +78,11 @@
 
             <div class="text-center mb-4">
                 <h4>{{ $perusahaan->nama }}</h4>
-                <h5>Laporan Keuangan {{ $namabulan }}</h5>
+                <h5>Laporan Keuangan {{ $months[$selectedMonth] }}</h5>
                 <h5>Jurnal Umum</h5>
             </div>
             <!-- Ledger Table -->
-            <div class="table-responsive">
+            <div class="table-responsive" style="padding: 20px;">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -148,7 +147,7 @@
             </div>
 
             <!-- Pagination -->
-            <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="d-flex justify-content-between align-items-center mt-3" style="padding: 20px;">
                 <a href="{{ $jurnals->previousPageUrl() }}" class="btn btn-outline-primary btn-sm {{ $jurnals->onFirstPage() ? 'disabled' : '' }}">&laquo; Previous</a>
                 <span>Page {{ $jurnals->currentPage() }} of {{ $jurnals->lastPage() }}</span>
                 <a href="{{ $jurnals->nextPageUrl() }}" class="btn btn-outline-primary btn-sm {{ $jurnals->hasMorePages() ? '' : 'disabled' }}">Next &raquo;</a>

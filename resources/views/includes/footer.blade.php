@@ -131,3 +131,12 @@
 <script src="assets/js/pages/ac-notification.js"></script>      
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script src="{{ asset('assets/js/plugins/buttons.colVis.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/buttons.print.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/pdfmake.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/jszip.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/js/pages/data-export-custom.js') }}"></script>
+

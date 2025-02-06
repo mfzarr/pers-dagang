@@ -8,11 +8,11 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Laporan Neraca</h5>
+                            <h5 class="m-b-10">Laporan Keuangan</h5>
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item active">Neraca</li>
+                            <li class="breadcrumb-item active">Laporan Keuangan</li>
                         </ul>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
 
         <div class="card">
             <div class="card-header">
-                <h5>Filter Laporan Neraca</h5>
+                <h5>Filter Laporan Keuangan</h5>
                 <form action="{{ route('neraca.index') }}" method="GET" class="form-inline">
                     <div class="form-group mx-sm-3 mb-2">
                         <label for="tanggal" class="sr-only">Tanggal</label>
@@ -36,7 +36,6 @@
                 <div class="text-center mb-4">
                     <h4>{{ $namaPerusahaan }}</h4>
                     <h5>Laporan Keuangan {{ $namaBulan }}</h5>
-                    <h5>Neraca</h5>
                 </div>
 
                 <div class="row">
@@ -62,13 +61,19 @@
                         <div class="row">
                             <div class="col-2">{{ $asset->kode_akun }}</div>
                             <div class="col-6">{{ $asset->nama_akun }}</div>
-                            <div class="col-4 text-right">Rp {{ number_format($asset->asset_value, 0, ',', '.') }}</div>
+                            <div class="col-4 text-right">
+                                @if (stripos($asset->nama_akun, 'akumulasi') !== false)
+                                    (Rp {{ number_format($asset->asset_value, 0, ',', '.') }})
+                                @else
+                                    Rp {{ number_format($asset->asset_value, 0, ',', '.') }}
+                                @endif
+                            </div>
                         </div>
                         @if($asset->accumulated_depreciation != 0)
                         <div class="row">
                             <div class="col-2"></div>
                             <div class="col-6">Akum. Peny. {{ $asset->nama_akun }}</div>
-                            <div class="col-4 text-right">-Rp {{ number_format(abs($asset->accumulated_depreciation), 0, ',', '.') }}</div>
+                            <div class="col-4 text-right">Rp {{ number_format(abs($asset->accumulated_depreciation), 0, ',', '.') }}</div>
                         </div>
                         <div class="row">
                             <div class="col-8"></div>
@@ -79,12 +84,6 @@
                         <div class="row font-weight-bold mb-4">
                             <div class="col-8">Jumlah Aktiva Tetap</div>
                             <div class="col-4 text-right">Rp {{ number_format($totalFixedAssets, 0, ',', '.') }}</div>
-                        </div>
-
-                        <!-- Total Assets -->
-                        <div class="row font-weight-bold">
-                            <div class="col-8">Total Aktiva</div>
-                            <div class="col-4 text-right">Rp {{ number_format($totalAssets, 0, ',', '.') }}</div>
                         </div>
                     </div>
 
@@ -103,8 +102,6 @@
                             <div class="col-8">Jumlah Hutang Jangka Pendek</div>
                             <div class="col-4 text-right">Rp {{ number_format($totalCurrentLiabilities, 0, ',', '.') }}</div>
                         </div>
-
-                        <h6>Hutang Jangka Panjang</h6><br>
                         {{-- @foreach($currentLiabilities as $liability)
                         <div class="row">
                             <div class="col-2">{{ $liability->kode_akun }}</div>
@@ -130,9 +127,19 @@
                             <div class="col-8">Total Modal</div>
                             <div class="col-4 text-right">Rp {{ number_format($totalEquity, 0, ',', '.') }}</div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Total Liabilities & Equity -->
-                        <div class="row font-weight-bold">
+                <!-- Total Assets and Total Liabilities & Equity in one row -->
+                <div class="row font-weight-bold">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-8">Total Aktiva</div>
+                            <div class="col-4 text-right">Rp {{ number_format($totalAssets, 0, ',', '.') }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
                             <div class="col-8">Total Pasiva</div>
                             <div class="col-4 text-right">Rp {{ number_format($totalLiabilitiesEquity, 0, ',', '.') }}</div>
                         </div>

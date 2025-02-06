@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers\Transaksi;
 
-use App\Http\Controllers\Controller;
-use App\Models\Transaksi\Penjualan;
-use App\Models\Transaksi\PenjualanDetail;
-use App\Models\Masterdata\Discount;
-use App\Models\Masterdata\Pelanggan;
-use App\Models\Masterdata\Produk;
-use App\Models\Masterdata\Karyawan;
-use App\Models\Masterdata\Coa;
-use App\Models\Laporan\JurnalUmum;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\Masterdata\Coa;
+use App\Models\Masterdata\Produk;
+use App\Models\Laporan\JurnalUmum;
+use Illuminate\Support\Facades\DB;
+use App\Models\Masterdata\Discount;
+use App\Models\Masterdata\Karyawan;
+use App\Models\Transaksi\Penjualan;
+use App\Http\Controllers\Controller;
+use App\Models\Masterdata\Pelanggan;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Masterdata\stok_produk;
+use App\Models\Transaksi\PenjualanDetail;
+use App\Models\Laporan\StokProduk;
 
 
 class PenjualanController extends Controller
@@ -29,6 +31,7 @@ class PenjualanController extends Controller
 
         $filter = $request->input('filter');
         $search = $request->input('search', '');
+        $month = $request->input('month');
 
         $query = Penjualan::with(['penjualanDetails', 'pelangganRelation', 'userRelation'])
             ->where('id_perusahaan', $id_perusahaan);
@@ -45,9 +48,14 @@ class PenjualanController extends Controller
             $query->where('status', 'Selesai');
         }
 
-        $penjualan = $query->paginate(10);
+        if ($month) {
+            $query->whereMonth('tgl_transaksi', Carbon::parse($month)->month)
+                  ->whereYear('tgl_transaksi', Carbon::parse($month)->year);
+        }
 
-        return view('transaksi.penjualan.index', compact('penjualan', 'filter', 'search'));
+        $penjualan = $query->get();
+
+        return view('transaksi.penjualan.index', compact('penjualan', 'filter', 'search', 'month'));
     }
 
 
@@ -120,7 +128,19 @@ class PenjualanController extends Controller
             'total' => $total - $discount_amount,
             'discount' => $discount_percentage,
             'hpp' => $total_hpp,
-        ]);      
+        ]);
+        
+        // sementara
+        // foreach ($request->produk as $item) {
+        //     $penjualanDetail = $penjualan->penjualanDetails()->create([
+        //         'id_produk' => $item['id_produk'],
+        //         'harga' => $item['harga'],
+        //         'kuantitas' => $item['kuantitas'],
+        //         'id_pegawai' => $item['pegawai'],
+        //     ]);
+
+        //     $this->updateStokProduk($penjualanDetail);
+        // }
 
         // Save the details
         foreach ($request->produk as $item) {
@@ -149,6 +169,7 @@ class PenjualanController extends Controller
 
         // Call createJournalForPenjualan to create the journal entry
         $this->createJournalForPenjualan($penjualan);
+
 
         return redirect()->route('penjualan.index')->with('success', 'Penjualan created successfully.');
     }
@@ -297,4 +318,22 @@ class PenjualanController extends Controller
 
         return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil dirubah dan di Selesaikan.');
     }
+    // protected function updateStokProduk(PenjualanDetail $penjualanDetail)
+    // {
+    //     DB::transaction(function () use ($penjualanDetail) {
+    //         $produk = Produk::findOrFail($penjualanDetail->id_produk);
+    //         $stokSebelum = $produk->stok;
+    //         $produk->stok -= $penjualanDetail->kuantitas;
+    //         $produk->save();
+
+    //         StokProduk::create([
+    //             'id_produk' => $penjualanDetail->id_produk,
+    //             'id_penjualan_detail' => $penjualanDetail->id_penjualan_detail,
+    //             'jumlah' => $penjualanDetail->kuantitas,
+    //             'jenis' => 'penjualan',
+    //             'stok_sebelum' => $stokSebelum,
+    //             'stok_sesudah' => $produk->stok,
+    //         ]);
+    //     });
+    // }
 }

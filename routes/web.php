@@ -31,6 +31,7 @@ use App\Http\Controllers\Laporan\LaporanLabaRugiController;
 use App\Http\Controllers\Laporan\LaporanNeracaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Laporan\LaporanPerubahanModalController;
+use App\Http\Controllers\Laporan\LaporanCashFlowController;
 use Illuminate\Support\Facades\Auth;
 
 // Auth routes
@@ -132,6 +133,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('pembelian/detail/{id}', [PembeliandetailController::class, 'destroy'])->name('pembeliandetail.destroy');
     Route::get('/get-products-by-supplier/{supplierId}', [PembelianController::class, 'getProductsBySupplier'])->name('get-products-by-supplier');
 
+    Route::get('/rekap-hutang', [PembelianController::class, 'rekapHutang'])->name('rekap_hutang');
+    Route::post('/rekap-hutang/update/{id_pembelian}', [PembelianController::class, 'updateDueDate'])->name('rekap_hutang.update');
+    Route::put('/rekap_hutang/update', [PembelianController::class, 'updateBulk'])->name('rekap_hutang.update_bulk');
+
+
     // Penjualan routes
     Route::resource('penjualan', PenjualanController::class);
     Route::get('penjualan/{id_penjualan}/selesaikan', [PenjualanController::class, 'edit'])->name('penjualan.selesaikan');
@@ -156,6 +162,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/laba-rugi', [LaporanLabaRugiController::class, 'index'])->name('laba-rugi.index');
     Route::get('/neraca', [LaporanNeracaController::class, 'index'])->name('neraca.index');
     Route::get('/perubahan-modal', [LaporanPerubahanModalController::class, 'index'])->name('perubahan-modal.index');
+    Route::get('/cashflow', [LaporanCashFlowController::class, 'cashFlow'])->name('cashflow');
 });
 
 Route::get('/get-user-email/{id}', function ($id) {

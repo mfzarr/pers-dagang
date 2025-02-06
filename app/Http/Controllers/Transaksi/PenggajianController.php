@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Transaksi;
 
-use App\Http\Controllers\Controller;
-use App\Models\Transaksi\Penggajian;
-use App\Models\masterdata\Karyawan;
-use App\Models\Masterdata\Coa;
-use App\Models\Laporan\JurnalUmum;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Masterdata\Coa;
+use App\Models\Laporan\JurnalUmum;
 use Illuminate\Support\Facades\DB;
+use App\Models\masterdata\Karyawan;
+use App\Http\Controllers\Controller;
+use App\Models\Transaksi\Penggajian;
+use Illuminate\Support\Facades\Auth;
 
 class PenggajianController extends Controller
 {
@@ -18,11 +19,15 @@ class PenggajianController extends Controller
     public function index(Request $request)
     {
         $id_perusahaan = Auth::user()->id_perusahaan;
-        $penggajian = Penggajian::where('id_perusahaan', $id_perusahaan)
-            ->with('karyawan') // Eager load 'karyawan'
-            ->paginate(10);
-
-        return view('transaksi.penggajian.index', compact('penggajian'));
+        $query = Penggajian::where('id_perusahaan', $id_perusahaan)
+            ->with('karyawan'); // Eager load 'karyawan'
+        $month = $request->input('month');
+        if ($month) {
+            $query->whereMonth('tanggal_penggajian', Carbon::parse($month)->month)
+                  ->whereYear('tanggal_penggajian', Carbon::parse($month)->year);
+        }
+        $penggajian = $query->get();
+        return view('transaksi.penggajian.index', compact('penggajian','month'));
     }
 
 

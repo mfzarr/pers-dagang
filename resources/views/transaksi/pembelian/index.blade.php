@@ -33,11 +33,7 @@
                     <!-- Search and Filter Form -->
                     <form method="GET" action="{{ route('pembelian.index') }}" class="mb-4">
                         <div class="row">
-                            <div class="col-md-4">
-                                <input type="text" name="search" class="form-control"
-                                    placeholder="Cari Dengan No Transaksi" value="{{ request('search') }}">
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <select name="filter" class="form-control" onchange="this.form.submit()">
                                     <option value="">Filter by Transaksi</option>
                                     <option value="lunas" {{ request('filter') == 'lunas' ? 'selected' : '' }}>Lunas
@@ -48,15 +44,25 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-secondary">Cari</button>
+                            <div class="col-md-3">
+                               <select name="supplier" id="supplier" class="form-control" onchange="this.form.submit()">
+                                    <option value="">All Suppliers</option>
+                                    @foreach($suppliers as $supplier)
+                                        <option value="{{ $supplier->id_supplier }}" {{ $supplier_filter == $supplier->id_supplier ? 'selected' : '' }}>
+                                            {{ $supplier->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="month" name="month" class="form-control" value="{{ request('month') }}" placeholder="Select Month" onchange="this.form.submit()">
                             </div>
                         </div>
                     </form>
 
                     <!-- Table -->
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
+                        <table id="basic-btn" class="table table-striped table-bordered nowrap">
                             <thead>
                                 <tr>
                                     <th>No Transaksi Pembelian</th>
@@ -138,24 +144,6 @@
                                 @endforelse
                             </tbody>
                         </table>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <!-- Left Arrow (Previous Page) -->
-                        <a href="{{ $pembelian->previousPageUrl() }}"
-                            class="btn btn-outline-primary btn-sm {{ $pembelian->onFirstPage() ? 'disabled' : '' }}">
-                            &laquo; Previous
-                        </a>
-
-                        <!-- Current Page Info -->
-                        <span>Page {{ $pembelian->currentPage() }} of {{ $pembelian->lastPage() }}</span>
-
-                        <!-- Right Arrow (Next Page) -->
-                        <a href="{{ $pembelian->nextPageUrl() }}"
-                            class="btn btn-outline-primary btn-sm {{ $pembelian->hasMorePages() ? '' : 'disabled' }}">
-                            Next &raquo;
-                        </a>
                     </div>
 
                     <!-- Delete Confirmation Modal -->

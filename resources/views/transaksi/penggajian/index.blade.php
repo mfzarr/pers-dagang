@@ -31,29 +31,14 @@
                 <div class="card-body">
                     <!-- Search and Filter Form -->
                     <form method="GET" action="{{ route('penggajian.index') }}" class="mb-4">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <input type="text" name="search" class="form-control"
-                                    placeholder="Cari Dengan No Transaksi Gaji" value="{{ request('search') }}">
-                            </div>
-                            <div class="col-md-6">
-                                <select name="filter" class="form-control" onchange="this.form.submit()">
-                                    <option value="">Filter by Karyawan</option>
-                                    <option value="lunas" {{ request('filter') == 'lunas' ? 'selected' : '' }}>Lunas
-                                    </option>
-                                    <option value="belum_lunas" {{ request('filter') == 'belum_lunas' ? 'selected' : '' }}>
-                                        Belum Lunas</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-secondary">Cari</button>
-                            </div>
+                        <div class="col-md-3">
+                            <input type="month" name="month" class="form-control" value="{{ request('month') }}" onchange="this.form.submit()">
                         </div>
                     </form>
 
                     <!-- Table -->
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
+                        <table id="basic-btn" class="table table-striped table-bordered nowrap">
                             <thead>
                                 <tr>
                                     <th>No Transaksi Gaji</th>
@@ -93,17 +78,6 @@
                                 @endforelse
                             </tbody>
                         </table>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <a href="{{ $penggajian->previousPageUrl() }}"
-                            class="btn btn-outline-primary btn-sm {{ $penggajian->onFirstPage() ? 'disabled' : '' }}">&laquo;
-                            Previous</a>
-                        <span>Page {{ $penggajian->currentPage() }} of {{ $penggajian->lastPage() }}</span>
-                        <a href="{{ $penggajian->nextPageUrl() }}"
-                            class="btn btn-outline-primary btn-sm {{ $penggajian->hasMorePages() ? '' : 'disabled' }}">Next
-                            &raquo;</a>
                     </div>
 
                     <!-- Delete Confirmation Modal -->

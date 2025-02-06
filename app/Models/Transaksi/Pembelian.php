@@ -46,4 +46,8 @@ class Pembelian extends Model
     {
         return $this->hasMany(Pembeliandetail::class, 'id_pembelian', 'id_pembelian');
     }
+    public function getRemainingPaymentAttribute()
+    {
+        return $this->total - $this->total_dibayar;
+    }
 }

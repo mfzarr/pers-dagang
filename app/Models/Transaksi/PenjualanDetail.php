@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Masterdata\Karyawan;
 use App\Models\Masterdata\Produk;
+use App\Models\Transaksi\Penjualan;
+use App\Models\Laporan\StokProduk;
 
 class PenjualanDetail extends Model
 {
@@ -32,4 +34,9 @@ class PenjualanDetail extends Model
     {
         return $this->belongsTo(Karyawan::class, 'id_pegawai', 'id_karyawan');
     }
+
+    public function stokProduk()
+{
+    return $this->hasOne(StokProduk::class, 'id_penjualan_detail', 'id_penjualan_detail');
+}
 }

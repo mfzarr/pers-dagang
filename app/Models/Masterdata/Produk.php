@@ -4,7 +4,7 @@ namespace App\Models\Masterdata;
 
 use App\Models\Masterdata\Supplier;
 use App\Models\Masterdata\Perusahaan;
-use App\Models\Masterdata\stok_produk;
+use App\Models\Laporan\StokProduk;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Masterdata\Kategori_barang;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,5 +45,9 @@ class Produk extends Model
         return $this->belongsToMany(Supplier::class, 'produk_supplier', 'id_produk', 'id_supplier');
     }
 
+    public function stokProduk()
+{
+    return $this->hasMany(StokProduk::class, 'id_produk', 'id_produk');
+}
     
 }

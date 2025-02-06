@@ -39,7 +39,7 @@ class JurnalUmum extends Model
         foreach ($transactionData['entries'] as $entry) {
             self::create([
                 'id_coa' => $entry['id_coa'],
-                'tanggal_jurnal' => $transactionData['tanggal_jurnal'],
+                'tanggal_jurnal' => $entry['tanggal_jurnal'],
                 'nama_akun' => $entry['nama_akun'],
                 'kode_akun' => $entry['kode_akun'],
                 'debit' => $entry['debit'] ?? null,

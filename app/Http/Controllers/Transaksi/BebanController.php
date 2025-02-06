@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Transaksi;
 
-use App\Http\Controllers\Controller;
-use App\Models\Transaksi\Beban;
-use App\Models\Masterdata\Coa;
-use App\Models\Laporan\JurnalUmum;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\Masterdata\Coa;
+use App\Models\Transaksi\Beban;
+use App\Models\Laporan\JurnalUmum;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class BebanController extends Controller
@@ -15,15 +16,20 @@ class BebanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $id_perusahaan = auth()->user()->id_perusahaan;
-        $beban = Beban::with('coa:id_coa,nama_akun,kode_akun')
-                  ->where('id_perusahaan', $id_perusahaan)->get();
-        return view('transaksi.beban.index', compact('beban'));
-        // Use paginate() and fetch `kode_akun` from the related Coa model
-        // $beban = Beban::with('coa:id_coa,nama_akun,kode_akun')->paginate(10); // Adjust the items per page as needed
-        // return view('transaksi.beban.index', compact('beban'));
+        $month = $request->input('month');
+        $bebanQuery = Beban::with('coa:id_coa,nama_akun,kode_akun')
+            ->where('id_perusahaan', $id_perusahaan);
+
+        if ($month) {
+            $bebanQuery->whereMonth('tanggal', Carbon::parse($month)->month)
+                ->whereYear('tanggal', Carbon::parse($month)->year);
+        }
+
+        $beban = $bebanQuery->get();
+        return view('transaksi.beban.index', compact('beban', 'month'));
     }
 
     /**
@@ -35,8 +41,8 @@ class BebanController extends Controller
         $coa = Coa::whereHas('kelompokakun', function ($query) {
             $query->where('kelompok_akun', '5');
         })->where('id_perusahaan', $id_perusahaan)
-          ->where('nama_akun', 'LIKE', '%beban%')
-          ->get();
+            ->where('nama_akun', 'LIKE', '%beban%')
+            ->get();
         return view('transaksi.beban.create', compact('coa'));
     }
 
@@ -111,12 +117,12 @@ class BebanController extends Controller
     {
         $id_perusahaan = Auth::user()->id_perusahaan;
         $beban = Beban::where('id_perusahaan', $id_perusahaan)
-        ->findOrFail($id);
+            ->findOrFail($id);
         $coa = Coa::whereHas('kelompokakun', function ($query) {
             $query->where('kelompok_akun', '5');
         })->where('id_perusahaan', $id_perusahaan)
-          ->where('nama_akun', 'LIKE', '%beban%')
-          ->get();
+            ->where('nama_akun', 'LIKE', '%beban%')
+            ->get();
 
         return view('transaksi.beban.edit', compact('beban', 'coa'));
     }

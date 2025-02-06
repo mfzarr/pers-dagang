@@ -60,7 +60,7 @@
                                         <optgroup label="Produk Aktif">
                                             @foreach($products as $product)
                                                 @if($product->status == 'Aktif')
-                                                    <option value="{{ $product->id_produk }}" {{ in_array($product->id_produk, old('products', $supplier->products->pluck('id_produk')->toArray())) ? 'selected' : '' }}>{{ $product->nama }}</option>
+                                                    <option value="{{ $product->id_produk }}" {{ in_array($product->id_produk, old('products', $supplier->products->pluck('id_produk')->toArray())) ? 'selected' : '' }}>   {{ $product->nama }}</option>
                                                 @endif
                                             @endforeach
                                         </optgroup>

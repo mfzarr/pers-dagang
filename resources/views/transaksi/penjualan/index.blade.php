@@ -32,11 +32,7 @@
                     <!-- Search and Filter Form -->
                     <form method="GET" action="{{ route('penjualan.index') }}" class="mb-4">
                         <div class="row">
-                            <div class="col-md-4">
-                                <input type="text" name="search" class="form-control"
-                                    placeholder="Cari Berdasarkan No Transaksi" value="{{ request('search') }}">
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <select name="filter" class="form-control" onchange="this.form.submit()">
                                     <option value="">Filter Status</option>
                                     <option value="lunas" {{ request('filter') == 'lunas' ? 'selected' : '' }}>Lunas
@@ -47,15 +43,15 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-secondary">Cari</button>
+                            <div class="col-md-3">
+                                <input type="month" name="month" class="form-control" value="{{ request('month') }}" onchange="this.form.submit()">
                             </div>
                         </div>
                     </form>
 
                     <!-- Table -->
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
+                        <table id="basic-btn" class="table table-striped table-bordered nowrap">
                             <thead>
                                 <tr>
                                     <th>No Transaksi</th>
@@ -115,17 +111,6 @@
                             </tbody>
 
                         </table>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <a href="{{ $penjualan->previousPageUrl() }}"
-                            class="btn btn-outline-primary btn-sm {{ $penjualan->onFirstPage() ? 'disabled' : '' }}">&laquo;
-                            Sebelumnya</a>
-                        <span>Halaman {{ $penjualan->currentPage() }} dari {{ $penjualan->lastPage() }}</span>
-                        <a href="{{ $penjualan->nextPageUrl() }}"
-                            class="btn btn-outline-primary btn-sm {{ $penjualan->hasMorePages() ? '' : 'disabled' }}">Selanjutnya
-                            &raquo;</a>
                     </div>
                 </div>
             </div>

@@ -27,13 +27,15 @@
                 <div class="card-body">
                     <!-- Date Filter Form -->
                     <form method="GET" action="{{ route('laba-rugi.index') }}" class="mb-4">
-                        <div class="col-md-10">
-                            <label for="bulan">Pilih Bulan:</label>
-                            <input type="month" name="bulan" id="bulan" class="form-control"
-                                value="{{ $selectedMonth }}">
-                        </div>
-                        <div class="col-md-2 align-self-end">
-                            <button type="submit" class="btn btn-primary">Filter</button>
+                        <div class="form-row">
+                            <div class="col-md-10">
+                                <label for="bulan">Pilih Bulan:</label>
+                                <input type="month" name="bulan" id="bulan" class="form-control"
+                                    value="{{ $selectedMonth }}">
+                            </div>
+                            <div class="col-md-2 align-self-end">
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                            </div>
                         </div>
                     </form>
                     <!-- End of Date Filter Form -->
@@ -49,50 +51,55 @@
                             </div>
 
                             <!-- Content -->
-                            <div class="row">
-                                <div class="col-12">
-                                    <!-- Pendapatan Section -->
-                                    <div class="mb-4">
-                                        <h6 class="font-weight-bold">Pendapatan</h6>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Kode Akun</th>
+                                            <th>Nama Akun</th>
+                                            <th class="text-right">Saldo (Rp)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Pendapatan Section -->
+                                        <tr class="table-primary">
+                                            <td colspan="3" class="font-weight-bold">Pendapatan</td>
+                                        </tr>
                                         @foreach ($pendapatan as $item)
-                                            <div class="row mb-2">
-                                                <div class="col-2">{{ $item->kode_akun }}</div>
-                                                <div class="col-6">{{ $item->nama_akun }}</div>
-                                                <div class="col-4 text-right">Rp
-                                                    {{ number_format($item->saldo, 0, ',', '.') }}</div>
-                                            </div>
+                                            <tr>
+                                                <td>{{ $item->kode_akun }}</td>
+                                                <td>{{ $item->nama_akun }}</td>
+                                                <td class="text-right">{{ number_format($item->saldo, 0, ',', '.') }}</td>
+                                            </tr>
                                         @endforeach
-                                        <div class="row font-weight-bold">
-                                            <div class="col-8">Total Pendapatan</div>
-                                            <div class="col-4 text-right">Rp
-                                                {{ number_format($totalPendapatan, 0, ',', '.') }}</div>
-                                        </div>
-                                    </div>
+                                        <tr class="font-weight-bold">
+                                            <td colspan="2">Total Pendapatan</td>
+                                            <td class="text-right">{{ number_format($totalPendapatan, 0, ',', '.') }}</td>
+                                        </tr>
 
-                                    <!-- Biaya Section -->
-                                    <div class="mb-4">
-                                        <h6 class="font-weight-bold">Biaya</h6>
+                                        <!-- Biaya Section -->
+                                        <tr class="table-danger">
+                                            <td colspan="3" class="font-weight-bold">Biaya</td>
+                                        </tr>
                                         @foreach ($biaya as $item)
-                                            <div class="row mb-2">
-                                                <div class="col-2">{{ $item->kode_akun }}</div>
-                                                <div class="col-6">{{ $item->nama_akun }}</div>
-                                                <div class="col-4 text-right">Rp
-                                                    {{ number_format($item->saldo, 0, ',', '.') }}</div>
-                                            </div>
+                                            <tr>
+                                                <td>{{ $item->kode_akun }}</td>
+                                                <td>{{ $item->nama_akun }}</td>
+                                                <td class="text-right">{{ number_format($item->saldo, 0, ',', '.') }}</td>
+                                            </tr>
                                         @endforeach
-                                        <div class="row font-weight-bold">
-                                            <div class="col-8">Total Biaya</div>
-                                            <div class="col-4 text-right">Rp {{ number_format($totalBiaya, 0, ',', '.') }}
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <tr class="font-weight-bold">
+                                            <td colspan="2">Total Biaya</td>
+                                            <td class="text-right">{{ number_format($totalBiaya, 0, ',', '.') }}</td>
+                                        </tr>
 
-                                    <!-- Laba/Rugi Section -->
-                                    <div class="row font-weight-bold">
-                                        <div class="col-8">Laba/Rugi Bersih</div>
-                                        <div class="col-4 text-right">Rp {{ number_format($labaRugi, 0, ',', '.') }}</div>
-                                    </div>
-                                </div>
+                                        <!-- Laba/Rugi Section -->
+                                        <tr class="font-weight-bold table-success">
+                                            <td colspan="2">{{ $labaRugi < 0 ? 'Rugi Bersih' : 'Laba Bersih' }}</td>
+                                            <td class="text-right">{{ number_format(abs($labaRugi), 0, ',', '.') }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -103,14 +110,8 @@
 @endsection
 
 <style>
-    /* Add these styles to match the format better */
     .card-body {
         font-family: 'Tahoma', sans-serif;
-    }
-
-    .row {
-        margin-left: 20px;
-        margin-right: 20px;
     }
 
     .text-right {

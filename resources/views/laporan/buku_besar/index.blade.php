@@ -71,7 +71,7 @@
 
                         <h4>Buku Besar</h4>
                         <h6>Akun {{ $selectedCoa->kode_akun }} - {{ $selectedCoa->nama_akun }}</h6>
-                        <h6>{{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</h6>
+                        <h6>{{ \Carbon\Carbon::create($selectedYear, $selectedMonth)->translatedFormat('F Y') }}</h6>
                     </div>
 
 

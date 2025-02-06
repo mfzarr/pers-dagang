@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <label for="products">Produk</label>
                                 <select class="js-example-basic-multiple col-sm-12 @error('products') is-invalid @enderror" id="products" name="products[]" multiple="multiple" required>
-                                    <optgroup label="Produk Aktif">
+                                    <optgroup label="Produk">
                                         @foreach($products as $product)
                                             @if($product->status == 'Aktif')
                                                 <option value="{{ $product->id_produk }}">{{ $product->nama }}</option>

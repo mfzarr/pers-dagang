@@ -130,7 +130,7 @@ class LaporanNeracaController extends Controller
             ->orderBy('c1.kode_akun')
             ->get()
             ->map(function ($item) {
-                if ($item->kode_akun == '1202') {
+                if (stripos($item->nama_akun, 'akumulasi') !== false) {
                     $item->net_value = -abs($item->net_value);
                 }
                 return $item;

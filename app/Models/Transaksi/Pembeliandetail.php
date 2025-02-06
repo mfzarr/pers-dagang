@@ -5,6 +5,7 @@ namespace App\Models\Transaksi;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Masterdata\Produk;
+use App\Models\Laporan\StokProduk;
 
 class Pembeliandetail extends Model
 {
@@ -23,5 +24,10 @@ class Pembeliandetail extends Model
     {
         return $this->belongsTo(Produk::class, 'id_produk');
     }
+
+    public function stokProduk()
+{
+    return $this->hasOne(StokProduk::class, 'id_pembelian_detail', 'id_pembelian_detail');
+}
 
 }

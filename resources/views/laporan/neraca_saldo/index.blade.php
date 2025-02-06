@@ -54,13 +54,15 @@
                         </form>
                         
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
+                            <table id="basic-btn" class="table table-striped table-bordered nowrap">
                                 <thead>
                                     <tr>
                                         <th>Kode Akun</th>
                                         <th>Nama Akun</th>
                                         <th>Debit</th>
                                         <th>Kredit</th>
+                                        <th>Saldo Debit</th>
+                                        <th>Saldo Kredit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,6 +72,8 @@
                                         <td>{{ $balance->nama_akun }}</td>
                                         <td>Rp{{ number_format($balance->total_debit) }}</td>
                                         <td>Rp{{ number_format($balance->total_credit) }}</td>
+                                        <td>Rp{{ number_format($balance->saldo_debit) }}</td>
+                                        <td>Rp{{ number_format($balance->saldo_kredit) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -78,9 +82,12 @@
                                         <th colspan="2">Total</th>
                                         <th>Rp{{ number_format($grandTotalDebit) }}</th>
                                         <th>Rp{{ number_format($grandTotalCredit) }}</th>
+                                        <th>Rp{{ number_format($grandTotalSaldoDebit) }}</th>
+                                        <th>Rp{{ number_format($grandTotalSaldoKredit) }}</th>
                                     </tr>
                                 </tfoot>
                             </table>
+                            
                         </div>
                     </div>
                 </div>

@@ -41,43 +41,47 @@
                 </div>
 
                 <!-- Content using monospace font for better alignment -->
-                <div style="font-family: 'calibri';">
-                    <!-- Modal Awal -->
-                    <div class="row mb-2">
-                        <div class="col-2">3101</div>
-                        <div class="col-6">Modal Investor {{ date('j', strtotime($startOfMonth)) }} {{ $namaBulan }}</div>
-                        <div class="col-4 text-right">Rp {{ number_format($modalAwal, 0, ',', '.') }}</div>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <!-- Modal Awal -->
+                            <tr>
+                                <td class="text-center">3101</td>
+                                <td>Modal Investor {{ date('j', strtotime($startOfMonth)) }} {{ $namaBulan }}</td>
+                                <td class="text-right">Rp {{ number_format($modalAwal, 0, ',', '.') }}</td>
+                            </tr>
 
-                    <!-- Laba -->
-                    <div class="row mb-2">
-                        <div class="col-2"></div>
-                        <div class="col-6">Laba</div>
-                        <div class="col-4 text-right">Rp {{ number_format($laba, 0, ',', '.') }}</div>
-                    </div>
+                            <!-- Laba -->
+                            <tr>
+                                <td class="text-center"></td>
+                                <td>Laba</td>
+                                <td class="text-right">Rp {{ number_format($laba, 0, ',', '.') }}</td>
+                            </tr>
 
-                    <!-- Prive (if exists) -->
-                    @if($prive > 0)
-                    <div class="row mb-2">
-                        <div class="col-2">3102</div>
-                        <div class="col-6">Prive</div>
-                        <div class="col-4 text-right">(Rp {{ number_format($prive, 0, ',', '.') }})</div>
-                    </div>
-                    @endif
+                            <!-- Prive (if exists) -->
+                            @if($prive > 0)
+                            <tr>
+                                <td class="text-center">3102</td>
+                                <td>Prive</td>
+                                <td class="text-right">(Rp {{ number_format($prive, 0, ',', '.') }})</td>
+                            </tr>
+                            @endif
 
-                    <!-- Laba dikurangi Prive -->
-                    <div class="row mb-2">
-                        <div class="col-2"></div>
-                        <div class="col-6">Laba - Prive</div>
-                        <div class="col-4 text-right">Rp {{ number_format($laba_prive, 0, ',', '.') }}</div>
-                    </div>
+                            <!-- Laba dikurangi Prive -->
+                            <tr>
+                                <td class="text-center"></td>
+                                <td>Laba - Prive</td>
+                                <td class="text-right">Rp {{ number_format($laba_prive, 0, ',', '.') }}</td>
+                            </tr>
 
-                    <!-- Modal Akhir -->
-                    <div class="row mt-3" style="border-top: 2px solid black; padding-top: 10px;">
-                        <div class="col-2">3101</div>
-                        <div class="col-6">Modal Investor {{ date('j', strtotime($endOfMonth)) }} {{ $namaBulan }}</div>
-                        <div class="col-4 text-right"><strong>Rp {{ number_format($modal_akhir, 0, ',', '.') }}</strong></div>
-                    </div>
+                            <!-- Modal Akhir -->
+                            <tr class="font-weight-bold" style="border-top: 2px solid black;">
+                                <td class="text-center">3101</td>
+                                <td>Modal Investor {{ date('j', strtotime($endOfMonth)) }} {{ $namaBulan }}</td>
+                                <td class="text-right">Rp {{ number_format($modal_akhir, 0, ',', '.') }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -86,21 +90,11 @@
 
 @push('styles')
 <style>
-    .row {
-        align-items: center;
-        margin-bottom: 5px;
+    .table td, .table th {
+        vertical-align: middle;
     }
-    .text-right {
-        text-align: right !important;
-    }
-    .mb-2 {
-        margin-bottom: 0.5rem !important;
-    }
-    .mt-3 {
-        margin-top: 1rem !important;
-    }
-    .card-body {
-        padding: 2rem;
+    .font-weight-bold {
+        font-weight: bold;
     }
 </style>
 @endpush

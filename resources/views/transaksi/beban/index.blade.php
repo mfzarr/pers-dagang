@@ -11,9 +11,10 @@
                                 <h5 class="m-b-10">List of Beban</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                            class="feather icon-home"></i></a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('beban.index') }}">Pengeluaran Beban</a></li>
-                            </ul> 
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -28,53 +29,53 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @if ($beban->isEmpty())
-                        <p>No bebans found for your perusahaan.</p>
-                    @else
-                        <div class="table-responsive">
-                            <table id="simpletable" class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Beban</th>
-                                        <th>Harga</th>
-                                        <th>Tanggal</th>
-                                        <th>Kode Akun</th>
-                                        <th>Nama Akun</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($beban as $item)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->nama_beban }}</td>
-                                            <td>Rp{{ number_format($item->harga) }}</td>
-                                            <td>{{ $item->tanggal }}</td>
-                                            <td>{{ $item->coa->kode_akun }}</td>
-                                            <td>{{ $item->coa->nama_akun }}</td>
-                                            <td>
-                                                <a href="{{ route('beban.edit', $item->id_beban) }}"
-                                                    class="btn btn-info btn-sm">
-                                                    <i class="feather icon-edit"></i>&nbsp;Edit
-                                                </a>
-                                                <form id="delete-form-{{ $item->id_beban }}"
-                                                    action="{{ route('beban.destroy', $item->id_beban) }}" method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-danger btn-sm"
-                                                        onclick="confirmDelete({{ $item->id_beban }})">
-                                                        <i class="feather icon-trash-2"></i>&nbsp;Delete
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                    <form method="GET" action="{{ route('beban.index') }}" class="mb-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="month" name="month" class="form-control" value="{{ request('month') }}"
+                                    onchange="this.form.submit()">
+                            </div>
                         </div>
-                    @endif
+                    </form>
+                    <div class="table-responsive">
+                        <table id="basic-btn" class="table table-striped table-bordered nowrap">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Tanggal</th>
+                                    <th>Nama Beban</th>
+                                    <th>Harga</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($beban as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->tanggal }}</td>
+                                        <td>{{ $item->nama_beban }}</td>
+                                        <td>Rp{{ number_format($item->harga) }}</td>
+                                        <td>
+                                            <a href="{{ route('beban.edit', $item->id_beban) }}"
+                                                class="btn btn-info btn-sm">
+                                                <i class="feather icon-edit"></i>&nbsp;Edit
+                                            </a>
+                                            <form id="delete-form-{{ $item->id_beban }}"
+                                                action="{{ route('beban.destroy', $item->id_beban) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    onclick="confirmDelete({{ $item->id_beban }})">
+                                                    <i class="feather icon-trash-2"></i>&nbsp;Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

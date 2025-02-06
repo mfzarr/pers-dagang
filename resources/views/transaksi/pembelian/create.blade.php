@@ -56,7 +56,8 @@
                                 {{-- Tanggal Pembelian --}}
                                 <div class="form-group">
                                     <label for="tanggal" class="form-label">Tanggal Pembelian</label>
-                                    <input type="date" id="tanggal" name="tanggal" class="form-control" required>
+                                    <input type="date" id="tanggal" name="tanggal" class="form-control"
+                                        value="{{ date('Y-m-d') }}" required>
                                 </div>
 
                                 {{-- Supplier --}}
@@ -68,7 +69,8 @@
                                         @foreach ($suppliers as $supplier)
                                             @if ($supplier->status == 'Aktif')
                                                 <option value="{{ $supplier->id_supplier }}"
-                                                    data-products="{{ json_encode($supplier->products) }}">{{ $supplier->nama }}
+                                                    data-products="{{ json_encode($supplier->products) }}">
+                                                    {{ $supplier->nama }}
                                                 </option>
                                             @endif
                                         @endforeach
@@ -78,7 +80,9 @@
                                 {{-- Tipe Pembayaran --}}
                                 <div class="form-group">
                                     <label for="tipe_pembayaran" class="form-label">Tipe Pembayaran</label>
-                                    <select id="tipe_pembayaran" name="tipe_pembayaran" class="form-control" required>
+                                    <select id="tipe_pembayaran" name="tipe_pembayaran" class="form-control" required
+                                        onchange="handleTipePembayaranChange()">
+                                        <option value="" disabled selected>Pilih Tipe Pembayaran</option>
                                         <option value="tunai">Tunai</option>
                                         <option value="kredit">Kredit</option>
                                     </select>
@@ -148,7 +152,10 @@
 
 
                                 {{-- Submit --}}
-                                <button type="submit" class="btn btn-success">Create Pembelian</button>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-success mr-2">Create Pembelian</button>
+                                    <a href="{{ route('pembelian.index') }}" class="btn btn-secondary">Back</a>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -159,43 +166,60 @@
 
     {{-- Script to handle row addition, deletion, and calculations --}}
     <script>
-    function updateProductOptions() {
-        const supplierSelect = document.getElementById('supplier');
-        const selectedSupplier = supplierSelect.options[supplierSelect.selectedIndex];
-        const products = JSON.parse(selectedSupplier.dataset.products || '[]');
+        function handleTipePembayaranChange() {
+            const tipePembayaran = document.getElementById('tipe_pembayaran').value;
+            const dibayarInputs = document.querySelectorAll('[name*="dibayar"]');
+            const subtotalInputs = document.querySelectorAll('.subtotal');
 
-        // Update all product dropdowns
-        document.querySelectorAll('.produk-select').forEach(select => {
-            // Save the current selection
-            const currentSelection = select.value;
-
-            // Clear existing options
-            select.innerHTML = '<option value="">Select Produk</option>';
-
-            // Add new options based on the selected supplier and status
-            products.forEach(product => {
-                if (product.status === 'Aktif') {
-                    const option = document.createElement('option');
-                    option.value = product.id_produk;
-                    option.textContent = product.nama;
-                    option.dataset.harga = product.hpp;
-                    select.appendChild(option);
+            dibayarInputs.forEach((input, index) => {
+                if (tipePembayaran === 'tunai') {
+                    input.value = subtotalInputs[index].value;
+                    input.readOnly = true;
+                } else {
+                    input.readOnly = false;
                 }
             });
 
-            // Restore the previous selection if it's still available
-            if (currentSelection) {
-                const option = select.querySelector(`option[value="${currentSelection}"]`);
-                if (option) {
-                    option.selected = true;
-                }
-            }
+            calculateTotals();
+        }
 
-            // Trigger the change event to update the price
-            select.dispatchEvent(new Event('change'));
-        });
-    }
-    
+        function updateProductOptions() {
+            const supplierSelect = document.getElementById('supplier');
+            const selectedSupplier = supplierSelect.options[supplierSelect.selectedIndex];
+            const products = JSON.parse(selectedSupplier.dataset.products || '[]');
+
+            // Update all product dropdowns
+            document.querySelectorAll('.produk-select').forEach(select => {
+                // Save the current selection
+                const currentSelection = select.value;
+
+                // Clear existing options
+                select.innerHTML = '<option value="">Select Produk</option>';
+
+                // Add new options based on the selected supplier and status
+                products.forEach(product => {
+                    if (product.status === 'Aktif') {
+                        const option = document.createElement('option');
+                        option.value = product.id_produk;
+                        option.textContent = product.nama;
+                        option.dataset.harga = product.hpp;
+                        select.appendChild(option);
+                    }
+                });
+
+                // Restore the previous selection if it's still available
+                if (currentSelection) {
+                    const option = select.querySelector(`option[value="${currentSelection}"]`);
+                    if (option) {
+                        option.selected = true;
+                    }
+                }
+
+                // Trigger the change event to update the price
+                select.dispatchEvent(new Event('change'));
+            });
+        }
+
 
         function updateHarga(selectElement) {
             const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -205,8 +229,8 @@
             calculateSubtotal(row.querySelector('.kuantitas'));
         }
         document.addEventListener('DOMContentLoaded', function() {
-        updateProductOptions();
-    });
+            updateProductOptions();
+        });
 
         // Modify the addRow function to include the updateProductOptions call
         function addRow() {
@@ -215,6 +239,7 @@
             const row = table.insertRow(rowCount);
             row.innerHTML = document.querySelector("#produkTable tbody tr").innerHTML.replace(/\[0\]/g, `[${rowCount}]`);
             updateProductOptions(); // Update options for the new row
+            handleTipePembayaranChange();
         }
 
         function removeRow(button) {
@@ -284,5 +309,10 @@
                     document.querySelector('.harga').value = data.harga;
                 });
         }); // Trigger change event on page load
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProductOptions();
+            handleTipePembayaranChange();
+        });
     </script>
 @endsection
